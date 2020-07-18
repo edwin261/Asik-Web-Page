@@ -1,0 +1,58 @@
+﻿{
+   "ContextClassName": "ASIK_PGWEB_Context",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "DoNotCombineNamespace": false,
+   "IdReplace": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": "Entidades",
+   "ProjectRootNamespace": "AsikWeb.Models",
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[ALCANCE]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CIUDAD]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[CLIENTES]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[DEPARTAMENTO]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[ESTADOS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[HERRAMIENTAS]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[ROL]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[TIP_PAGO]"
+      },
+      {
+         "HasPrimaryKey": true,
+         "Name": "[dbo].[USUARIOS]"
+      }
+   ],
+   "UseDatabaseNames": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": false,
+   "UseLegacyPluralizer": false,
+   "UseSpatial": false
+}

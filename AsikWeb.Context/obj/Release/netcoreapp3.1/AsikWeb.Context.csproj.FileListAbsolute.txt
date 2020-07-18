@@ -1,0 +1,47 @@
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/bin/Release/netcoreapp3.1/AsikWeb.Context.deps.json
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/bin/Release/netcoreapp3.1/AsikWeb.Context.dll
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/bin/Release/netcoreapp3.1/AsikWeb.Context.pdb
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/bin/Release/netcoreapp3.1/AsikWeb.Models.dll
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/bin/Release/netcoreapp3.1/AsikWeb.Models.pdb
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.csprojAssemblyReference.cache
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.csproj.CoreCompileInputs.cache
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.AssemblyInfoInputs.cache
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.AssemblyInfo.cs
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.csproj.CopyComplete
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.dll
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.pdb
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Context/bin/Release/netcoreapp3.1/AsikWeb.Context.deps.json
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Context/bin/Release/netcoreapp3.1/AsikWeb.Context.dll
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Context/bin/Release/netcoreapp3.1/AsikWeb.Context.pdb
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Context/bin/Release/netcoreapp3.1/AsikWeb.Models.dll
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Context/bin/Release/netcoreapp3.1/AsikWeb.Models.pdb
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.csprojAssemblyReference.cache
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.AssemblyInfoInputs.cache
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.AssemblyInfo.cs
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.csproj.CopyComplete
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.dll
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Context/obj/Release/netcoreapp3.1/AsikWeb.Context.pdb
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\bin\Release\netcoreapp3.1\AsikWeb.Context.deps.json
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\bin\Release\netcoreapp3.1\AsikWeb.Context.dll
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\bin\Release\netcoreapp3.1\AsikWeb.Context.pdb
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\bin\Release\netcoreapp3.1\AsikWeb.Models.dll
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\bin\Release\netcoreapp3.1\AsikWeb.Models.pdb
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.csprojAssemblyReference.cache
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.csproj.CoreCompileInputs.cache
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.AssemblyInfoInputs.cache
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.AssemblyInfo.cs
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.csproj.CopyComplete
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.dll
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.pdb
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\bin\Release\netcoreapp3.1\AsikWeb.Context.deps.json
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\bin\Release\netcoreapp3.1\AsikWeb.Context.dll
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\bin\Release\netcoreapp3.1\AsikWeb.Context.pdb
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\bin\Release\netcoreapp3.1\AsikWeb.Models.dll
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\bin\Release\netcoreapp3.1\AsikWeb.Models.pdb
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.csprojAssemblyReference.cache
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.csproj.CoreCompileInputs.cache
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.AssemblyInfoInputs.cache
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.AssemblyInfo.cs
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.csproj.CopyComplete
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.dll
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\obj\Release\netcoreapp3.1\AsikWeb.Context.pdb

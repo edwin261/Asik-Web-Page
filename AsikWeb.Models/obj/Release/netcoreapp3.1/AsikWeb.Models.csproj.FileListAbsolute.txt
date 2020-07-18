@@ -1,0 +1,46 @@
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/bin/Release/netcoreapp3.1/AsikWeb.Models.deps.json
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/bin/Release/netcoreapp3.1/AsikWeb.Models.runtimeconfig.json
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/bin/Release/netcoreapp3.1/AsikWeb.Models.runtimeconfig.dev.json
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/bin/Release/netcoreapp3.1/AsikWeb.Models.dll
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/bin/Release/netcoreapp3.1/AsikWeb.Models.pdb
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.csprojAssemblyReference.cache
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.csproj.CoreCompileInputs.cache
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.AssemblyInfoInputs.cache
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.AssemblyInfo.cs
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.dll
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.pdb
+C:/Users/edwin/OneDrive/Escritorio/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.genruntimeconfig.cache
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Models/bin/Release/netcoreapp3.1/AsikWeb.Models.deps.json
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Models/bin/Release/netcoreapp3.1/AsikWeb.Models.runtimeconfig.json
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Models/bin/Release/netcoreapp3.1/AsikWeb.Models.runtimeconfig.dev.json
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Models/bin/Release/netcoreapp3.1/AsikWeb.Models.dll
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Models/bin/Release/netcoreapp3.1/AsikWeb.Models.pdb
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.csprojAssemblyReference.cache
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.AssemblyInfoInputs.cache
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.AssemblyInfo.cs
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.dll
+/Users/edwinmarquezmelendez/Documents/Asik/Web/AsikWeb/AsikWeb.Models/obj/Release/netcoreapp3.1/AsikWeb.Models.pdb
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\bin\Release\netcoreapp3.1\AsikWeb.Models.deps.json
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\bin\Release\netcoreapp3.1\AsikWeb.Models.runtimeconfig.json
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\bin\Release\netcoreapp3.1\AsikWeb.Models.runtimeconfig.dev.json
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\bin\Release\netcoreapp3.1\AsikWeb.Models.dll
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\bin\Release\netcoreapp3.1\AsikWeb.Models.pdb
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.csprojAssemblyReference.cache
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.csproj.CoreCompileInputs.cache
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.AssemblyInfoInputs.cache
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.AssemblyInfo.cs
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.dll
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.pdb
+C:\Users\edwin\OneDrive\Documentos\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.genruntimeconfig.cache
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\bin\Release\netcoreapp3.1\AsikWeb.Models.deps.json
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\bin\Release\netcoreapp3.1\AsikWeb.Models.runtimeconfig.json
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\bin\Release\netcoreapp3.1\AsikWeb.Models.runtimeconfig.dev.json
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\bin\Release\netcoreapp3.1\AsikWeb.Models.dll
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\bin\Release\netcoreapp3.1\AsikWeb.Models.pdb
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.csprojAssemblyReference.cache
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.csproj.CoreCompileInputs.cache
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.AssemblyInfoInputs.cache
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.AssemblyInfo.cs
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.dll
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.pdb
+C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\obj\Release\netcoreapp3.1\AsikWeb.Models.genruntimeconfig.cache
