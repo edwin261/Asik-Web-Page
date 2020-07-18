@@ -1,0 +1,47 @@
+﻿@model List<AsikWeb.Models.Entidades.Proceso>
+@{
+    ViewData["Title"] = "Calidad";
+}
+
+<div id="Splash_Screen_Load" style="display: none"></div>
+
+<div id="div_Procesos">
+    <div class="col-md-12 text-center mt-3"><strong class="h4 text-shadow">Procesos</strong></div>
+
+    <div class="row mt-3">
+        @foreach (var procesos in Model)
+        {
+            <div class="col-md-4 mt-4">
+                <input type="button" class="btn btn-light TextNegrita btn_save_color border-radius New_OT form-control box-shadow-green"
+                       id="@procesos.Pro_Codigo" value="@procesos.Pro_Nombre" onclick="Load_Actividades(@procesos.Pro_Codigo)" />
+            </div>
+        }
+    </div>
+</div>
+
+<div id="div_Actividades" style="display:none">
+    <div class="col-md-12 text-center mt-3"><strong class="h4 text-shadow">Actividades</strong></div>
+
+    <div class="row mt-3" id="divBtnActivities">
+        @*<div class="col-md-4 mt-4">
+                <input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"
+                       value="Boton 2" />
+            </div>*@
+    </div>
+</div>
+
+<div id="div_Tareas" style="display:none">
+    <div class="col-md-12 text-center mt-3"><strong class="h4 text-shadow">Tarea</strong></div>
+
+    <div class="row mt-3" id="divBtnTrea">
+        @*<div class="col-md-4 mt-4">
+                <input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"
+                       value="Boton 2" />
+            </div>*@
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/Calidad.js" type="text/javascript" asp-append-version="true"></script>
+}

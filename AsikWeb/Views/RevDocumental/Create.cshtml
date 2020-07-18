@@ -1,0 +1,95 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Revision Documental";
+}
+    <div id="Splash_Screen_Load" style="display: none"></div>
+    <form action="/RevDocumental/updateCheckDoc" method="Post" onsubmit="updateCheckDoc(event)" style="margin-top: 15vh;">
+        <div class="row">
+            <div class="col-md-5 mt-3 mb-2">
+                <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+                <h4 class="color_orange text-shadow">
+                    Programar O.T.
+                </h4>
+            </div>
+            <div class="col-md-3">
+                <h6>Orden de trabajo</h6>
+                <input type="text" class="form-control inputText_NoBorder inputHeight" readonly id="O_Trabajo"
+                       value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Codotc.ToString().PadLeft(8,'0')" />    
+            </div>
+
+            <div class="col-md-4">
+                <h6>Fecha O.T.</h6>
+                <input type="text" class="form-control" readonly
+                       value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Fecmod.Value.ToShortDateString()" />
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-4">
+                <h6>Nombre del Proyecto</h6>
+                <input type="text" class="form-control inputText_NoBorder inputHeight" readonly name="N_Proyecto"
+                       value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Nomproy" />
+            </div>
+            <div class="col-md-4">
+                <h6>Nombre del Cliente</h6>
+                <input type="text" readonly class="form-control inputText_NoBorder inputHeight" name="N_Cliente"
+                       value="@Model.Clientes.FirstOrDefault().CliNombre" />
+            </div>
+        </div>
+
+        @if (Model.Ord_Trabajo.FirstOrDefault().Ord_RevDoc_Rest > 0)
+        {
+            <div class="mt-3">
+                <h5 class="mt-3">Se debe marcar los documentos que se recibieron para la orden de trabajo.</h5>
+
+                @foreach (var itemDistinct in Model.rev_DocItems.Select(s => s.Rev_LisCheck).Distinct())
+                {
+                    <div class="row">
+                        <div class="col-md-12 col-sm-12 mt-2">
+                            <div class="card">
+                                <h6 class="color_orange pt-3 pl-3 pr-3" style="padding:1.2vh">@itemDistinct</h6>
+                                @foreach (var item in Model.rev_DocItems.Where(w => w.Rev_LisCheck == itemDistinct))
+                                {
+                                    @if (!item.Rev_Estado)
+                                    {
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <input type="checkbox" id="@item.Rev_CodDocItem" value="@item.Rev_CodDocItem"
+                                                       onclick="hideorshowtxt('@item.Rev_CodDocItem')">
+                                                <label for="@item.Rev_CodDocItem">@item.Rev_DocCheck</label>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <input type="text" class="form-control" value="@item.Rev_Descrip" id="txt_@item.Rev_CodDocItem"
+                                                       placeholder="Especifique razon del no aceptado" maxlength="200" />
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-12 mt-3">
+                                            <label>@item.Rev_DocCheck</label>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+        <div class="col-md-12 col-sm-12" style="margin-bottom: 11vh;">
+            <div class="row" style="padding-top: 10vh;">
+                @if (Model.Ord_Trabajo.FirstOrDefault().Ord_Canvis_Rest > 0)
+                {
+                    <input type="submit" class="ml-5 col-md-4 btn btn-light TextNegrita border-radius New_OT btn_save_color disable" value="Guardar" id="Btn_SaveOt" />
+                }
+                <input type="button" class="ml-5 col-md-4 btn btn-light TextNegrita float-right border-radius btn_cancel disable" onclick="location.href ='/RevDocumental/Show'" value="Cancelar" />
+            </div>
+        </div>
+    </form>
+
+@section Scripts{
+    <script src="~/js/RevDocumental.js" type="text/javascript" asp-append-version="true"></script>
+}

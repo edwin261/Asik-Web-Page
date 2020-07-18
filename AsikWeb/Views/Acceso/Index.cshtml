@@ -1,0 +1,82 @@
+﻿@{
+    ViewData["Title"] = "Acceso - Login";
+}
+
+<style>
+    .container-all {
+        width: 100%;
+        max-width: 1000px;
+        margin: auto;
+        margin-top: 25vh;
+        display: flex;
+    }
+
+    .ctn-form {
+        width: 92%;
+        padding: 14px;
+    }
+
+    .logo {
+        width: 72%;
+        display: block;
+        margin: auto;
+    }
+
+    label {
+        display: block;
+        margin-top: 30px;
+        font-size: 20px;
+        font-weight: 300;
+        color: #7a7a7a;
+    }
+
+    input[type="text"], input[type="password"] {
+        border: 0px;
+        outline: 0px;
+        border-bottom: 1px solid rgba(0,0,0,.12);
+        color: #e30F87;
+    }
+
+    .ctn-text {
+        width: 100%;
+        background-image: url(../Img/Mascota_Asik.svg);
+        background-position: center;
+        border-radius: 8%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        padding: 40px;
+    }
+</style>
+
+<div id="Splash_Screen_Load" style="display: none"></div>
+<div class="container-all">
+    <div class="ctn-text">
+        @*<div class="capa">
+        </div>*@
+    </div>
+
+    <div class="ctn-form">
+        <img src="~/Img/logo_asik.svg" alt="Logo empresa" class="logo" />
+
+        <form action="/Acceso/LogIn" method="Post" onsubmit="LogIn(event)">
+            <label for="UserAsik">Usuario</label>
+            <input type="text" required pattern="[0-9]+" class="form-control inputText_NoBorder inputHeight" value=""
+                   id="UserAsik" autofocus name="UserAsik" title="Solo se permiten numeros" />
+
+            <label for="PassAsik">Contraseña</label>
+            <input type="password" required class="form-control col-md-12 inputText_NoBorder" value="" id="PassAsik" name="PassAsik" />
+            <input type="submit" id="btn_Login" class="btn btn-light TextNegrita float-right border-radius mt-2 New_OT" value="Ingresar">
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/Login.js" type="text/javascript" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function () {
+            $(".menu-vert").remove();
+        });
+    </script>
+}

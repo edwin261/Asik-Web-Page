@@ -1,0 +1,215 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Create";
+    bool fact = false;
+}
+
+<div id="Splash_Screen_Load" style="display: none"></div>
+<div class="row">
+    <div class="col-md-12" style="height: 74.7vh;overflow:auto">
+        <!-- Encabezado -->
+        <form action="/Fac_Cont/Save" method="Post" onsubmit="Save(event)" style="margin-top: 3vh;">
+            <div class="row">
+                <div class="col-md-9 mt-3">
+                    @foreach (var identities in User.Identities.ToList())
+                    {
+                        foreach (var rol in identities.Claims)
+                        {
+                            switch (rol.Value)
+                            {
+                                case "6":
+                                    if (Model.Fac_Cont.FirstOrDefault().Fac_FacVer)
+                                    {
+                                        <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+                                        <h4 class="color_orange text-shadow">
+                                            Contabilidad
+                                        </h4>
+                                    }
+                                    break;
+                                case "7":
+                                    if (!Model.Fac_Cont.FirstOrDefault().Fac_FacVer)
+                                    {
+                                        <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+                                        <h4 class="color_orange text-shadow">
+                                            Facturacion
+                                        </h4>
+                                    }
+                                    break;
+                            }
+                        }
+                    }
+                </div>
+               
+                <div class="col-md-3">
+                    <input type="date" class="form-control" id="DtNewOT" disabled value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </div>
+            </div>
+            <!-- Cuerpo -->
+            <div class="row">
+                <div class="col-md-3 mt-4">
+                    <h6>Orden de trabajo</h6>
+                    <input type="hidden" value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Codotc" id="hd_Ord_Codotc" />
+                    <input type="text" class="form-control inputText_NoBorder inputHeight" readonly id="O_Trabajo" name="O_Trabajo"
+                           value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Prefot-@Model.Ord_Trabajo.FirstOrDefault().Ord_Codotc.ToString().PadLeft(8, '0')" />
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <h6>Nombre del Proyecto</h6>
+                    <input type="text" class="form-control inputText_NoBorder inputHeight" readonly id="N_Proyecto" name="N_Proyecto"
+                           value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Nomproy" />
+                </div>
+                <div class="col-md-6">
+                    <h6>Nombre del Cliente</h6>
+                    <input type="text" class="form-control inputText_NoBorder inputHeight" readonly id="N_Cliente" name="N_Cliente"
+                           value="@Model.Clientes.FirstOrDefault().CliNombre" />
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label>
+                        Direcci&oacute;n
+                    </label>
+                    <input type="text" value="@Model.Clientes.FirstOrDefault().CliDirecc" readonly required id="Cli_Dir" class="form-control inputText_NoBorder" placeholder="Direccion" />
+                </div>
+                <div class="col-md-6">
+                    <label>
+                        Num. Tel&eacute;fono
+                    </label>
+                    <input type="text" value="@Model.Clientes.FirstOrDefault().CliTelefo" readonly required id="Cli_Tel" class="form-control inputText_NoBorder" placeholder="Telefono" />
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label>
+                        Forma de pago
+                    </label>
+                    <select disabled id="Form_Pag" class="form-control">
+                        <option value="@Model.TipPago.FirstOrDefault().TipCodigo">@Model.TipPago.FirstOrDefault().TipNombre</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label>
+                        Tipo de alcance
+                    </label>
+                    <select disabled id="Alcance" class="form-control">
+                        <option value="@Model.TipAlcance.FirstOrDefault().Alc_codigo">@Model.TipAlcance.FirstOrDefault().Tip_alnomb</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                @foreach (var identities in User.Identities.ToList())
+                {
+                    foreach (var rol in identities.Claims)
+                    {
+                        switch (rol.Value)
+                        {
+                            case "6":
+                                if (Model.Fac_Cont.FirstOrDefault().Fac_FacVer)
+                                {
+                                    <input type="hidden" id="rol_factCont" value="6" />
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="card">
+                                            <h6 class="color_orange" style="padding:1.2vh">Confirma Factura</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="text-center"><input type="radio" checked disabled class="ml-1" value="1"> Si</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="text-center"><input type="radio" disabled class="ml-1" value="0"> No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-12">
+                                        <div class="card">
+                                            <h6 class="color_orange" style="padding:1.2vh">Confirma Contabilidad</h6>
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <label class="text-center"><input onclick="ShowBtn(true)" checked type="radio" id="Accept" name="Check_Cont" class="ml-1" value="1"> Si</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label class="text-center"><input onclick="ShowBtn(false)" type="radio" id="Accept" name="Check_Cont" class="ml-1" value="0"> No</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                break;
+                            case "7":
+                                <input type="hidden" id="rol_factCont" value="7" />
+                                if (!Model.Fac_Cont.FirstOrDefault().Fac_FacVer)
+                                {
+                                    if (!Model.Fac_Cont.FirstOrDefault().Fac_FacVer)
+                                    {
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="card">
+                                                <h6 class="color_orange" style="padding:1.2vh">Confirma Factura</h6>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="text-center"><input type="radio" onclick="ShowBtn(true)" checked id="Accept" name="Check_fact" class="ml-1" value="1"> Si</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="text-center"><input type="radio" onclick="ShowBtn(false)" id="Accept" name="Check_fact" class="ml-1" value="0"> No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-6 col-sm-12">
+                                            <div class="card">
+                                                <h6 class="color_orange" style="padding:1.2vh">Confirma Factura</h6>
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <label class="text-center"><input type="radio" disabled checked id="Accept" name="Check_fact" class="ml-1" value="1"> Si</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="text-center"><input type="radio" disabled id="Accept" name="Check_fact" class="ml-1" value="0"> No</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    fact = true;
+                                }
+                                break;
+                        }
+                    }
+                }
+
+                @if (fact && !Model.Fac_Cont.FirstOrDefault().Fac_FacVer && Model.Fac_Cont.FirstOrDefault().Fac_Fechfa == null)
+                {
+                    <!-- Botones -->
+                    <div class="col-md-12 col-sm-12">
+                        <div class="row" style="padding-top: 10vh;">
+                            <input type="submit" class="ml-5 col-md-4 btn btn-light TextNegrita border-radius New_OT btn_save_color disable" value="Guardar" id="Btn_SaveOt" />
+                            <input type="button" class="ml-5 col-md-4 btn btn-light TextNegrita float-right border-radius btn_cancel disable" onclick="location.href ='/OrdenTrabajo/Show'" value="Cancelar" />
+                        </div>
+                    </div>
+                }
+                else if (!fact && Model.Fac_Cont.FirstOrDefault().Fac_FacVer && Model.Fac_Cont.FirstOrDefault().Fac_Fechfa != null
+                    && !Model.Fac_Cont.FirstOrDefault().Fac_Conver && Model.Fac_Cont.FirstOrDefault().Fac_Feccon == null)
+                {
+                    <div class="col-md-12 col-sm-12">
+                        <div class="row" style="padding-top: 10vh;">
+                            <input type="submit" class="ml-5 col-md-4 btn btn-light TextNegrita border-radius New_OT btn_save_color disable" value="Guardar" id="Btn_SaveOt" />
+                            <input type="button" class="ml-5 col-md-4 btn btn-light TextNegrita float-right border-radius btn_cancel disable" onclick="location.href ='/OrdenTrabajo/Show'" value="Cancelar" />
+                        </div>
+                    </div>
+                }
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts                    {
+    <script src="~/js/Fac_cont.js" type="text/javascript" asp-append-version="true"></script>
+}

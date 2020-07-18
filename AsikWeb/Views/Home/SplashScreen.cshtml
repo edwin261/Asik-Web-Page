@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewData["Title"] = "Asik";
+    Layout = null;
+}
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Img/Mascota_Asik.ico" />
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <title>Portal Asik</title>
+    <style>
+        body{
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="Splash_Screen"></div>
+    <div id="page_content">
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
+                <div class="container justify-content-center">
+                    <a class="navbar-brand" href="#">
+                        <img src="~/Img/Logo_Final_Asik.svg" alt="Logo Asik" height="40" />
+                    </a>
+                </div>
+            </nav>
+        </header>
+        <h4 class="text-center" style="margin-top: 8rem!important;">Portal ordenes de trabajo <strong>ASIK</strong></h4>
+
+        <h3 class="text-center" style="margin-top: 2rem!important;"><strong>¡Bienvenido!</strong></h3>
+
+        <div class="row mt-5">
+            <div class="col-md-3"></div>
+            <div class="col-md-3 col-sm-12">
+                <button class="btn_opt">Consultar O.T. 🌴</button>
+                @*<input type="button" class="form-control col-md-10 ml-2 mb-4" value="Consultar O.T." />*@
+            </div>
+
+            <div class="col-md-3 col-sm-12">
+                <button class="btn_opt">Ingresar al portal 🌴</button>
+                @*<input type="button" class="form-control col-md-10 ml-2 mb-4" value="Ingresar al portal" />*@
+            </div>
+        </div>
+
+        <footer class="footer text-muted borderLine">
+            <div class="container text-center">
+                &copy; 2020 - Asik S.A.S. | Powered by OurSoft | @*- <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+            </div>
+        </footer>
+    </div>
+
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            setTimeout(function () {
+                $("#Splash_Screen").fadeOut(300);
+                $("#page_content").fadeIn(400);
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

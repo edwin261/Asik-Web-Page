@@ -1,0 +1,107 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Herramientas";
+}
+
+<div class="col-md-4 mt-5 mb-5">
+    <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+    <h4 class="color_orange text-shadow">
+        Editar Herramienta
+    </h4>
+</div>
+
+<div id="Splash_Screen_Load" style="display: none"></div>
+<form action="/Maestros/Herramientas" method="Post" onsubmit="SaveHerramienta(event)">
+    <input type="hidden" value="@Model.Herramientas.FirstOrDefault().HerCodigo" id="HerCodigo" />
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h6>Nombre de la Herramienta</h6>
+            <input type="text" required class="form-control inputText_NoBorder" value="@Model.Herramientas.FirstOrDefault().HerNombre"
+                   id="HerNombre" name="HerNombre" placeholder="Nombre" />
+        </div>
+        <div class="col-md-6">
+            <h6>Marca de la herramienta</h6>
+            <input type="text" required class="form-control inputText_NoBorder clear" name="Her_Marca" id="Her_Marca"
+                   placeholder="Marca" value="@Model.Herramientas.FirstOrDefault().HerMarca" />
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h6>Serie de la herramienta</h6>
+            <input type="text" required class="form-control inputText_NoBorder inputHeight clear" name="HerNumser"
+                   value="@Model.Herramientas.FirstOrDefault().HerNumser" id="HerNumser" placeholder="Marca" />
+        </div>
+
+        <div class="col-md-6">
+            <h6>Estado de la herramienta</h6>
+            <select id="slt_her" class="form-control" onchange="ShowOrHideAddHerTec(this.value)">
+                @switch (Model.Herramientas.FirstOrDefault().HerObser)
+                {
+                    case "OFICINA":
+                        <option value="OFICINA" selected>Completo en Oficina</option>
+                        <option value="ASIGNADA">Asignar Tecnico</option>
+                        break;
+                    default:
+                        <option value="OFICINA">Completo en Oficina</option>
+                        <option value="ASIGNADA" selected>Asignar Tecnico</option>
+                        break;
+                }
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-3 lst_TecHer" style="display:none">
+        @foreach (var tecnicos in Model.LstUsuarios)
+        {
+            if (Model.herramientas_Usuarios == null)
+            {
+                <div class="col-md-4">
+                    <input type="checkbox" id="@tecnicos.UsuIdenti" value="@tecnicos.UsuIdenti"> <label for="@tecnicos.UsuIdenti">@tecnicos.UsuNombre</label>
+                </div>
+            }
+            else
+            {
+                int UsuhaveHerra = (Model.herramientas_Usuarios.Where(w => w.Usu_identi == tecnicos.UsuIdenti).Count());
+
+                @if (UsuhaveHerra > 0)
+                {
+                    <div class="col-md-4">
+                        <input type="checkbox" checked id="@tecnicos.UsuIdenti" value="@tecnicos.UsuIdenti"> <label for="@tecnicos.UsuIdenti">@tecnicos.UsuNombre</label>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-4">
+                        <input type="checkbox" id="@tecnicos.UsuIdenti" value="@tecnicos.UsuIdenti"> <label for="@tecnicos.UsuIdenti">@tecnicos.UsuNombre</label>
+                    </div>
+                }
+            }
+        }
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <input type="submit" class="btn btn-success col-md-12 btn-md disable" value="Guardar" />
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <input type="button" class="btn btn-danger btn-md col-md-12 disable" value="Cancelar" onclick="location.href='/Maestros/Lst_Herramientas'" />
+        </div>
+    </div>
+</form>
+
+@section Scripts
+{
+    <script src="~/js/Maestros.js" type="text/javascript" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            if ($("#slt_her").val() == "ASIGNADA") {
+                ShowOrHideAddHerTec("ASIGNADA");
+            }
+        });
+    </script>
+}

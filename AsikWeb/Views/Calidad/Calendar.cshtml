@@ -1,0 +1,241 @@
+﻿
+@{
+    ViewData["Title"] = "Calendar";
+}
+
+<div id="Splash_Screen_Load" style="display: none"></div>
+
+<div id="calender"></div>
+
+<div id="myModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header text-center">
+                <h4 class="modal-title"><span id="eventTitle"></span></h4>
+            </div>
+            <div class="modal-body">
+                <p id="pDetails"></p>
+            </div>
+            <div class="modal-footer text-center">
+                <button type="button" class="btn btn-default" data-dismiss="modal"
+                        onclick="$('#CalendarModal').modal('show');">
+                    Volver al calendario
+                </button>
+
+                <button type="button" id="btnclick" class="btn btn-light TextNegrita float-right border-radius New_OT">
+                    Ver Inspeccion
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="myModalSave" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content" style="border-radius: 7vh; box-shadow: 1em 1em 11.3em rgba(255, 143, 46, 0.94);">
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <h4 class="TextNegrita text-center text-shadow">Datos</h4>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Inicio</label>
+                        @*<input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control col-md-12" id="dtp1" />*@
+                        <div class="input-group date" id="dtp1" data-target-input="nearest">
+                            <input type="text" readonly class="form-control datetimepicker-input" data-target="#dtp1" id="txtStart" />
+                            <div class="input-group-append" data-target="#dtp1" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Proceso</label>
+                        <select class="form-control" id="slt_Proceso" onchange="loadSltActividad(this.value)">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Actividad</label>
+                        <select class="form-control" id="slt_Actividad" onchange="loadSltTarea(this.value, false)">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tarea</label>
+                        <select class="form-control" id="slt_Tarea">
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Descripcion</label>
+                        <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div class="modal-footer" id="divBtn" style="display:none">
+                        <button type="button" id="btnSave" class="btn btn-success btn_save_color disable" style="color:black">Guardar</button>
+                        <button type="button" class="btn btn-danger btn_cancel disable" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.css" rel="stylesheet" />
+<link href="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.print.css" rel="stylesheet" media="print" />
+
+@section Scripts{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
+    <script src="~/js/Calidad.js" type="text/javascript" asp-append-version="true"></script>
+
+    <script>
+        var events = [];
+        var selectedEvent = null;
+        $(document).ready(function () {
+            //LoadCalendar($("#rol_usu").val());
+            GenerateCalender(null);
+        })
+
+        function LoadCalendar(rol) {
+            $.ajax({
+                type: "Post",
+                url: "/ProgramarOT/GetProgramacion",
+                data: {
+                    codTec: $('#slt_CodiTec').val(),
+                    codigoOt: 0,
+                    rol: rol
+                },
+                success: function (data) {
+                    events = [];
+                    if (data != null) {
+                        if (data.calendario != null) {
+                            for (var i = 0; i < data.calendario.length; i++) {
+                                events.push({
+                                    codOt: data.ord_Trabajo[i].ord_Codotc,
+                                    Nom_Cli: data.clientes[i].cliNombre,
+                                    proyect_name: data.ord_Trabajo[i].ord_Nomproy,
+                                    Cal_eventId: data.calendario[i].cal_EventId,
+                                    title: data.calendario[i].subjec,
+                                    description: data.calendario[i].descripcion,
+                                    start: moment(data.calendario[i].inicio),
+                                    end: data.calendario[i].fin != null ? moment(data.calendario[i].fin) : null,
+                                    color: data.calendario[i].themeColor,
+                                    allDay: data.calendario[i].tod_Dia
+                                });
+                            }
+                        }
+                    }
+                    GenerateCalender(events);
+                },
+                error: function (error) {
+                    showAlert("Ha ocurrido un error",
+                        "Visita Tecnica", "warning");
+                }
+            })
+        }
+
+        function GenerateCalender(events) {
+            modal = false;
+            $('#calender').fullCalendar('destroy');
+            $('#calender').fullCalendar({
+                displayEventTime: false,
+                monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+                monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
+                dayNames: ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'],
+                dayNamesShort: ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'],
+                lang: 'es',
+                contentHeight: 600,
+                defaultDate: new Date(),
+                timeFormat: 'h(:mm)a',
+                header: {
+                    left: 'month,basicWeek,basicDay,agenda',
+                    center: 'title',
+                    right: 'today,prevYear,prev,next,nextYear'
+                },
+                buttonText: {
+                    prevYear: new moment().year() - 1,
+                    nextYear: new moment().year() + 1
+                },
+                viewRender: function (view) {
+                    var y = moment($('#calender').fullCalendar('getDate')).year();
+                    $(".fc-prevYear-button").text(y - 1);
+                    $(".fc-nextYear-button").html(y + 1);
+                },
+                eventLimit: true,
+                eventColor: '#378006',
+                events: events,
+                eventClick: function (calEvent, jsEvent, view) {
+                    selectedEvent = calEvent;
+                    $('#myModal #eventTitle').text(calEvent.proyect_name);
+                    var $description = $('<div/>');
+                    $description.append($('<p/>').html('<b>Cliente: </b>' + calEvent.Nom_Cli));
+                    $description.append($('<p/>').html('<b>Inicio: </b>' + calEvent.start.format("DD-MMM-YYYY")));
+                    if (calEvent.end != null) {
+                        $description.append($('<p/>').html('<b>Fin: </b>' + calEvent.end.format("DD-MMM-YYYY")));
+                    } else {
+                        $description.append($('<p/>').html('<b>Fin: </b>' + calEvent.start.format("DD-MMM-YYYY")));
+                    }
+                    $description.append($('<p/>').html('<b>Descripcion: </b>' + calEvent.description));
+                    $('#myModal #pDetails').empty().html($description);
+
+                    $('#CalendarModal').modal('hide');
+                    $('#myModal').modal();
+                },
+                selectable: true,
+                select: function (start, end) {
+                    //endDate = $.fullCalendar.moment(end).add(-1, 'days').format('YYYY/MM/DD');
+                    selectedEvent = {
+                        Nom_Cli: $("#N_Cliente").val(),
+                        proyect_name: $("#N_Proyecto").val(),
+                        Cal_eventId: 0,
+                        title: '',
+                        description: '',
+                        start: start,
+                        end: end,
+                        color: '',
+                        allDay: false
+                    };
+                    openAddEditForm();
+                    $('#calendar').fullCalendar('unselect');
+                }
+            });
+            $(".fc-month-button").html("Mes");
+            $(".fc-basicWeek-button").html("Semana");
+            $(".fc-basicDay-button").html("Dia");
+            $(".fc-today-button").html("Hoy");
+            $('#CalendarModal').modal('show');
+        }
+
+        $('#btnclick').click(function () {
+            LoadEventView();
+        });
+
+        function openAddEditForm() {
+            loadSelectProceso();
+            //if (selectedEvent != null) {
+            //    $("#txtCodigo").val(selectedEvent.Cal_eventId);
+            //    $("#txtStart").val(selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
+            //    if (selectedEvent.end != null) {
+            //        $("#txtEnd").val(selectedEvent.end.format('DD/MM/YYYY HH:mm A'));
+            //    } else {
+            //        $("#txtEnd").val(selectedEvent.end != null ? selectedEvent.end.format('DD/MM/YYYY HH:mm A') : selectedEvent.start.format('DD/MM/YYYY HH:mm A'));
+            //    }
+            //    $('#txtSubject').val(selectedEvent.proyect_name);
+            //    $('#chkIsFullDay').prop("checked", selectedEvent.allDay || false);
+            //    $('#chkIsFullDay').change();
+            //    $('#txtDescription').val(selectedEvent.description);
+            //    $('#ddThemeColor').val(selectedEvent.color);
+            //}
+            $("#txtStart").val(selectedEvent.start.format('DD/MM/YYYY'));
+            $('#CalendarModal').modal('hide');
+
+            $('#myModalSave').modal();
+
+        }
+
+        function LoadEventView() {
+            if (selectedEvent != null) {
+                location.href = "/VisitaTecnica/Visit_Start?Ord_CodOtc=" + selectedEvent.codOt;
+            }
+        }
+    </script>
+}

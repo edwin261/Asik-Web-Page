@@ -1,0 +1,108 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Consultar O.T.";
+}
+
+<style>
+    .menu {
+        display: none !important;
+    }
+
+    .DivLstcontainer {
+        display: none;
+    }
+</style>
+
+<div id="Splash_Screen_Load" style="display: none"></div>
+
+<div class="col-md-12" style="margin-top: 12vh;">
+    <div class="row">
+        <div class="col-md-6 mt-5" id="linecolorrigth">
+            <img src="~/Img/Mascota_Asik.svg" class="img-center" alt="Mascota Asik" />
+        </div>
+
+        <div class="col-md-6 form_consulta mt-5">
+            <img style="float: left;display:none" id="imgNextToTitle" alt="Mascota Asik al lado del titulo" src="~/Img/Mascota_Asik.svg" width="47">
+            <p class="text-shadow"><span class="span_color_orange" style="font-weight:bold;">Consultar</span></p>
+
+            <p>Ingresar el codigo de su proyecto, para verificar el estado.</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <input type="text" autofocus class="form-control inputText_NoBorder inputFullHeight disable" value="" id="RefOrden" name="RefOrden" />
+                </div>
+                <div class="col-md-3">
+                    <input type="button" class="btn btn-light TextNegrita border-radius New_OT disable" id="btn_searchInfoOt" onclick="SearchOT($('#RefOrden').val())" value="Consultar" />
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-3" id="div_infoOt" style="display:none;border-top: 1px solid transparent;border-image: linear-gradient(to left, #b7675c, #fd850e 100%) 18%;">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+                    <p>Nombre del Proyecto: <strong id="proy_name" class="infoOrd"></strong></p>
+                    <p>Fecha de Creacion: <strong id="proy_ini" class="infoOrd"></strong></p>
+                    <p>Fecha de Finalizacion: <strong id="proy_fin" class="infoOrd"></strong></p>
+                </div>
+                <div class="col-md-1"></div>
+                <div class="col-md-5">
+                    <p>Alcance: <strong id="proy_alc" class="infoOrd"></strong></p>
+                    <p>Tipo Alcance: <strong id="proy_talc" class="infoOrd"></strong></p>
+                    <p>Estado: <strong id="proy_status" class="infoOrd"></strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-12 mt-3" id="div_Tl" style="margin-bottom: 12vh;">
+            <div class="timeline">
+                <div class="year">
+                    <div class="inner">
+                        <span style="color: orange">Detalles Orden de Trabajo</span>
+                    </div>
+                </div>
+
+                <ul class="days">
+                    <li class="day" id="Tl_D0">
+                        <div class="events">
+                            <p id="Tl0_F"></p>
+                            <div class="date" id="Tl0_D"></div>
+                        </div>
+                    </li>
+
+                    <li class="day" id="Tl_D1">
+                        <div class="events">
+                            <p id="Tl1_F"></p>
+                            <div class="date" id="Tl1_D"></div>
+                        </div>
+                    </li>
+
+                    <li class="day" id="Tl_D2">
+                        <div class="events">
+                            <p id="Tl2_F"></p>
+                            <div class="date" id="Tl2_D"></div>
+                        </div>
+                    </li>
+
+                    <li class="day" id="Tl_D3">
+                        <div class="events">
+                            <p id="Tl3_F"></p>
+                            <div class="date" id="Tl3_D"></div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/OrdenTrabajo.js" type="text/javascript" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $(".content_body").removeClass("col-md-10");
+            $(".content_body").addClass("col-md-12");
+            $(".menu-vert").remove();
+        });
+    </script>
+}

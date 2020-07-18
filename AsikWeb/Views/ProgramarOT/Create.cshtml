@@ -1,0 +1,248 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Programar Orden de Trabajo";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/css/tempusdominus-bootstrap-4.min.css" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet" crossorigin="anonymous">
+
+<div id="Splash_Screen_Load" style="display: none"></div>
+
+<form action="/ProgramarOt/Create" method="Post" onsubmit="Save(event)" style="margin-top: 15vh;">
+    <div class="row">
+        <div class="col-md-3">
+            <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+            <h4 class="color_orange text-shadow">
+                Programar O.T.
+            </h4>
+        </div>
+        <div class="col-md-2">
+            <h6>Orden de trabajo</h6>
+            <input type="hidden" value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Codotc" id="hd_Ord_Codotc" />
+            <input type="text" class="form-control inputText_NoBorder inputHeight" readonly id="O_Trabajo" name="O_Trabajo"
+                   value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Prefot-@Model.Ord_Trabajo.FirstOrDefault().Ord_Codotc.ToString().PadLeft(8, '0')" />
+        </div>
+        <div class="col-md-2">
+            <h6>Alcance</h6>
+            <input type="text" class="form-control inputText_NoBorder inputHeight" readonly name="O_Trabajo"
+                   value="@Model.Alcance.FirstOrDefault().AlcNombre" />
+        </div>
+        <div class="col-md-5">
+            <h6>Tipo de alcance</h6>
+            <input type="text" class="form-control inputText_NoBorder inputHeight" readonly name="O_Trabajo"
+                   value="@Model.TipAlcance.FirstOrDefault().Tip_alnomb" />
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h6>Nombre del Proyecto</h6>
+            <input type="text" class="form-control inputText_NoBorder inputHeight" readonly id="N_Proyecto" name="N_Proyecto"
+                   value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Nomproy" />
+        </div>
+        <div class="col-md-6">
+            <h6>Nombre del Cliente</h6>
+            <input type="text" class="form-control inputText_NoBorder inputHeight" readonly id="N_Cliente" name="N_Cliente"
+                   value="@Model.Clientes.FirstOrDefault().CliNombre" />
+        </div>
+
+        <div class="col-md-4 mt-3">
+            <h6>Tecnico</h6>
+            <select class="form-control disable" id="slt_CodiTec" onchange="LoadHerAsigtoTec()">
+                @foreach (var usu_tec in Model.LstUsuarios)
+                {
+                    <option value="@usu_tec.UsuIdenti">
+                        @usu_tec.UsuNombre
+                    </option>
+                }
+            </select>
+        </div>
+        <div class="col-md-4 mt-3">
+            <h6>Planos Impresos</h6>
+            <select class="form-control disable" id="Pl_Imp">
+                <option value="true">Si</option>
+                <option value="false" selected>No</option>
+            </select>
+        </div>
+        @if (Model.Ord_Trabajo.FirstOrDefault().Ord_Canvis_Rest > 0)
+        {
+            <div class="col-md-4 mt-3">
+                <h6>Programacion</h6>
+                <input type="button" class="btn btn-link btn-md" value="Asignar Programacion" onclick="InvoiceCalendar()" />
+            </div>
+        }
+    </div>
+
+    <div class="row mt-3">
+        <!-- Info adicional -->
+        <div class="col-md-8 col-sm-12">
+            <div class="card">
+                <h6 class="color_orange" style="padding:1.2vh">Herramientas Asignadas</h6>
+                <div class="row" id="TecHerAsig"></div>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-sm-12">
+            <div class="row" style="padding-top: 10vh;">
+                <input type="submit" class="ml-5 col-md-4 btn btn-light TextNegrita border-radius New_OT btn_save_color disable" value="Guardar" id="Btn_SaveOt" />
+                <input type="button" class="ml-5 col-md-4 btn btn-light TextNegrita float-right border-radius btn_cancel disable" onclick="Check_CalEvents()" value="Cancelar" />
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="CalendarModal" tabindex="-1" role="dialog" aria-labelledby="CalendarModal" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div id="calender"></div>
+            </div>
+        </div>
+    </div>
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title"><span id="eventTitle"></span></h4>
+                </div>
+                <div class="modal-body">
+                    <p id="pDetails"></p>
+                </div>
+                <div class="modal-footer text-center">
+                    <button type="button" class="btn btn-default" data-dismiss="modal"
+                            onclick="$('#CalendarModal').modal('show');">
+                        Volver al calendario
+                    </button>
+                    <button type="button" id="btnEdit" class="btn btn-default btn-sm btn_save_color" style="margin-right:5px;">
+                        Editar
+                    </button>
+                    <button type="button" id="btnDelete" class="btn btn-default btn-sm btn_cancel">
+                        Eliminar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<div id="myModalSave" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label>Nombre de la inspeccion</label>
+                        <input type="hidden" id="txtCodigo" />
+                        <input type="text" readonly id="txtSubject" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Inicio</label>
+                        @*<input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control col-md-12" id="dtp1" />*@
+                        <div class="input-group date" id="dtp1" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#dtp1" id="txtStart" />
+                            <div class="input-group-append" data-target="#dtp1" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label><input type="checkbox" id="chkIsFullDay" />Programacion para todo el dia</label>
+                        </div>
+                    </div>
+                    <div class="form-group" id="divEndDate" style="display:none">
+                        <label>Fecha de Fin</label>
+                        @*<input type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" value="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control col-md-12" id="dtp2" />*@
+                        <div class="input-group date" id="dtp2" data-target-input="nearest">
+                            <input type="text" class="form-control datetimepicker-input" data-target="#dtp2" id="txtEnd" />
+                            <div class="input-group-append" data-target="#dtp2" data-toggle="datetimepicker">
+                                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Detalle</label>
+                        <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Theme Color</label>
+                        <select id="ddThemeColor" class="form-control">
+                            <option value="">Default</option>
+                            <option value="red">Rojo</option>
+                            <option value="orange">Naranja</option>
+                            <option value="yelow">Amarillo</option>
+                            <option value="blue">Azul</option>
+                            <option value="green">Verde</option>
+                            <option value="gray">gris</option>
+                            <option value="violet">Morado</option>
+                            <option value="pink">Rosado</option>
+                            <option value="brow">Marron</option>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" id="btnSave" class="btn btn-success btn_save_color disable" style="color: black">Guardar</button>
+                        <button type="button" class="btn btn-danger btn_cancel disable" data-dismiss="modal"
+                                onclick="showCalendarModal()">
+                            Cerrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link href="~/css/fullcalendar.min.css" rel="stylesheet" />
+<link href="~/css/fullcalendar.print.css" rel="stylesheet" media="print" />
+
+@section Scripts{
+    <script src="~/js/moment.min.js"></script>
+    <script src="~/js/fullcalendar.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tempusdominus-bootstrap-4/5.0.0-alpha14/js/tempusdominus-bootstrap-4.min.js"></script>
+    <script src="~/js/ProgramarOt.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            LoadHerAsigtoTec();
+            $.fn.datetimepicker.Constructor.Default = $.extend({}, $.fn.datetimepicker.Constructor.Default, {
+                icons: {
+                    time: 'fa fa-clock',
+                    date: 'fa fa-calendar',
+                    up: 'fa fa-arrow-up',
+                    down: 'fa fa-arrow-down',
+                    previous: 'fa fa-chevron-left',
+                    next: 'fa fa-chevron-right',
+                    today: 'fa fa-calendar-check-o',
+                    clear: 'fa fa-trash',
+                    close: 'fa fa-times'
+                }
+            });
+
+            $('#dtp1,#dtp2').datetimepicker({
+                format: 'DD/MM/YYYY HH:mm A'
+            });
+        });
+
+        function LoadHerAsigtoTec() {
+            $.ajax({
+                type: "POST",
+                url: '/ProgramarOT/LoadHerAsigtoTec',
+                data: {
+                    codTec: parseInt($("#slt_CodiTec").val())
+                },
+                success: function (data) {
+                    $(".lstDivHerrTec").remove();
+                    if (data != null) {
+                        for (herr in data.herramientas) {
+                            $('<div class="col-md-4 lstDivHerrTec">' +
+                                data.herramientas[herr].herNombre + '</div>').appendTo("#TecHerAsig");
+                        }
+                    }
+                },
+                error: function () {
+                    showAlert("Ha ocurrido un error al cargar la lista de herramientas del tecnico",
+                        "Programar OT", "warning");
+                }
+            })
+        }</script>
+}

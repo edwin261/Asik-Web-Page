@@ -1,0 +1,50 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Tiempo Tecnicos";
+}
+
+<div id="Splash_Screen_Load" style="display: none"></div>
+<div class="row" style="margin-top: 15vh;">
+    <div class="col-md-12 mb-3">
+        <div class="col-md-9 mt-2 mb-2">
+            <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+            <h4 class="color_orange text-shadow">
+                Reporte Tiempos de Inspeccion
+                <a href="#" id="LinkReport" download target="_blank" style="visibility:hidden">content</a>
+            </h4>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-2">
+    <label class="col-md-12">
+        Rango de fechas
+    </label>
+    <div class="col-md-6">
+        <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="DateInicio" />
+    </div>
+    <div class="col-md-6">
+        <input type="date" class="form-control" value="@DateTime.Now.ToString("yyyy-MM-dd")" id="DateFin" />
+    </div>
+    <div class="col-md-6 mt-3">
+        <h6>Tecnicos</h6>
+        <select class="form-control disable" id="slt_CodiTec" onchange="LoadHerAsigtoTec()">
+            <option value="0">Todos</option>
+            @foreach (var usu_tec in Model.LstUsuarios)
+            {
+                <option value="@usu_tec.UsuIdenti">
+                    @usu_tec.UsuNombre
+                </option>
+            }
+        </select>
+    </div>
+    <div class="col-md-6 mt-5">
+        <input type="button" class="ml-5 col-md-6 btn btn-light TextNegrita border-radius New_OT btn_save_color disable" value="Generar Reporte" onclick="DictamenReportTecnicos()" />
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/Reportes.js" type="text/javascript" asp-append-version="true"></script>
+}

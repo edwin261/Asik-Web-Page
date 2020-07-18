@@ -1,0 +1,104 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Usuarios";
+}
+<div id="Splash_Screen_Load" style="display: none"></div>
+<form action="/Maestros/Usuarios" method="Post" onsubmit="SaveUsuario(event)">
+    <input type="hidden" class="clear" id="Cli_Codigo" value="0" />
+    <input type="hidden" id="RolId" />
+
+    <div class="row">
+        <div class="col-md-9">
+            <div class="col-md-4 mt-4">
+                <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+                <h4 class="color_orange text-shadow">
+                    Nuevo Usuario
+                </h4>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <input type="date" required class="form-control" id="DtNewOT" readonly value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <h6>Nit</h6>
+            <input type="text" required pattern="[0-9]+" class="form-control inputText_NoBorder" value=""
+                   id="Codigo_Id" name="UsuIdenti" title="Solo se permiten numeros" onchange="VerifiNitUsu(this.value)" />
+        </div>
+
+        <div class="col-md-4">
+            <h6>Nombres</h6>
+            <input type="text" readonly required class="form-control inputText_NoBorder clear" name="UsuNombre" id="UsuNombre" placeholder="Nombres" />
+        </div>
+
+        <div class="col-md-4">
+            <h6>Apellidos</h6>
+            <input type="text" readonly required class="form-control inputText_NoBorder clear" name="UsuApelli" id="UsuApelli" placeholder="Apellidos" />
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h6>Contraseña</h6>
+            <input type="text" required readonly class="form-control inputText_NoBorder inputHeight clear" value=""
+                   id="UsuContra" name="UsuContra" />
+        </div>
+
+        <div class="col-md-6">
+            <h6>Correo</h6>
+            <input type="text" class="form-control clear" placeholder="Correo electronico" id="Usu_Email" />
+        </div>
+    </div>
+
+    <div class="row mt-3 ml-1">
+        <h6>Perfil</h6>
+        <div class="row">
+            @foreach (var Rol in Model.LstRol)
+            {
+                <div class="col-md-3">
+                    <input type="checkbox" id="@Rol.RolCodigo" name="@Rol.RolCodigo" value="@Rol.RolCodigo">
+                    <label for="@Rol.RolCodigo"> @Rol.RolNombre</label>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <input type="submit" class="btn btn-success col-md-12 btn-md disable" value="Guardar" />
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <input type="button" class="btn btn-danger btn-md col-md-12 disable" value="Cancelar" onclick="location.href='/Maestros/Lst_Usuarios'" />
+        </div>
+    </div>
+</form>
+
+<div class="modal fade" id="Askcreate" tabindex="-1" role="dialog" aria-labelledby="Askcreate" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AskcreateClientTitle">Agregar nuevo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Desea crear un nuevo Usuario?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="NewClient('Usu')">Si</button>
+                <button type="button" class="btn btn-danger" onclick="location.href='/Maestros/Lst_Clientes'">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/Maestros.js" type="text/javascript" asp-append-version="true"></script>
+}

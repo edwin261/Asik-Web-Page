@@ -1,0 +1,171 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Visita Tecnica";
+}
+<div id="Splash_Screen_Load" style="display: none"></div>
+<div class="row" style="margin-top: 3vh;">
+    <div class="col-md-5">
+        <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+        <h4 class="color_orange text-shadow">
+            Orden de Trabajo
+        </h4>
+        <input type="text" class="form-control inputText_NoBorder inputHeight" id="Cod_OT"
+               value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Codotc.ToString().PadLeft(8,'0')" readonly
+               name="O_Trabajo" />
+        <input type="hidden" id="Insp_Codigo" value="@Model.inspeccion.FirstOrDefault().Insp_Codigo" />
+    </div>
+    @foreach (var rol in User.Claims)
+    {
+        switch (rol.Value)
+        {
+            case "5":
+                <div class="col-md-5">
+                    <h6>Nombre Inspector</h6>
+                    <input type="text" class="form-control inputText_NoBorder inputHeight"
+                           value="@Model.Usuarios.UsuNombre @Model.Usuarios.UsuApelli" readonly name="Nomtec" />
+                </div>
+                break;
+        }
+    }
+</div>
+
+<div class="row mt-3">
+    <div class="col-md-4">
+        <h6>Nombre del Proyecto</h6>
+        <input type="text" class="form-control inputText_NoBorder inputHeight" name="N_Proyecto"
+               readonly value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Nomproy" />
+    </div>
+    <div class="col-md-4">
+        <h6>Nombre del Cliente</h6>
+        <input type="text" class="form-control inputText_NoBorder inputHeight" name="N_Cliente"
+               readonly value="@Model.Clientes.FirstOrDefault().CliNombre" />
+    </div>
+    <div class="col-md-4">
+        <h6>Fecha</h6>
+        <input type="date" readonly class="form-control"
+               value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Feccre.ToString("yyyy-MM-dd")" />
+    </div>
+</div>
+
+<div class="row mt-3" style="margin-bottom: 13vh;">
+    <!-- Info adicional -->
+    <div class="col-md-8 col-sm-12">
+        <div class="card">
+            <h6 class="color_orange text-center" style="padding:1.2vh">Detalle visita Orden Tecnica</h6>
+            @foreach (var rol in User.Claims)
+            {
+                if (rol.Value == "4" && Model.inspeccion.FirstOrDefault().Insp_Inici == null || rol.Value == "4" && Model.inspeccion.FirstOrDefault().Insp_Fin == null && rol.Subject.Name == Model.Usuarios.UsuNombre)
+                {
+                    @if (Model.inspeccion.Count() > 0 && Model.inspeccion.FirstOrDefault().Insp_Acept)
+                    {
+                        <label class="text-center">Aceptaci&oacute;n <input type="checkbox" checked disabled class="ml-1"></label>
+                    }
+                    else
+                    {
+                        <label class="text-center">Aceptaci&oacute;n <input type="checkbox" id="Accept" class="ml-1" value="1"></label>
+                        <small id="Noacept_text">En caso de presentar conflicto de interés: Absténgase de aceptar esta orden, informe inmediatamente al Director Técnico o al Coordinador de calidad y declare que está impedido para aceptar esta orden de trabajo.</small>
+                    }
+                    <div class="row mt-2">
+                        <div class="col-md-6 col-sm-12">
+                            @if (Model.inspeccion.Count > 0 && Model.inspeccion.FirstOrDefault().Insp_Inici != null)
+                            {
+                                if (Model.Tiem_Insps.Where(w => w.TiemFin == null).Count() > 0)
+                                {
+                                    <input type="button" class="form-control btn btn-light border-radius New_OT" onclick="pausar(true)" value="Pausar" />
+                                }
+                                else
+                                {
+                                    <input type="button" class="form-control btn btn-light border-radius New_OT btn_visit" onclick="pausar(false)" value="Inicio" />
+                                }
+                            }
+                            else
+                            {
+                                <input type="button" class="form-control btn btn-light border-radius New_OT btn_visit" value="Inicio" onclick="start(true)" />
+                            }
+                        </div>
+                        <div class="col-md-6 col-sm-12">
+                            @if (Model.inspeccion.Count() > 0 && Model.inspeccion.FirstOrDefault().Insp_Inici != null && Model.inspeccion.FirstOrDefault().Insp_Fin != null)
+                            {
+                                <input type="button" class="form-control btn btn-light border-radius New_OT" disabled value="Fin" />
+                            }
+                            else if (Model.inspeccion.Count() > 0 && Model.inspeccion.FirstOrDefault().Insp_Inici != null && Model.inspeccion.FirstOrDefault().Insp_Fin == null)
+                            {
+                                <input type="button" class="form-control btn btn-light border-radius New_OT" value="Fin" onclick="start(false)" />
+                            }
+                            else
+                            {
+                                <input type="button" class="form-control btn btn-light border-radius New_OT" disabled value="Fin" />
+                            }
+                        </div>
+                    </div>
+                }
+            }
+            <h6 class="mt-2 text-center">Duraci&oacute;n:</h6>
+            <div class="row">
+                @foreach (var insp_times in Model.Tiem_Insps)
+                {
+                    @if (insp_times.TiemIni != null)
+                    {
+                        <div class="col-md-6">
+                            <h6 class="mt-2 text-center">Inicio: @insp_times.TiemIni</h6>
+                        </div>
+                    }
+                    @if (insp_times.TiemFin != null)
+                    {
+                        <div class="col-md-6">
+                            <h6 class="mt-2 text-center">Fin: @insp_times.TiemFin</h6>
+                        </div>
+                    }
+                }
+
+                @if (Model.inspeccion.Count > 0 && Model.inspeccion.FirstOrDefault().Insp_Inici != null && Model.inspeccion.FirstOrDefault().Insp_Fin != null && Model.inspeccion.FirstOrDefault().Insp_Ttotal != null)
+                {
+                    <div class="col-md-12">
+                        <h6 class="mt-2 text-center">Duracion: @Model.inspeccion.FirstOrDefault().Insp_Ttotal</h6>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    @foreach (var rol in User.Claims)
+    {
+        if (rol.Value == "4" && rol.Subject.Name == Model.Usuarios.UsuNombre && Model.inspeccion.FirstOrDefault().Insp_Con_Cam && !Model.inspeccion.FirstOrDefault().Insp_Final)
+        {
+            <div class="col-md-4 col-sm-12 mt-2 pl-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="button" class="form-control btn btn-light border-radius New_OT" onclick="ConformeCampo(true)"
+                               value="Entregar Carpeta" />
+                    </div>
+
+                    <div class="col-md-12 mt-2">
+                        <textarea rows="5" class="col-md-12 form-control" id="tec_carpet"></textarea>
+                    </div>
+                </div>
+            </div>
+        }
+
+        if (rol.Value == "5" && rol.Subject.Name != Model.Usuarios.UsuNombre && Model.inspeccion.FirstOrDefault().Insp_Con_Cam && Model.inspeccion.FirstOrDefault().Insp_Dic_Fecha == null)
+        {
+            <div class="col-md-4 col-sm-12 mt-2 pl-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <input type="button" class="form-control btn btn-light border-radius New_OT" onclick="ConformeDirTec(true)"
+                               value="Aprobar" />
+                    </div>
+
+                    <div class="col-md-12 mt-2">
+                        <input type="button" class="form-control btn btn-light border-radius New_OT" value="Rechazado"
+                               onclick="ConformeDirTec(false)" />
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" charset="utf8" src="/js/VisitaTecnica.js" asp-append-version="true"></script>
+}

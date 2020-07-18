@@ -1,0 +1,290 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Crear nueva O.T.";
+}
+
+<div id="Splash_Screen_Load" style="display: none"></div>
+<div class="row">    
+    <div class="col-md-12" style="height: 74.7vh;overflow:auto">
+        <!-- Encabezado -->
+        <form action="/OrdenTrabajo/Save" method="Post" onsubmit="Save(event)" style="margin-top: 2vh;">
+            <div class="row">
+                <div class="col-md-9 mt-4">
+                    <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+                    <h4 class="color_orange text-shadow">
+                        Detalle O.T.
+                    </h4>
+                </div>
+                
+                <div class="col-md-3">
+                    <input type="date" required class="form-control" id="DtNewOT" readonly value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </div>
+            </div>
+            <!-- Cuerpo -->
+            <div class="row mt-4">
+                <div class="col-md-5">
+                    <label>
+                        Nombre del Proyecto
+                    </label>
+                    <input type="text" autofocus class="form-control inputText_NoBorder inputHeight" required name="Proyect_Name" id="Proyect_Name" placeholder="Ingrese nombre del proyecto" />
+                </div>
+                <div class="col-md-2">
+                    <label>
+                        Forma de pago
+                    </label>
+                    <select id="Form_Pag" class="form-control">
+                        @foreach (var item in Model.TipPago)
+                        {
+                            <option value="@item.TipCodigo">@item.TipNombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Cantidad de visitas
+                    </label>
+                    <input type="text" required pattern="[0-9]+" title="Solo se permiten numeros" class="form-control inputText_NoBorder inputHeight" name="Proyect_Visit" id="Proyect_Visit" placeholder="Visitas" />
+                </div>
+                <div class="col-md-2">
+                    <label>
+                        Insp. documental
+                    </label>
+                    <input type="text" required pattern="[0-9]+" title="Solo se permiten numeros" class="form-control inputText_NoBorder inputHeight" placeholder="Revision" id="Proyect_InsDocument" />
+                </div>
+            </div>
+
+            <div class="row mt-3">
+
+                <div class="col-md-4">
+                    <label>
+                        Alcance
+                    </label>
+                    <select onchange="LstTipPago()" id="Alcance" class="form-control">
+                        @foreach (var item in Model.Alcance)
+                        {
+                            <option value="@item.AlcCodigo">@item.AlcNombre</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label>
+                        Tipo de alcance
+                    </label>
+                    <select id="Tip_Alc" class="form-control">
+                        @foreach (var item in Model.TipAlcance)
+                        {
+                            <option class="OptTipAlcance" value="@item.Tip_alcodi">@item.Tip_alnomb</option>
+                        }
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label>
+                        Cantidad
+                    </label>
+                    <input type="text" required pattern="[0-9]+" class="form-control inputText_NoBorder inputHeight"
+                           id="ord_cantalc" name="ord_cantalc" title="Solo se permiten numeros" value="0" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <label>
+                        Cliente
+                    </label>
+
+                    <div>
+                        <input type="hidden" required class="form-control inputText_NoBorder inputHeight" name="Cliente_Id" id="Cliente_Id" placeholder="Codigo" />
+                        <input type="text" required onclick="ClientList()" readonly data-toggle="modal" data-target="#ModalSearchCliente" class="form-control inputText_NoBorder inputHeight" name="Cliente_name" id="Cliente_name" placeholder="Nombre" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Direcci&oacute;n
+                    </label>
+                    <input type="text" readonly required id="Cli_Dir" class="form-control inputText_NoBorder inputHeight" placeholder="Direccion" />
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Num. Tel&eacute;fono
+                    </label>
+                    <input type="text" readonly required id="Cli_Tel" class="form-control inputText_NoBorder inputHeight" placeholder="Telefono" />
+                </div>
+            </div>
+
+            <div class="row mt-3" id="Div_Sede" style="display: none">
+                <div class="col-md-6">
+                    <label>
+                        Seleccionar sede
+                    </label>
+                    <div>
+                        <input type="hidden" required class="form-control inputText_NoBorder inputHeight" name="Sede_Id" id="Sede_Id" placeholder="Codigo" />
+                        <input type="text" required onclick="SedeList()" readonly data-toggle="modal" data-target="#ModalSearchSede" class="form-control inputText_NoBorder inputHeight" name="Sede_name" id="Sede_name" placeholder="Seleccionar Sede" />
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Direcci&oacute;n
+                    </label>
+                    <input type="text" readonly required id="Sede_Dir" class="form-control inputText_NoBorder inputHeight" placeholder="Direccion" />
+                </div>
+                <div class="col-md-3">
+                    <label>
+                        Num. Tel&eacute;fono
+                    </label>
+                    <input type="text" readonly required id="Sede_Tel" class="form-control inputText_NoBorder inputHeight" placeholder="Telefono" />
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <!-- Info adicional -->
+                <div class="col-md-8 col-sm-12">
+                    <div class="card">
+                        <h6 class="color_orange pt-3 pl-3 pr-3">Informaci&oacute;n adicional de contacto</h6>
+                        <div class="row ml-3">
+                            <div class="col-md-10 mt-2">
+                                <label>
+                                    Nombres Completos
+                                </label>
+                                <input type="text" class="form-control inputText_NoBorder" id="AdiCli_Name" placeholder="Nombre" />
+                            </div>
+                            <div class="col-md-10">
+                                <label>
+                                    Num. Tel&eacute;fono fijo
+                                </label>
+                                <input type="text" class="form-control inputText_NoBorder" id="AdiCli_Tel" placeholder="Telefono" />
+                            </div>
+                            <div class="col-md-10">
+                                <label>
+                                    Num. Tel&eacute;fono movil
+                                </label>
+                                <input type="text" class="form-control inputText_NoBorder" id="ORD_CELCAD" placeholder="Telefono" />
+                            </div>
+                            <div class="col-md-10">
+                                <label>
+                                    E-mail
+                                </label>
+                                <input type="email" required class="form-control inputText_NoBorder" id="AdiCli_Email" placeholder="Correo Electronico" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Botones -->
+                <div class="col-md-4 col-sm-12">
+                    <div class="row" style="padding-top: 15vh;">
+                        <input type="submit" class="ml-5 col-md-4 btn btn-light TextNegrita border-radius New_OT btn_save_color disable" value="Guardar" id="Btn_SaveOt" />
+                        <input type="button" class="ml-5 col-md-4 btn btn-light TextNegrita float-right border-radius btn_cancel disable" onclick="location.href ='/OrdenTrabajo/Show'" value="Cancelar" />
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalSearchCliente" tabindex="-1" role="dialog" aria-labelledby="SearchCliente" aria-hidden="true" style="padding-left: 0px !important">
+    <div class="modal-dialog modal-lg" style="height:45vh;width:100%">
+        <input type="button" class="btn btn-danger float-right" value="Cerrar" />
+        <div class="modal-content" style="padding:20px 20px;height:88vh;overflow-y:auto;background-color: white;">
+            <div class="form-group pull-right">
+                <input type="text" class="search form-control" readonly onkeyup="search()" id="filtroCliente" placeholder="Filtrar Cliente">
+            </div>
+            <h4 class="load">CARGANDO...</h4>
+            <span class="counter pull-right"></span>
+            <table class="table table-hover table-bordered results">
+                <thead>
+                    <tr>
+                        <th class="text-center">Codigo</th>
+                        <th class="text-center">Nombre</th>
+                    </tr>
+                    <tr class="warning no-result">
+                        <td colspan="4"><i class="fa fa-warning"></i>El cliente no se encuentra registrado, <a href="/Maestros/Clientes" target=”_blank”>Crear Nuevo</a></td>
+                    </tr>
+                </thead>
+                <tbody id="table_data"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ModalSearchSede" tabindex="-1" role="dialog" aria-labelledby="SearchSede" aria-hidden="true" style="padding-left: 0px !important">
+    <div class="modal-dialog modal-lg" style="height:45vh;width:100%">
+        <input type="button" class="btn btn-danger float-right" value="Cerrar" />
+        <div class="modal-content" style="padding:20px 20px;height:88vh;overflow-y:auto;background-color: white;">
+            <div class="form-group pull-right">
+                <input type="text" class="searchSede form-control" readonly onkeyup="searchSede()" id="filtroSede" placeholder="Filtrar Sede">
+            </div>
+            <h4 class="load">CARGANDO...</h4>
+            <span class="counter pull-right"></span>
+            <table class="table table-hover table-bordered resultsSede">
+                <thead>
+                    <tr>
+                        <th class="text-center">Codigo</th>
+                        <th class="text-center">Nombre</th>
+                    </tr>
+                    <tr class="warning no-result">
+                        <td colspan="4"><i class="fa fa-warning"></i>La Sede no se encuentra registrada</td>
+                    </tr>
+                </thead>
+                <tbody id="tableSede_data"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/OrdenTrabajo.js" type="text/javascript" asp-append-version="true"></script>
+    <script>
+        function search() {
+            var searchTerm = $(".search").val();
+
+            var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+            $.extend($.expr[':'], {
+                'containsi': function (elem, i, match, array) {
+                    return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                }
+            });
+
+            $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function (e) {
+                $(this).attr('visible', 'false');
+            });
+
+            $(".results tbody tr:containsi('" + searchSplit + "')").each(function (e) {
+                $(this).attr('visible', 'true');
+            });
+
+            var jobCount = $('.results tbody tr[visible="true"]').length;
+            $('.counter').text(jobCount + ' item');
+
+            if (jobCount == '0') { $('.no-result').show(); }
+            else { $('.no-result').hide(); }
+        }
+
+        function searchSede() {
+            var searchTerm = $(".searchSede").val();
+
+            var searchSplit = searchTerm.replace(/ /g, "'):containsi('")
+
+            $.extend($.expr[':'], {
+                'containsi': function (elem, i, match, array) {
+                    return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+                }
+            });
+
+            $(".resultsSede tbody tr").not(":containsi('" + searchSplit + "')").each(function (e) {
+                $(this).attr('visible', 'false');
+            });
+
+            $(".resultsSede tbody tr:containsi('" + searchSplit + "')").each(function (e) {
+                $(this).attr('visible', 'true');
+            });
+
+            var jobCount = $('.resultsSede tbody tr[visible="true"]').length;
+            $('.counter').text(jobCount + ' item');
+
+            if (jobCount == '0') { $('.no-result').show(); }
+            else { $('.no-result').hide(); }
+        }
+    </script>
+}

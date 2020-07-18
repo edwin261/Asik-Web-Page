@@ -1,0 +1,87 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Herramientas";
+}
+
+    <div class="col-md-4 mt-4">
+        <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+        <h4 class="color_orange text-shadow">
+            Nuevo Herramienta
+        </h4>
+    </div>
+<div id="Splash_Screen_Load" style="display: none"></div>
+<form action="/Maestros/Herramientas" method="Post" onsubmit="SaveHerramienta(event)" style="margin-top: 15vh;">
+    <input type="hidden" value="0" id="HerCodigo" />
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h6>Nombre de la Herramienta</h6>
+            <input type="text" required class="form-control inputText_NoBorder" value="" id="HerNombre" name="HerNombre" placeholder="Nombre" />
+        </div>
+        <div class="col-md-6">
+            <h6>Marca de la herramienta</h6>
+            <input type="text" required class="form-control inputText_NoBorder clear" name="Her_Marca" id="Her_Marca" placeholder="Marca" />
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h6>Serie de la herramienta</h6>
+            <input type="text" required class="form-control inputText_NoBorder inputHeight clear" name="HerNumser" id="HerNumser" placeholder="Marca" />
+        </div>
+
+        <div class="col-md-6">
+            <h6>Estado de la herramienta</h6>
+            <select id="slt_her" class="form-control" onchange="ShowOrHideAddHerTec(this.value)">
+                <option value="OFICINA" selected>Completo en Oficina</option>
+                <option value="ASIGNADA">Asignar Tecnico</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-3 lst_TecHer" style="display:none">
+        @foreach (var tecnicos in Model.LstUsuarios)
+        {
+            <div class="col-md-4">
+                <input type="checkbox" id="@tecnicos.UsuIdenti" value="@tecnicos.UsuIdenti"> <label for="@tecnicos.UsuIdenti">@tecnicos.UsuNombre</label>
+            </div>
+        }
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-3">
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <input type="submit" class="btn btn-success col-md-12 btn-md" value="Guardar" />
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <input type="button" class="btn btn-danger btn-md col-md-12" value="Cancelar" onclick="location.href='/Maestros/Lst_Herramientas'" />
+        </div>
+    </div>
+</form>
+
+<div class="modal fade" id="Askcreate" tabindex="-1" role="dialog" aria-labelledby="Askcreate" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AskcreateClientTitle">Crear nueva Herramienta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Desea crear una nueva Herramienta?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success disable" onclick="location.reload()">Si</button>
+                <button type="button" class="btn btn-danger disable" onclick="location.href='/Maestros/Lst_Herramientas'">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/Maestros.js" type="text/javascript" asp-append-version="true"></script>
+}

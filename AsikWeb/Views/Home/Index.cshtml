@@ -1,0 +1,145 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Img/Mascota_Asik.ico" />
+    <link rel="stylesheet" type="text/css" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/css/site.css" />
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <a class="navbar-brand d-none d-md-none d-block d-sm-none" href="/Home/Index">
+                <img src="~/Img/Logo_Final_Asik.svg" alt="Logo Asik" height="40" />
+            </a>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto ToLeft">
+                    <li class="nav-item">
+                        <a class="nav-link FontAclonica" href="/Home/Index">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link FontAclonica" href="/ConsultarOT/Index">Consultar O.T.</a>
+                    </li>
+                </ul>
+
+                <a class="navbar-brand d-none d-xs-none d-sm-block" href="/Home/Index">
+                    <img src="~/Img/Logo_Final_Asik.svg" alt="Logo Asik" height="40" />
+                </a>
+
+                <ul class="navbar-nav ml-auto ToRight">
+                    <li class="nav-item">
+                        <a class="nav-link FontAclonica" href="https://asik.com.co/contactenos/" target="_blank">Contacto</a>
+                    </li>
+                    @if (User.Claims.Count() == 0)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link FontAclonica" href="/Acceso/Index">Ingresar</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item" id="Li_NomUsu">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-link">
+                                    <img src="~/Img/Mascota_Asik.svg" width="30" height="30" alt="logo">
+                                    @User.Claims.ElementAt(0).Value
+                                </button>
+                                <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">Toggle Dropdown</span>
+                                </button>
+                                <div class="dropdown-menu">
+                                    @foreach (var rol in User.Claims)
+                                    {
+                                        switch (rol.Value)
+                                        {
+                                            case "1":
+                                                <a class="dropdown-item FontAclonica" href="/OrdenTrabajo/Show">Orden de Trabajo</a>
+                                                break;
+                                            case "2":
+                                                <a class="dropdown-item FontAclonica" href="/ProgramarOT/Show">Programacion</a>
+                                                break;
+                                            case "3":
+                                                <a class="dropdown-item FontAclonica" href="/RevDocumental/Show">Revision Documental</a>
+                                                break;
+                                            case "4":
+                                                <a class="dropdown-item FontAclonica" href="/VisitaTecnica/VisiTec_OtLst">Visita Tecnica</a>
+                                                break;
+                                            case "5":
+                                                <a class="dropdown-item FontAclonica" href="/VisitaTecnica/VisiTec_OtLst">Direccion Tecnica</a>
+                                                break;
+                                            case "6":
+                                                <a class="dropdown-item FontAclonica" href="/Fac_Cont/Show">Contabilidad</a>
+                                                break;
+                                            case "7":
+                                                <a class="dropdown-item FontAclonica" href="/Fac_Cont/Show">Facturacion</a>
+                                                break;
+                                            case "10":
+                                                <a class="dropdown-item FontAclonica" href="/Dictamen/Index">Dictamen</a>
+                                                break;
+                                        }
+                                    }
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="/Acceso/LogOut">Salir</a>
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header>
+        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+            </ol>
+            <div class="carousel-inner" role="listbox">
+                <!-- Slide One - Set the background image for this slide in the line below -->
+                <div class="carousel-item active" style="background-image: url('../img/Slider-1.jpg')">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 class="display-4">Certificamos su tranquilidad. </h2>
+                        <h4>Conoce tu camino a la seguridad</h4>
+                    </div>
+                </div>
+                <!-- Slide Two - Set the background image for this slide in the line below -->
+                <div class="carousel-item" style="background-image: url('../img/Slider-2.jpg')">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 class="display-4">Certificamos su tranquilidad. Conoce tu camino a la seguridad</h2>
+                    </div>
+                </div>
+                <!-- Slide Three - Set the background image for this slide in the line below -->
+                <div class="carousel-item" style="background-image: url('../img/Slider-3.jpg')">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h2 class="display-4">Certificamos su tranquilidad. Conoce tu camino a la seguridad</h2>
+                    </div>
+                </div>
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+        </div>
+    </header>
+</body>
+</html>

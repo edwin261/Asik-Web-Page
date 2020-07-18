@@ -1,0 +1,217 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Clientes";
+}
+
+<div class="col-md-4 mt-5">
+    <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+    <h4 class="color_orange text-shadow">
+        Editar Cliente
+    </h4>
+</div>
+
+<div id="Splash_Screen_Load" style="display: none"></div>
+<form action="/Maestros/Clientes" method="Post" onsubmit="SaveCliente(event)">
+    <input type="hidden" class="clear" id="optsave" />
+    <input type="hidden" class="clear" id="Cli_Codigo" value="@Model.Clientes.FirstOrDefault().CliCodigo" />
+
+    <div class="row mt-3">
+        <div class="col-md-4">
+            <h6>Nit</h6>
+            <input type="text" required readonly pattern="[0-9]+" class="form-control inputText_NoBorder"
+                   value="@Model.Clientes.FirstOrDefault().CliIdenti" id="Codigo_Id" name="Cliente_Id"
+                   title="Solo se permiten numeros" onchange="VerifiNit(this.value)" />
+        </div>
+        <div class="col-md-1">
+            <h6>Verif.</h6>
+            <input type="text" required readonly pattern="[0-9]+" class="form-control inputText_NoBorder clear"
+                   value="@Model.Clientes.FirstOrDefault().CliDverif"
+                   id="CliDverif" name="CliDverif" title="Solo se permiten numeros" />
+        </div>
+        <div class="col-md-7">
+            <h6>Nombre Cliente</h6>
+            <input type="text" required class="form-control inputText_NoBorder clear" name="Cliente_name"
+                   value="@Model.Clientes.FirstOrDefault().CliNombre" id="Cliente_name" />
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h6>Telefono</h6>
+            <input type="text" required pattern="[0-9]+" class="form-control inputText_NoBorder clear"
+                   value="@Model.Clientes.FirstOrDefault().CliTelefo"
+                   id="Cliente_tel" name="Tel_Cli" title="Solo se permiten numeros" />
+        </div>
+        <div class="col-md-6">
+            <h6>Direccion</h6>
+            <input type="text" required class="form-control col-md-12 inputText_NoBorder clear"
+                   value="@Model.Clientes.FirstOrDefault().CliDirecc" id="Dir_Cli" name="Dir_Cli" />
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-6">
+            <h6>Departamento</h6>
+            <select id="Dep_Cli" onchange="Lstciudades(false)" class="form-control">
+                @foreach (var dep in Model.Deparcol)
+                {
+                    if (dep.Dep_Codigo != Model.Clientes.FirstOrDefault().DepCodigo)
+                    {
+                        <option value="@dep.Dep_Codigo">@dep.Dep_Nombre</option>
+                    }
+                    else
+                    {
+                        <option selected value="@dep.Dep_Codigo">@dep.Dep_Nombre</option>
+                    }
+                }
+            </select>
+        </div>
+        <div class="col-md-6">
+            <h6>Ciudad</h6>
+            <input type="hidden" value="@Model.Clientes.FirstOrDefault().CiuCodigo" id="CiuCod_Cli" />
+            <select id="Ciu_Cli" class="form-control">
+            </select>
+        </div>
+    </div>
+
+    <div class="row mt-3">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <input type="button" class="btn btn-primary col-md-12 btn-md disable" onclick="Lstciudades(true);HideOrShowBtn(1)" data-toggle="modal" data-target="#ModalNewSede" value="Agregar Sede" />
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <input type="submit" class="btn btn-success col-md-12 btn-md disable" value="Actualizar" />
+        </div>
+        <div class="col-md-3 col-sm-12">
+            <input type="button" class="btn btn-danger btn-md col-md-12 disable" value="Cancelar" onclick="location.href='/Maestros/Lst_Clientes'" />
+        </div>
+    </div>
+</form>
+
+<div class="row" style="margin-bottom: 12vh;">
+    @if (Model.Sedes_Cli.Count() > 0)
+    {
+        <h3 class="col-md-12 TextNegrita mt-3">Sedes</h3>
+        foreach (var sedes in Model.Sedes_Cli)
+        {
+            <div class="col-md-6 mt-2" id="@sedes.SeCodigo">
+                <div class="card">
+                    <div class="card-header">
+                        <strong>NIT</strong> @sedes.SeNumIden-@sedes.SeDigver
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title">@sedes.SeNomSed</h5>
+                        <p class="card-text">
+                            <strong>Departamento:</strong> @Model.Deparcol.Where(w => w.Dep_Codigo == sedes.SeDepart).FirstOrDefault().Dep_Nombre<br />
+                            <strong>Ciudad:</strong> @Model.Munidep.Where(w => w.Ciu_Codigo == sedes.SeCiudad).FirstOrDefault().Ciu_Nombre<br />
+                            <strong>Telefono:</strong> @sedes.SeNumTel
+                        </p>
+                        <div class="row pull-right">
+                            <div class="col-md-4">
+                                <input type="button" class="btn btn-sm btn-success" onclick="HideOrShowBtn(2, @sedes.SeCodigo)" value="Editar">
+                            </div>
+                            <div class="col-md-4">
+                                <input type="button" value="Eliminar" class="btn btn-sm btn-danger" onclick="Delete_Sede(@sedes.SeCodigo)">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+
+<div class="modal fade" id="Askcreate" tabindex="-1" role="dialog" aria-labelledby="Askcreate" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="AskcreateClientTitle">Crear nuevo Cliente</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>¿Desea crear un nuevo cliente?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" onclick="NewClient('Cli')">Si</button>
+                <button type="button" class="btn btn-danger" onclick="location.href='/Maestros/Lst_Clientes'">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade mt-4" id="ModalNewSede" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title w-100" id="myModalLabel">Nueva Sede</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row mt-3">
+                    <div class="col-md-3">
+                        <h6>Nit</h6>
+                        <input type="hidden" value="0" id="SeCodigo" />
+                        <input type="text" required pattern="[0-9]+" class="form-control inputText_NoBorder"
+                               id="SCodigo_Id" name="SCliente_Id" title="Solo se permiten numeros" onchange="VerifiNit(this.value, true)" />
+                    </div>
+                    <div class="col-md-2">
+                        <h6>Verif.</h6>
+                        <input type="text" required readonly pattern="[0-9]+" class="form-control inputText_NoBorder Sclear" value=""
+                               id="SCliDverif" name="SCliDverif" title="Solo se permiten numeros" />
+                    </div>
+                    <div class="col-md-7">
+                        <h6>Nombre Sede</h6>
+                        <input type="text" readonly required class="form-control inputText_NoBorder Sclear" name="SCliente_name" id="SCliente_name" />
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h6>Telefono</h6>
+                        <input type="text" required readonly pattern="[0-9]+" class="form-control inputText_NoBorder Sclear" value=""
+                               id="SCliente_tel" name="STel_Cli" title="Solo se permiten numeros" />
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Direccion</h6>
+                        <input type="text" required readonly class="form-control col-md-12 inputText_NoBorder Sclear" value="" id="SDir_Cli" name="SDir_Cli" />
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <h6>Departamento</h6>
+                        <select id="SDep_Cli" onchange="Lstciudades(true)" class="form-control">
+                            @foreach (var dep in Model.Deparcol)
+                            {
+                                <option value="@dep.Dep_Codigo">@dep.Dep_Nombre</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Ciudad</h6>
+                        <select id="SCiu_Cli" class="form-control">
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="$('#ModalNewSede').modal('hide')">Cancelar</button>
+                <button type="button" class="btn btn-success btn-sm" id="btnsavesede" onclick="AddSedeCliente(true)">Guardar</button>
+                <button type="button" class="btn btn-success btn-sm" id="btneditsede" onclick="AddSedeCliente(false)">Editar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/Maestros.js" type="text/javascript" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            Lstciudades(false);
+        });
+    </script>
+}

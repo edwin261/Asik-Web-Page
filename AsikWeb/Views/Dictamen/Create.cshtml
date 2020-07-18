@@ -1,0 +1,175 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Crear nueva O.T.";
+}
+
+<div id="Splash_Screen_Load" style="display: none"></div>
+
+<div class="row">
+    <div class="col-md-12" style="height: 74.7vh;overflow:auto;margin-top: 3vh;">
+        <!-- Encabezado -->
+        <div class="row">
+            <div class="col-md-12 mb-3">
+                <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+                <h4 class="color_orange text-shadow">
+                    Detalle O.T.
+                </h4>
+            </div>
+            <div class="col-md-8">
+                <h6>Orden de trabajo</h6>
+                <input type="text" class="form-control inputText_NoBorder inputHeight" readonly id="O_Trabajo"
+                       value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Codotc.ToString().PadLeft(8, '0')" />
+            </div>
+
+            <div class="col-md-4">
+                <h6>Fecha O.T.</h6>
+                <input type="text" class="form-control"
+                       value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Fecmod.Value.ToShortDateString()" />
+            </div>
+        </div>
+        <!-- Cuerpo -->
+        <div class="row mt-4">
+            <div class="col-md-7">
+                <label>
+                    Nombre del Proyecto
+                </label>
+                <input type="text" autofocus class="form-control inputText_NoBorder inputHeight" required readonly
+                       name="Proyect_Name" id="Proyect_Name" placeholder="Ingrese nombre del proyecto" value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Nomproy" />
+            </div>
+            <div class="col-md-2">
+                <label>
+                    Forma de pago
+                </label>
+                <select disabled id="Form_Pag" class="form-control">
+                    @foreach (var item in Model.TipPago.Where(w => w.TipCodigo == Model.Ord_Trabajo.FirstOrDefault().Ord_Tippag))
+                    {
+                        <option value="@item.TipCodigo">@item.TipNombre</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <label>
+                    Cliente
+                </label>
+                <div>
+                    <input type="hidden" required class="form-control inputText_NoBorder inputHeight" name="Cliente_Id" id="Cliente_Id" placeholder="Codigo" />
+                    @*onclick="ClientList()" data-toggle="modal" data-target="#ModalSearchCliente"*@
+                    <input type="text" required readonly class="form-control inputText_NoBorder inputHeight" name="Cliente_name" id="Cliente_name"
+                           placeholder="Nombre" value="@Model.Clientes.FirstOrDefault().CliNombre" />
+                </div>
+            </div>
+            <div class="col-md-3">
+                <label>
+                    Direcci&oacute;n
+                </label>
+                <input type="text" readonly required id="Cli_Dir" class="form-control inputText_NoBorder inputHeight" placeholder="Direccion"
+                       value="@Model.Clientes.FirstOrDefault().CliDirecc" />
+            </div>
+            <div class="col-md-3">
+                <label>
+                    Num. Tel&eacute;fono
+                </label>
+                <input type="text" readonly required id="Cli_Tel" class="form-control inputText_NoBorder inputHeight" placeholder="Telefono"
+                       value="@Model.Clientes.FirstOrDefault().CliTelefo" />
+            </div>
+        </div>
+
+        @if (!Model.Fac_Cont.FirstOrDefault().Fac_FacVer && !Model.Fac_Cont.FirstOrDefault().Fac_Conver)
+        {
+            <div class="row mt-3">
+                <input type="button" class="ml-5 col-md-4 btn btn-light TextNegrita float-right btn_save_color border-radius"
+                       onclick="Dictamen(1)" value="Emitir Dictamen" />
+            </div>
+        }
+        else
+        {
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <label>
+                        Forma de envio
+                    </label>
+                    <select id="Form_env" onclick="formEnvChanged(this.value)" class="form-control">
+                        <option value="Mensajero Local" id="Mensajero Local" selected>Mensajeria Local</option>
+                        <option value="Correo" id="Correo">Correo</option>
+                    </select>
+                </div>
+
+                <div class="col-md-4">
+                    <label>
+                        Numero de Guia
+                    </label>
+                    <input type="text" name="Env_NGuia" id="Env_NGuia" class="form-control" placeholder="Digitar numero de guia" />
+                </div>
+
+                <div class="col-md-4">
+                    <label>
+                        Observaciones
+                    </label>
+                    <textarea id="txtDescription" rows="3" class="form-control"></textarea>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-12 col-sm-12">
+                    <div class="row">
+                        <input type="button" class="ml-5 col-md-4 btn btn-light TextNegrita border-radius New_OT btn_save_color disable" value="Guardar" onclick="Dictamen(2)" />
+                        <input type="button" class="ml-5 col-md-4 btn btn-light TextNegrita float-right border-radius btn_cancel disable" onclick="location.href = '/Dictamen/Index'" value="Cancelar" />
+                    </div>
+                </div>
+            </div>
+        }
+
+        @*<div class="row mt-3">
+                <div class="col-md-8 col-sm-12">
+                    <div class="card">
+                        <h6 class="color_orange pt-3 pl-3 pr-3">Informaci&oacute;n adicional de contacto</h6>
+                        <div class="row ml-3">
+                            <div class="col-md-10 mt-2">
+                                <label>
+                                    Nombres Completos
+                                </label>
+                                <input type="text" readonly class="form-control inputText_NoBorder" id="AdiCli_Name" placeholder="Nombre"
+                                       value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Nomcad" />
+                            </div>
+                            <div class="col-md-10">
+                                <label>
+                                    Num. Tel&eacute;fono fijo
+                                </label>
+                                <input type="text" class="form-control inputText_NoBorder" id="AdiCli_Tel" placeholder="Telefono"
+                                       value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Telcad" />
+                            </div>
+                            <div class="col-md-10">
+                                <label>
+                                    Num. Tel&eacute;fono movil
+                                </label>
+                                <input type="text" class="form-control inputText_NoBorder" id="ORD_CELCAD" placeholder="Telefono"
+                                       value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Celcad" />
+                            </div>
+                            <div class="col-md-10">
+                                <label>
+                                    E-mail
+                                </label>
+                                <input type="email" required class="form-control inputText_NoBorder" id="AdiCli_Email"
+                                       placeholder="Correo Electronico" value="@Model.Ord_Trabajo.FirstOrDefault().Ord_Emacad" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-4 col-sm-12">
+                    <div class="row" style="padding-top: 15vh;">
+                        <input type="button" class="ml-5 col-md-4 btn btn-light TextNegrita float-right border-radius btn_cancel disable" onclick="location.href ='/OrdenTrabajo/Show'" value="Volver" />
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</div>
+
+@section Scripts
+{
+    <script src="~/js/Dictamen.js" asp-append-version="true"></script>
+}

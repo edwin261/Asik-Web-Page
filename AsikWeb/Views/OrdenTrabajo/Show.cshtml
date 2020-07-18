@@ -1,0 +1,113 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Ver O.T.";
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<style>
+    .row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+    .dataTables_scrollBody {
+        height: 317px !important; 
+    }
+
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+        bottom: .5em;
+    }
+
+    .col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+        width: unset;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-4 mt-4">
+        <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+        <h4 class="color_orange text-shadow">
+            Lista Ordenes de trabajo
+        </h4>
+    </div>
+
+    <!-- btn crear nueva OT -->
+    <div class="col-md-7 mt-4">
+        @foreach (var identities in User.Identities.ToList())
+        {
+            foreach (var rol in identities.Claims)
+            {
+                switch (rol.Value)
+                {
+                    case "1":
+                        <a href="/OrdenTrabajo/Index" class="btn btn-light TextNegrita float-right border-radius New_OT">
+                            Crear nueva OT
+                        </a>
+                        break;
+                }
+            }
+        }
+    </div>
+
+    <!-- tabla lista OT -->
+    <div class="col-md-12 mt-2" style="margin-bottom:4.5rem">
+        <table id="dtBasicExample" class="table table-sm" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Codigo</th>
+                    <th class="text-center">Nombre</th>
+                    <th class="text-center">Cliente</th>
+                    <th class="text-center">Fecha Creacion</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var LstOt in Model.Ord_Trabajo.Where(w => w.Ord_Estado != 6))
+                    {
+                        <tr>
+                            <td class="text-center">@LstOt.Ord_Prefot-@LstOt.Ord_Codotc.ToString().PadLeft(8, '0')</td>
+                            <td class="text-center">@LstOt.Ord_Nomproy</td>
+                            <td class="text-center">@Model.Clientes.Where(w => w.CliIdenti == LstOt.Ord_Codcli).Select(s => s.CliNombre).FirstOrDefault()</td>
+                            <td class="text-center">@LstOt.Ord_Feccre.ToShortDateString()</td>
+                            <td class="text-center">@Model.Estados.Where(w => w.EstCodigo == LstOt.Ord_Estado).Select(s => s.EstNombre).FirstOrDefault()</td>
+                            <td class="text-center">
+                                <a href="/OrdenTrabajo/ShowOT?Ord_CodOtc=@LstOt.Ord_Codotc" class="btn btn-light TextNegrita float-right border-radius New_OT">
+                                    Ver
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable({
+                
+                language: {
+                    url: '/js/Spanish.json'
+                },
+                lengthMenu: [5, 10, 20, 50, 100, 200, 500, 10000]
+            });
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}

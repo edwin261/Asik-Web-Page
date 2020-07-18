@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" type="image/x-icon" href="~/Img/Mascota_Asik.ico" />
+    <title>@ViewData["Title"] - AsikWeb</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/toastr.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 fixed-top">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <a class="navbar-brand d-none d-md-none d-block d-sm-none" href="/Home/Index">
+                    <img src="~/Img/Logo_Final_Asik.svg" alt="Logo Asik" height="40" />
+                </a>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto ToLeft">
+                        <li class="nav-item">
+                            <a class="nav-link FontAclonica" href="/Home/Index">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link FontAclonica" href="/ConsultarOT/Index">Consultar O.T.</a>
+                        </li>
+                    </ul>
+
+                    <a class="navbar-brand d-none d-xs-none d-sm-block" href="/Home/Index">
+                        <img src="~/Img/Logo_Final_Asik.svg" alt="Logo Asik" height="40" />
+                    </a>
+
+                    <ul class="navbar-nav ml-auto ToRight">
+                        <li class="nav-item">
+                            <a class="nav-link FontAclonica" href="https://asik.com.co/contactenos/" target="_blank">Contacto</a>
+                        </li>
+                        @if (string.IsNullOrEmpty(User.Identity.Name))
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link FontAclonica" href="/Acceso/Index">Ingresar</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item" id="Li_NomUsu">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-link">
+                                        <img src="~/Img/Mascota_Asik.svg" width="30" height="30" alt="Mascota Asik">
+                                        @User.Identity.Name
+                                    </button>
+                                    <button type="button" class="btn btn-link dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span class="sr-only">Toggle Dropdown</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        @foreach (var rol in User.Claims)
+                                        {
+                                            switch (rol.Value)
+                                            {
+                                                case "1":
+                                                    <a class="dropdown-item FontAclonica" href="/OrdenTrabajo/Show">Orden de Trabajo</a>
+                                                    break;
+                                                case "2":
+                                                    <a class="dropdown-item FontAclonica" href="/ProgramarOT/Show">Programacion</a>
+                                                    break;
+                                                case "3":
+                                                    <a class="dropdown-item FontAclonica" href="/RevDocumental/Show">Revision Documental</a>
+                                                    break;
+                                                case "4":
+                                                    <a class="dropdown-item FontAclonica" href="/VisitaTecnica/VisiTec_OtLst">Visita Tecnica</a>
+                                                    break;
+                                                case "5":
+                                                    <a class="dropdown-item FontAclonica" href="/VisitaTecnica/VisiTec_OtLst">Direccion Tecnica</a>
+                                                    break;
+                                                case "6":
+                                                    <a class="dropdown-item FontAclonica" href="/Fac_Cont/Show">Contabilidad</a>
+                                                    break;
+                                                case "7":
+                                                    <a class="dropdown-item FontAclonica" href="/Fac_Cont/Show">Facturacion</a>
+                                                    break;
+                                                @*case "8":
+                                                    <a class="dropdown-item FontAclonica" href="/OrdenTrabajo/Show">Orden de Trabajo</a>
+                                                    break;*@
+                                                case "10":
+                                                    <a class="dropdown-item FontAclonica" href="/Dictamen/Index">Dictamen</a>
+                                                    break;
+                                            }
+                                        }
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item FontAclonica" href="/Acceso/LogOut">Salir</a>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <input type="checkbox" id="check" class="menu-vert" />
+    <label for="check" class="menu-vert" id="Menu_Opt" style="display:none">
+        <i class="fa fa-bars" id="btn"></i>
+        <i class="cancel"></i>
+        <img class="imgNextToTitle cancel" alt="Button to close menu" src="~/Img/Close_Menu.svg" width="47" onclick="OpenHideMenu(false)"
+             style="width: 7vh !important;" />
+    </label>
+    <div class="sidebar menu-vert linecolorrigthMenu" style="overflow-y: auto">
+        <ul class="menu" style="margin-bottom: 10vh;">
+        </ul>
+    </div>
+
+    <section class="mt-5">
+        <div class="col-md-12" style="margin-top: 12vh;">
+            @RenderBody()
+        </div>
+
+        <footer class="footer text-muted borderLine">
+            <div class="container text-center">
+                &copy; 2020 - Asik S.A.S. | Powered by OurSoft | @*- <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>*@
+            </div>
+        </footer>
+    </section>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/toastr.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

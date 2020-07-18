@@ -1,0 +1,145 @@
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
+@{
+    ViewData["Title"] = "Lista de Usuarios";
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<style>
+    .row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .dataTables_scrollBody {
+        height: 317px !important;
+    }
+
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+        bottom: .5em;
+    }
+
+    .col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+        width: unset;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-4 mt-4">
+        <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+        <h4 class="color_orange text-shadow">
+            Lista de usuarios
+        </h4>
+    </div>
+    <!-- btn crear nuevo cliente -->
+    <div class="col-md-7 mt-4">
+        <a href="/Maestros/Usuarios" class="btn btn-light TextNegrita float-right border-radius New_OT">
+            Crear nuevo Usuario
+        </a>
+    </div>
+
+    <div class="col-md-12 mt-2" style="margin-bottom:4.5rem">
+        <table id="dtBasicExample" class="table table-sm" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Codigo</th>
+                    <th class="text-center">Nombres</th>
+                    <th class="text-center">Apellidos</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Opciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model.LstUsuarios != null)
+                {
+                    foreach (var LstUsu in Model.LstUsuarios.Where(w => w.UsuEstad != 14))
+                    {
+                        <tr>
+                            <td class="text-center">@LstUsu.UsuIdenti</td>
+                            <td class="text-center">@LstUsu.UsuNombre</td>
+                            <td class="text-center">@LstUsu.UsuApelli</td>
+                            <td class="text-center" id="@LstUsu.UsuIdenti">
+                                @if (LstUsu.UsuEstad == 5)
+                                {<text>Activo</text>}
+                            else
+                            {<text>Inactivo</text>}
+                            </td>
+                            <td class="text-center">
+                                <a href="/Maestros/Edit_Usuario?usu_identi=@LstUsu.UsuIdenti" class="btn btn-link TextNegrita" style="color:black !important">
+                                    Ver
+                                </a>
+                                @if (LstUsu.UsuEstad == 5)
+                                {
+                                    <input type="button" class="btn color_green form-control" value="Activar" id="Activar" onclick="Est_Usuario(5, @LstUsu.UsuIdenti)" style="display: none" />
+                                    <input type="button" class="btn color_orange form-control" value="Inactivar" id="Inactivar" onclick="Est_Usuario(6, @LstUsu.UsuIdenti)" />
+                                }
+                                else
+                                {
+                                    <input type="button" class="btn color_orange form-control" value="Inactivar" id="Inactivar_@LstUsu.UsuIdenti" onclick="Est_Usuario(6, @LstUsu.UsuIdenti)" style="display: none" />
+                                    <input type="button" class="btn color_green form-control" value="Activar" id="Activar_@LstUsu.UsuIdenti" onclick="Est_Usuario(5, @LstUsu.UsuIdenti)" />
+                                }
+                                <a href="#" onclick="Est_Usuario(14, @LstUsu.UsuIdenti)" class="btn btn-link TextNegrita" style="color:black !important">
+                                    Eliminar
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable({
+
+                language: {
+                    url: '/js/Spanish.json'
+                },
+                lengthMenu: [5, 10, 20, 50, 100, 200, 500, 10000]
+            });
+            $('.dataTables_length').addClass('bs-select');
+        });
+
+        function Est_Usuario(estado, codigo) {
+            $.ajax({
+                url: "/Maestros/Est_Usuario",
+                type: 'Post',
+                data: {
+                    codigo: parseInt(estado),
+                    usuIdenti: parseInt(codigo)
+                },
+                success: function (data) {
+                    if (data.status) {
+                        showAlert(data.message, "Usuario", "success");
+                        if (estado == 5) {
+                            $('#' + codigo).html("Activo");
+                            $('#Activar_' + codigo).fadeOut("slow");
+                            $('#Inactivar_' + codigo).fadeIn("slow");
+                        } else {
+                            $('#' + codigo).html("Inactivo");
+                            $('#Inactivar_' + codigo).fadeOut("slow");
+                            $('#Activar_' + codigo).fadeIn("slow");
+                        }
+
+                    } else {
+                        showAlert(data.message, "Usuario", "warning");
+                    }
+                }
+            });
+        }
+    </script>
+}
