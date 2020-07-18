@@ -1,0 +1,34 @@
+﻿<Properties StartupConfiguration="{DDC8C775-F410-483D-9AC1-7CFB55922DC8}|Default">
+  <MonoDevelop.Ide.Workbench ActiveDocument="../AsikWeb.Models/ViewModels/AsikViewModel.cs">
+    <Files>
+      <File FileName="../AsikWeb.Models/Entidades/CalCalendario.cs" Line="13" Column="45" />
+      <File FileName="../AsikWeb.Models/Entidades/Tareas.cs" Line="1" Column="34" />
+      <File FileName="../AsikWeb.Models/Entidades/Actividad.cs" Line="1" Column="1" />
+      <File FileName="../AsikWeb.Models/Entidades/Proceso.cs" Line="18" Column="6" />
+      <File FileName="../AsikWeb.Models/Entidades/Periocidad.cs" Line="8" Column="6" />
+      <File FileName="../AsikWeb.Models/Entidades/ASIK_PGWEB_Context.cs" Line="827" Column="16" />
+      <File FileName="../AsikWeb.Models/ViewModels/AsikViewModel.cs" Line="46" Column="51" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="AsikWeb" expanded="True">
+            <Node name="AsikWeb.Models" expanded="True">
+              <Node name="Entidades" expanded="True" />
+              <Node name="ViewModels" expanded="True">
+                <Node name="AsikViewModel.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.AsikWeb PreferredExecutionTarget="/Applications/Safari.app" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>

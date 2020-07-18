@@ -42,6 +42,8 @@ namespace AsikWeb.Models.ViewModels
         public List<Proceso> Procesos { get; set; }
         public List<Actividad> Actividades { get; set; }
         public List<Tareas> Tareas { get; set; }
+        public List<CalCalendario> calCalendarios { get; set; }
+        public Periocidad Periocidad { get; set; }
 
         #region mensajes de validacion
         public string errorMetodo { get; set; }

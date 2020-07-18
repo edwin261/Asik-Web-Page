@@ -6,7 +6,14 @@ namespace AsikWeb.Models.Entidades
 {
     public partial class Proceso
     {
-        public int Pro_Codigo { get; set; }
-        public string Pro_Nombre{ get; set; }
+        public Proceso()
+        {
+            Actividad = new HashSet<Actividad>();
+        }
+
+        public int ProCodigo { get; set; }
+        public string ProNombre { get; set; }
+
+        public virtual ICollection<Actividad> Actividad { get; set; }
     }
 }

@@ -1,16 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace AsikWeb.Models.Entidades
 {
     public partial class Tareas
     {
-        public int Tar_Codigo { get; set; }
-        public int Tar_ActCod { get; set; }
-        public string Tar_Nombre { get; set; }
-        public string Tar_Period { get; set; }
-        public string Tar_Respon { get; set; }
-        public string Tar_Regist { get; set; }
+        public Tareas()
+        {
+            CalCalendario = new HashSet<CalCalendario>();
+        }
+
+        public int TarCodigo { get; set; }
+        public int? TarActcod { get; set; }
+        public string TarNombre { get; set; }
+        public string TarPeriod { get; set; }
+        public int? TarRespon { get; set; }
+        public string TarRegist { get; set; }
+
+        public virtual Actividad TarActcodNavigation { get; set; }
+        public virtual ICollection<CalCalendario> CalCalendario { get; set; }
     }
 }

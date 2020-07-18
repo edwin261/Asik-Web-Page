@@ -39,9 +39,12 @@ namespace AsikWeb.Models.Entidades
         public virtual DbSet<Rev_Noaprov> Rev_Noaprov { get; set; }
         public virtual DbSet<Sedes_Cli> Sedes_Cli { get; set; }
         public virtual DbSet<Tiem_Insp> Tiem_Insps { get; set; }
-        public virtual DbSet<Proceso> Procesos { get; set; }
-        public virtual DbSet<Actividad> Actividades { get; set; }
+        public virtual DbSet<Actividad> Actividad { get; set; }
+        public virtual DbSet<CalCalendario> CalCalendario { get; set; }
+        public virtual DbSet<Periocidad> Periocidad { get; set; }
+        public virtual DbSet<Proceso> Proceso { get; set; }
         public virtual DbSet<Tareas> Tareas { get; set; }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -685,47 +688,142 @@ namespace AsikWeb.Models.Entidades
 
             });
 
-            modelBuilder.Entity<Proceso>(entity =>
-            {
-                entity.HasKey(e => e.Pro_Codigo);
-
-                entity.ToTable("PROCESO");
-
-                entity.Property(e => e.Pro_Codigo).HasColumnName("PRO_CODIGO");
-
-                entity.Property(e => e.Pro_Nombre).HasColumnName("PRO_NOMBRE");
-            });
-
             modelBuilder.Entity<Actividad>(entity =>
             {
-                entity.HasKey(e => e.Act_Codigo);
+                entity.HasKey(e => e.ActCodigo)
+                    .HasName("PK__ACTIVIDA__A18C4B145CF999CA");
 
                 entity.ToTable("ACTIVIDAD");
 
-                entity.Property(e => e.Act_Codigo).HasColumnName("ACT_CODIGO");
+                entity.Property(e => e.ActCodigo).HasColumnName("ACT_CODIGO");
 
-                entity.Property(e => e.Act_ProCod).HasColumnName("ACT_PROCOD");
+                entity.Property(e => e.ActNombre)
+                    .HasColumnName("ACT_NOMBRE")
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.Act_Nombre).HasColumnName("ACT_NOMBRE");
+                entity.Property(e => e.ActProcod).HasColumnName("ACT_PROCOD");
+
+                entity.HasOne(d => d.ActProcodNavigation)
+                    .WithMany(p => p.Actividad)
+                    .HasForeignKey(d => d.ActProcod)
+                    .HasConstraintName("FK__ACTIVIDAD__ACT_P__31B762FC");
+            });
+
+            modelBuilder.Entity<CalCalendario>(entity =>
+            {
+                entity.HasKey(e => e.CalCodigo);
+
+                entity.ToTable("CAL_CALENDARIO");
+
+                entity.Property(e => e.CalCodigo).HasColumnName("CAL_CODIGO");
+
+                entity.Property(e => e.CalColor)
+                    .HasColumnName("CAL_COLOR")
+                    .HasMaxLength(10)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CalFeccre)
+                    .HasColumnName("CAL_FECCRE")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.CalFecprog)
+                    .HasColumnName("CAL_FECPROG")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.CalFecreal)
+                    .HasColumnName("CAL_FECREAL")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.CalFecreprog)
+                    .HasColumnName("CAL_FECREPROG")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.CalFecven)
+                    .HasColumnName("CAL_FECVEN")
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.CalObser)
+                    .HasColumnName("CAL_OBSER")
+                    .HasMaxLength(300);
+
+                entity.Property(e => e.CalReprog).HasColumnName("CAL_REPROG");
+
+                entity.Property(e => e.CalRutarc)
+                    .HasColumnName("CAL_RUTARC")
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CalTarcod).HasColumnName("CAL_TARCOD");
+
+                entity.HasOne(d => d.CalTarcodNavigation)
+                    .WithMany(p => p.CalCalendario)
+                    .HasForeignKey(d => d.CalTarcod)
+                    .HasConstraintName("FK__CAL_CALEN__CAL_T__5E8A0973");
+            });
+
+            modelBuilder.Entity<Periocidad>(entity =>
+            {
+                entity.HasKey(e => e.PerCodigo)
+                    .HasName("PK__PERIOCID__AA2E668D5D2B2C34");
+
+                entity.ToTable("PERIOCIDAD");
+
+                entity.Property(e => e.PerCodigo).HasColumnName("PER_CODIGO");
+
+                entity.Property(e => e.PerNombre)
+                    .HasColumnName("PER_NOMBRE")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Proceso>(entity =>
+            {
+                entity.HasKey(e => e.ProCodigo)
+                    .HasName("PK__PROCESO__A78C2E8902605051");
+
+                entity.ToTable("PROCESO");
+
+                entity.Property(e => e.ProCodigo).HasColumnName("PRO_CODIGO");
+
+                entity.Property(e => e.ProNombre)
+                    .HasColumnName("PRO_NOMBRE")
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Tareas>(entity =>
             {
-                entity.HasKey(e => e.Tar_Codigo);
+                entity.HasKey(e => e.TarCodigo)
+                    .HasName("PK__TAREAS__CE6AB93235B5AEE2");
 
-                entity.ToTable("Tareas");
+                entity.ToTable("TAREAS");
 
-                entity.Property(e => e.Tar_Codigo).HasColumnName("TAR_CODIGO");
+                entity.Property(e => e.TarCodigo).HasColumnName("TAR_CODIGO");
 
-                entity.Property(e => e.Tar_ActCod).HasColumnName("TAR_ACTCOD");
+                entity.Property(e => e.TarActcod).HasColumnName("TAR_ACTCOD");
 
-                entity.Property(e => e.Tar_Nombre).HasColumnName("TAR_NOMBRE");
+                entity.Property(e => e.TarNombre)
+                    .HasColumnName("TAR_NOMBRE")
+                    .HasMaxLength(250)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.Tar_Period).HasColumnName("TAR_PERIOD");
+                entity.Property(e => e.TarPeriod)
+                    .HasColumnName("TAR_PERIOD")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.Tar_Respon).HasColumnName("TAR_RESPON");
+                entity.Property(e => e.TarRegist)
+                    .HasColumnName("TAR_REGIST")
+                    .HasMaxLength(150)
+                    .IsUnicode(false);
 
-                entity.Property(e => e.Tar_Regist).HasColumnName("TAR_REGIST");
+                entity.Property(e => e.TarRespon).HasColumnName("TAR_RESPON");
+
+                entity.HasOne(d => d.TarActcodNavigation)
+                    .WithMany(p => p.Tareas)
+                    .HasForeignKey(d => d.TarActcod)
+                    .HasConstraintName("FK__TAREAS__TAR_ACTC__5BAD9CC8");
             });
 
             OnModelCreatingPartial(modelBuilder);

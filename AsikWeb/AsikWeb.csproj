@@ -11,6 +11,7 @@
     <None Remove="Views\Home\ConsultarOT\**" />
     <Content Remove="wwwroot\Img\Logo_Final_Asik.svg" />
     <Content Remove="wwwroot\js\Calidad.js" />
+    <None Remove="obj\project.assets.json" />
   </ItemGroup>
 
 
