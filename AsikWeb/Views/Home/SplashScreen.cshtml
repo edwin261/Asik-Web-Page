@@ -37,13 +37,11 @@
         <div class="row mt-5">
             <div class="col-md-3"></div>
             <div class="col-md-3 col-sm-12">
-                <button class="btn_opt">Consultar O.T. 🌴</button>
-                @*<input type="button" class="form-control col-md-10 ml-2 mb-4" value="Consultar O.T." />*@
+                <button class="btn_opt" onclick="GoToPage('Consultar')">Consultar O.T. 🌴</button>
             </div>
 
             <div class="col-md-3 col-sm-12">
-                <button class="btn_opt">Ingresar al portal 🌴</button>
-                @*<input type="button" class="form-control col-md-10 ml-2 mb-4" value="Ingresar al portal" />*@
+                <button class="btn_opt" onclick="GoToPage('Ingresar')">Ingresar al portal 🌴</button>
             </div>
         </div>
 
@@ -62,6 +60,16 @@
                 $("#page_content").fadeIn(400);
             }, 3000);
         });
+
+        function GoToPage(id_Page) {
+            switch (id_Page) {
+                case "Consultar":
+                    location.href = "/ConsultarOT/Index";
+                    break;
+                default:
+                    location.href = "/Acceso/Index";
+            }
+        }
     </script>
 </body>
 </html>
