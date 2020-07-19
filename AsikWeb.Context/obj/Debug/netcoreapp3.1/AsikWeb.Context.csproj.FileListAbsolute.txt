@@ -90,3 +90,15 @@ C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\obj\Debu
 C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\obj\Debug\netcoreapp3.1\AsikWeb.Context.csproj.CopyComplete
 C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\obj\Debug\netcoreapp3.1\AsikWeb.Context.dll
 C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Context\obj\Debug\netcoreapp3.1\AsikWeb.Context.pdb
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\bin\Debug\netcoreapp3.1\AsikWeb.Context.deps.json
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\bin\Debug\netcoreapp3.1\AsikWeb.Context.dll
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\bin\Debug\netcoreapp3.1\AsikWeb.Context.pdb
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\bin\Debug\netcoreapp3.1\AsikWeb.Models.dll
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\bin\Debug\netcoreapp3.1\AsikWeb.Models.pdb
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\obj\Debug\netcoreapp3.1\AsikWeb.Context.csprojAssemblyReference.cache
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\obj\Debug\netcoreapp3.1\AsikWeb.Context.csproj.CoreCompileInputs.cache
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\obj\Debug\netcoreapp3.1\AsikWeb.Context.AssemblyInfoInputs.cache
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\obj\Debug\netcoreapp3.1\AsikWeb.Context.AssemblyInfo.cs
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\obj\Debug\netcoreapp3.1\AsikWeb.Context.csproj.CopyComplete
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\obj\Debug\netcoreapp3.1\AsikWeb.Context.dll
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Context\obj\Debug\netcoreapp3.1\AsikWeb.Context.pdb

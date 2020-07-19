@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6vFqIKahdPgv33aS0JZ445xhAbYrjsvoevQexV/92pJYl3zcKq77lje+0Fv3qo7i9FeeEcEWivzaxYIyyXrLfw==",
+  "dgSpecHash": "e/xzN/UE4VkjQzr0595ChyUym8KGNsD8PQYdl3acEEYEErwzMr3jwGsqq3acuIUGVSU9KumXvHxPr+Lf1wgt8A==",
   "success": true,
-  "projectFilePath": "C:\\Users\\edwin\\OneDrive\\Documentos\\My Web Sites\\AsikWeb\\AsikWeb.Models\\AsikWeb.Models.csproj",
+  "projectFilePath": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Models\\AsikWeb.Models.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\edwin\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\1.1.0\\microsoft.bcl.asyncinterfaces.1.1.0.nupkg.sha512",
     "C:\\Users\\edwin\\.nuget\\packages\\microsoft.bcl.hashcode\\1.1.0\\microsoft.bcl.hashcode.1.1.0.nupkg.sha512",

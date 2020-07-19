@@ -46,17 +46,17 @@ namespace AsikWeb.Models.Entidades
 
         public async Task<List<Tareas>> Lst_BtnTareas(int act_Codigo)
         {
-            return await _context.Tareas.Where(w => w.Tar_ActCod == act_Codigo).ToListAsync();
+            return await _context.Tareas.Where(w => w.TarActcod == act_Codigo).ToListAsync();
         }
 
         public async Task<List<Actividad>> Lst_BtnActividades(int pro_Codigo)
         {
-            return await _context.Actividades.Where(w => w.Act_ProCod == pro_Codigo).ToListAsync();
+            return await _context.Actividad.Where(w => w.ActProcod == pro_Codigo).ToListAsync();
         }
 
         public async Task<List<Proceso>> Lst_BtnProcesos()
         {
-            return await _context.Procesos.ToListAsync();
+            return await _context.Proceso.ToListAsync();
         }
 
         //, DateTime inicio, DateTime fin

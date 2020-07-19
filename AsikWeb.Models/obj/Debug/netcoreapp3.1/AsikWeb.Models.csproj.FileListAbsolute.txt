@@ -86,3 +86,15 @@ C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\obj\Debug
 C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.pdb
 C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.genruntimeconfig.cache
 C:\Users\edwin\OneDrive\Documentos\My Web Sites\AsikWeb\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.csprojAssemblyReference.cache
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.csprojAssemblyReference.cache
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.csproj.CoreCompileInputs.cache
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.AssemblyInfoInputs.cache
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.AssemblyInfo.cs
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.dll
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.pdb
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\bin\Debug\netcoreapp3.1\AsikWeb.Models.deps.json
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\bin\Debug\netcoreapp3.1\AsikWeb.Models.runtimeconfig.json
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\bin\Debug\netcoreapp3.1\AsikWeb.Models.runtimeconfig.dev.json
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\bin\Debug\netcoreapp3.1\AsikWeb.Models.dll
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\bin\Debug\netcoreapp3.1\AsikWeb.Models.pdb
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.genruntimeconfig.cache

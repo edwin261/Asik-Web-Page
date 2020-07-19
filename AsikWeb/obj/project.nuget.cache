@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LxnefkZm2OXLcu5DSNOUQ6IhaLeMnZFIgOErbXkJmkMnpH3nmop3TD9/8T+Y4DflWS6PRZ7AC7eR5rC3zDDnVQ==",
+  "dgSpecHash": "NB6GN+mW0eVuuYQOq20uN1WoWho5R7///vxOFgEEtWuz47WtPRyATfWrSHUb5twsSbpLMc82/AknmxD2VSMyZw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\edwin\\OneDrive\\Documentos\\My Web Sites\\AsikWeb\\AsikWeb\\AsikWeb.csproj",
+  "projectFilePath": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb\\AsikWeb.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\edwin\\.nuget\\packages\\mailkit\\2.5.2\\mailkit.2.5.2.nupkg.sha512",
     "C:\\Users\\edwin\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
