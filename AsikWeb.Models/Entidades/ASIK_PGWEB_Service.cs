@@ -38,6 +38,8 @@ namespace AsikWeb.Models.Entidades
                 }
                 return null;
             }
+
+
             catch (Exception ex)
             {
                 return new AsikViewModel { errorMetodo = ex.Message };
@@ -47,6 +49,57 @@ namespace AsikWeb.Models.Entidades
         public async Task<List<Tareas>> Lst_BtnTareas(int act_Codigo)
         {
             return await _context.Tareas.Where(w => w.TarActcod == act_Codigo).ToListAsync();
+        }
+
+        public async Task<AsikViewModel> SaveintoTables()
+        {
+            try
+            {
+                #region guardar dentro de tabla calcalendario
+                foreach (var proceso in _context.Proceso.Include(i => i.Actividad).ToList())
+                {
+                    for (int i = 0; i < proceso.Actividad.Count(); i++)
+                    {
+                        CalCalendario calCalendario = new CalCalendario
+                        {
+                            CalTarcod = _context.Tareas.Where(w => w.TarActcod == proceso.Actividad.ElementAt(i).ActCodigo).
+                            FirstOrDefault().TarCodigo,
+                            CalFeccre = DateTime.Now,
+                            CalFecprog = DateTime.Now,
+                            CalColor = "green"
+                        };
+                        await _context.CalCalendario.AddAsync(calCalendario);
+                    }
+                }
+                await _context.SaveChangesAsync();
+                #endregion
+                return new AsikViewModel { successMetodo = "Proceso completado exitosamente" };
+            }
+            catch (Exception ex)
+            {
+                return new AsikViewModel { errorMetodo = ex.InnerException.Message };
+            }
+        }
+
+        public async Task<string> SaveNewProgTask(int tarCodigo, DateTime CalFecprog)
+        {
+            try
+            {
+                CalCalendario calCalendario = new CalCalendario
+                {
+                    CalTarcod = tarCodigo,
+                    CalFeccre = DateTime.Now,
+                    CalFecprog = CalFecprog,
+                    CalColor = "green"
+                };
+                await _context.CalCalendario.AddAsync(calCalendario);
+                await _context.SaveChangesAsync();
+                return "Tarea programada exitosamente";
+            }
+            catch (Exception ex)
+            {
+                return ex.InnerException.Message.ToString();
+            }
         }
 
         public async Task<List<Actividad>> Lst_BtnActividades(int pro_Codigo)

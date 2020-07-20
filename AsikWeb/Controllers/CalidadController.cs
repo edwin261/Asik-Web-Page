@@ -20,9 +20,11 @@ namespace AsikWeb.Controllers
             using (var service = GetService<ASIK_PGWEB_Service>())
             {
                 var Btn_Procesos = await service.Lst_BtnProcesos();
-                if (!calendar)
-                    return View(Btn_Procesos);
-                return Json(Btn_Procesos);
+
+                if (calendar)
+                    return Json(Btn_Procesos);
+                return View(Btn_Procesos);
+                
             }
         }
         [HttpGet]
@@ -51,6 +53,24 @@ namespace AsikWeb.Controllers
             {
                 var Btn_Tareas = await service.Lst_BtnTareas(Act_Codigo);
                 return Json(Btn_Tareas);
+            }
+        }
+        [HttpGet]
+        public async Task<JsonResult> LoadInfoIntoTables()
+        {
+            using (var service = GetService<ASIK_PGWEB_Service>())
+            {
+                var SaveSucefully = await service.SaveintoTables();
+                return Json(SaveSucefully);
+            }
+        }
+        [HttpPost]
+        public async Task<JsonResult> SaveNewProgTask(int tarCodigo, DateTime CalFecprog)
+        {
+            using (var service = GetService<ASIK_PGWEB_Service>())
+            {
+                string message = await service.SaveNewProgTask(tarCodigo, CalFecprog);
+                return Json(message);
             }
         }
     }

@@ -15,7 +15,8 @@ function Load_Actividades(Pro_Codigo) {
                 data.forEach(function (actividad) {
                     $('<div class="col-md-4 mt-4">' +
                         '<input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"' +
-                        'value="' + actividad.act_Nombre + '" id="' + actividad.act_Codigo + '" onclick="addValueToArray(' + actividad.act_Codigo + '), loadSltTarea(\'' + actividad.act_Codigo + '\'' + ',' + '\'' + true + '\')" />' +
+                        'value="' + actividad.actNombre + '" id="' + actividad.actCodigo + '" onclick="addValueToArray(' +
+                        actividad.actCodigo + '), loadSltTarea(\'' + actividad.act_Codigo + '\'' + ',' + '\'' + true + '\')" />' +
                         '</div>').appendTo("#divBtnActivities");
                 });
                 $("#div_Actividades").fadeIn(300);
@@ -41,7 +42,7 @@ function loadSelectProceso() {
         success: function (data) {
             if (data.length > 0) {
                 data.forEach(function (proceso) {
-                    $('#slt_Proceso').append("<option value=" + proceso.pro_Codigo + ">" + proceso.pro_Nombre + "</option>");
+                    $('#slt_Proceso').append("<option value=" + proceso.proCodigo + ">" + proceso.proNombre + "</option>");
                 });
                 loadSltActividad(1);
             } else {
@@ -63,7 +64,7 @@ function loadSltActividad(Pro_Codigo) {
             if (data.length > 0) {
                 $("#slt_Actividad").empty();
                 data.forEach(function (actividad) {
-                    $('#slt_Actividad').append("<option value=" + actividad.act_Codigo + ">" + actividad.act_Nombre + "</option>");
+                    $('#slt_Actividad').append("<option value=" + actividad.actCodigo + ">" + actividad.actNombre + "</option>");
                 });
             } else {
                 showAlert("El proceso no tiene actividades relacionadas", "Calidad", "warning");
@@ -104,6 +105,26 @@ function loadSltTarea(Act_Codigo, opt) {
                 showAlert("La actividad no tiene tareas relacionadas", "Calidad", "warning");
             }
             $("#Splash_Screen_Load").fadeOut();
+        }
+    });
+}
+
+function SaveNewProgTask() {
+    $("#Splash_Screen_Load").fadeIn();
+    $.ajax({
+        url: "/Calidad/SaveNewProgTask",
+        type: 'Post',
+        data: {
+            tarCodigo: $("#slt_Tarea").val()
+        },
+        success: function (data) {
+            $("#Splash_Screen_Load").fadeOut();
+            if (data = "Tarea programada exitosamente") {
+                showAlert(data, "Calidad", "success");
+            }
+            else {
+                showAlert(data, "Calidad", "warning");
+            }
         }
     });
 }
