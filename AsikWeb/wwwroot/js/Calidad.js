@@ -16,7 +16,7 @@ function Load_Actividades(Pro_Codigo) {
                     $('<div class="col-md-4 mt-4">' +
                         '<input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"' +
                         'value="' + actividad.actNombre + '" id="' + actividad.actCodigo + '" onclick="addValueToArray(' +
-                        actividad.actCodigo + '), loadSltTarea(\'' + actividad.act_Codigo + '\'' + ',' + '\'' + true + '\')" />' +
+                        actividad.actCodigo + '), loadSltTarea(\'' + actividad.actCodigo + '\'' + ',' + '\'' + false + '\')" />' +
                         '</div>').appendTo("#divBtnActivities");
                 });
                 $("#div_Actividades").fadeIn(300);
@@ -84,10 +84,10 @@ function loadSltTarea(Act_Codigo, opt) {
         },
         success: function (data) {
             if (data.length > 0) {
-                if (opt) {
+                if (opt == "true") {
                     $("#slt_Tarea").empty();
                     data.forEach(function (tarea) {
-                        $('#slt_Tarea').append("<option value=" + tarea.tar_Codigo + ">" + tarea.tar_Nombre + "</option>");
+                        $('#slt_Tarea').append("<option value=" + tarea.tarCodigo + ">" + tarea.tarNombre + "</option>");
                     });
                     $("#divBtn").fadeIn();
                 } else {
@@ -96,10 +96,10 @@ function loadSltTarea(Act_Codigo, opt) {
                     data.forEach(function (tarea) {
                         $('<div class="col-md-4 mt-4">' +
                             '<input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"' +
-                            'value="' + tarea.tar_Nombre + '" id="' + tarea.tar_Codigo + '" />' +
+                            'value="' + tarea.tarNombre + '" id="' + tarea.tarCodigo + '" />' +
                             '</div>').appendTo("#divBtnTrea");
                         $("#div_Tareas").fadeIn(300);
-                    });                    
+                    });
                 }
             } else {
                 showAlert("La actividad no tiene tareas relacionadas", "Calidad", "warning");
@@ -115,7 +115,8 @@ function SaveNewProgTask() {
         url: "/Calidad/SaveNewProgTask",
         type: 'Post',
         data: {
-            tarCodigo: $("#slt_Tarea").val()
+            tarCodigo: $("#slt_Tarea").val(),
+            CalFecprog: $("#txtStart").val()
         },
         success: function (data) {
             $("#Splash_Screen_Load").fadeOut();

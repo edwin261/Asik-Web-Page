@@ -48,37 +48,122 @@ namespace AsikWeb.Models.Entidades
 
         public async Task<List<Tareas>> Lst_BtnTareas(int act_Codigo)
         {
-            return await _context.Tareas.Where(w => w.TarActcod == act_Codigo).ToListAsync();
+            try
+            {
+                return await _context.Tareas.Where(w => w.TarActcod == act_Codigo).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+                string error = ex.InnerException.Message.ToString();
+                return null;
+            }
         }
 
-        public async Task<AsikViewModel> SaveintoTables()
+        public async Task<string> SaveintoTables()
         {
             try
             {
                 #region guardar dentro de tabla calcalendario
                 foreach (var proceso in _context.Proceso.Include(i => i.Actividad).ToList())
                 {
-                    for (int i = 0; i < proceso.Actividad.Count(); i++)
+                    //eliminar consulta where ya que solo consulta los procesos de gestion de calidad
+                    for (int i = 0; i < proceso.Actividad.Where(w => w.ActProcod == 1).Count(); i++)
                     {
-                        CalCalendario calCalendario = new CalCalendario
+                        List<Tareas> tareas = await _context.Tareas.Where(w => w.TarActcod == proceso.Actividad.ElementAt(i).ActCodigo).
+                            ToListAsync();
+
+                        for (int t = 0; t < tareas.Count(); t++)
                         {
-                            CalTarcod = _context.Tareas.Where(w => w.TarActcod == proceso.Actividad.ElementAt(i).ActCodigo).
-                            FirstOrDefault().TarCodigo,
-                            CalFeccre = DateTime.Now,
-                            CalFecprog = DateTime.Now,
-                            CalColor = "green"
-                        };
-                        await _context.CalCalendario.AddAsync(calCalendario);
+                            Periocidad periocidad = await _context.Periocidad.Where(w => w.PerCodigo == tareas[t].TarPeriod).FirstOrDefaultAsync();
+                            DateTime date = DateTime.Now;
+                            CalCalendario calCalendario = null;
+
+                            switch (periocidad.PerNombre)
+                            {
+                                case "DIARIA":
+                                    if (tareas[t].TarFechini != 0)
+                                    {
+                                        date = DateTime.Now;
+                                        for (int l = 1; l <= DateTime.DaysInMonth(date.Year, date.Month); l++)
+                                        {
+                                            calCalendario = AddCalcalendario(tareas[t]);
+                                            calCalendario.CalFecprog = date.AddDays(Convert.ToInt32(tareas[t].TarFechini));
+                                            calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog).AddDays(Convert.ToInt32(tareas[t].TarFechfin));
+                                            date = Convert.ToDateTime(calCalendario.CalFecprog);
+                                            await _context.CalCalendario.AddAsync(calCalendario);
+                                            await _context.SaveChangesAsync();
+                                        }
+                                    }
+                                    break;
+                                case "SEMANAL":
+                                    if (tareas[t].TarFechini != 0)
+                                    {
+                                        date = DateTime.Now;
+                                        for (int l = 1; l <= 4; l++)
+                                        {
+                                            calCalendario = AddCalcalendario(tareas[t]);
+                                            calCalendario.CalFecprog = date.AddDays(Convert.ToInt32(tareas[t].TarFechini));
+                                            calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog).AddDays(Convert.ToInt32(tareas[t].TarFechfin));
+                                            date = Convert.ToDateTime(calCalendario.CalFecprog);
+                                            await _context.CalCalendario.AddAsync(calCalendario);
+                                            await _context.SaveChangesAsync();
+                                        }
+                                    }
+                                    break;
+                                case "QUINCENAL":
+                                    if (tareas[t].TarFechini != 0)
+                                    {
+                                        date = DateTime.Now;
+                                        calCalendario = AddCalcalendario(tareas[t]);
+                                        calCalendario.CalFecprog = date.AddDays(Convert.ToInt32(tareas[t].TarFechini));
+                                        calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog).AddDays(Convert.ToInt32(tareas[t].TarFechfin));
+                                        await _context.CalCalendario.AddAsync(calCalendario);
+                                        await _context.SaveChangesAsync();
+                                    }
+                                    break;
+                                case "MENSUAL":
+                                    if (tareas[t].TarFechini != 0)
+                                    {
+                                        date = DateTime.Now;
+                                        calCalendario = AddCalcalendario(tareas[t]);
+                                        calCalendario.CalFecprog = date.AddDays(Convert.ToInt32(tareas[t].TarFechini));
+                                        calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog).AddDays(Convert.ToInt32(tareas[t].TarFechfin));
+                                        await _context.CalCalendario.AddAsync(calCalendario);
+                                        await _context.SaveChangesAsync();
+                                    }
+                                    break;
+                                case "TRIMESTRAL":
+                                    date = DateTime.Now;
+                                    break;
+                                case "SEMESTRAL":
+                                    date = DateTime.Now;
+                                    break;
+                                case "ANUAL":
+                                    date = DateTime.Now;
+                                    break;
+                            }
+                        }
                     }
                 }
-                await _context.SaveChangesAsync();
                 #endregion
-                return new AsikViewModel { successMetodo = "Proceso completado exitosamente" };
+                return "Proceso completado exitosamente";
             }
             catch (Exception ex)
             {
-                return new AsikViewModel { errorMetodo = ex.InnerException.Message };
+                return ex.InnerException.Message.ToString();
             }
+        }
+
+        public CalCalendario AddCalcalendario(Tareas tareas)
+        {
+            CalCalendario calCalendario = new CalCalendario
+            {
+                CalTarcod = tareas.TarCodigo,
+                CalFeccre = DateTime.Now,
+                CalColor = "green"
+            };
+
+            return calCalendario;
         }
 
         public async Task<string> SaveNewProgTask(int tarCodigo, DateTime CalFecprog)

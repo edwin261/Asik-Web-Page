@@ -9,5 +9,7 @@ namespace AsikWeb.Models.Entidades
         public int Rd_Codigo { get; set; }
         public int Rd_tipo { get; set; }
         public string Rd_Nombre { get; set; }
+
+        public virtual Rol RdCodigoNavigation { get; set; }
     }
 }

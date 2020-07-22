@@ -12,11 +12,13 @@ namespace AsikWeb.Models.Entidades
         public int TarCodigo { get; set; }
         public int? TarActcod { get; set; }
         public string TarNombre { get; set; }
-        public string TarPeriod { get; set; }
-        public int? TarRespon { get; set; }
+        public int? TarPeriod { get; set; }
         public string TarRegist { get; set; }
+        public int? TarFechini { get; set; }
+        public int? TarFechfin { get; set; }
 
         public virtual Actividad TarActcodNavigation { get; set; }
+        public virtual Periocidad TarPeriodNavigation { get; set; }
         public virtual ICollection<CalCalendario> CalCalendario { get; set; }
     }
 }

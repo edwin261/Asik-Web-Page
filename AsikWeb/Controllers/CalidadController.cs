@@ -60,7 +60,7 @@ namespace AsikWeb.Controllers
         {
             using (var service = GetService<ASIK_PGWEB_Service>())
             {
-                var SaveSucefully = await service.SaveintoTables();
+                string SaveSucefully = await service.SaveintoTables();
                 return Json(SaveSucefully);
             }
         }

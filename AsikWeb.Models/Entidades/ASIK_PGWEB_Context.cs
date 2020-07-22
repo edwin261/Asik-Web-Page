@@ -44,6 +44,7 @@ namespace AsikWeb.Models.Entidades
         public virtual DbSet<Periocidad> Periocidad { get; set; }
         public virtual DbSet<Proceso> Proceso { get; set; }
         public virtual DbSet<Tareas> Tareas { get; set; }
+        public virtual DbSet<Accesoxrol> Accesoxrol { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -366,7 +367,7 @@ namespace AsikWeb.Models.Entidades
             modelBuilder.Entity<Rol>(entity =>
             {
                 entity.HasKey(e => e.RolCodigo)
-                    .HasName("PK__ROL__6A87FB9BB7E801C2");
+                    .HasName("PK__ROL__6A87FB9BD38B2FAA");
 
                 entity.ToTable("ROL");
 
@@ -762,21 +763,6 @@ namespace AsikWeb.Models.Entidades
                     .HasConstraintName("FK__CAL_CALEN__CAL_T__5E8A0973");
             });
 
-            modelBuilder.Entity<Periocidad>(entity =>
-            {
-                entity.HasKey(e => e.PerCodigo)
-                    .HasName("PK__PERIOCID__AA2E668D5D2B2C34");
-
-                entity.ToTable("PERIOCIDAD");
-
-                entity.Property(e => e.PerCodigo).HasColumnName("PER_CODIGO");
-
-                entity.Property(e => e.PerNombre)
-                    .HasColumnName("PER_NOMBRE")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-            });
-
             modelBuilder.Entity<Proceso>(entity =>
             {
                 entity.HasKey(e => e.ProCodigo)
@@ -795,7 +781,7 @@ namespace AsikWeb.Models.Entidades
             modelBuilder.Entity<Tareas>(entity =>
             {
                 entity.HasKey(e => e.TarCodigo)
-                    .HasName("PK__TAREAS__CE6AB93235B5AEE2");
+                    .HasName("PK__TAREAS__CE6AB93285BA450B");
 
                 entity.ToTable("TAREAS");
 
@@ -805,25 +791,70 @@ namespace AsikWeb.Models.Entidades
 
                 entity.Property(e => e.TarNombre)
                     .HasColumnName("TAR_NOMBRE")
-                    .HasMaxLength(250)
+                    .HasMaxLength(400)
                     .IsUnicode(false);
 
-                entity.Property(e => e.TarPeriod)
-                    .HasColumnName("TAR_PERIOD")
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
+                entity.Property(e => e.TarPeriod).HasColumnName("TAR_PERIOD");
 
                 entity.Property(e => e.TarRegist)
                     .HasColumnName("TAR_REGIST")
                     .HasMaxLength(150)
                     .IsUnicode(false);
 
-                entity.Property(e => e.TarRespon).HasColumnName("TAR_RESPON");
+                entity.Property(e => e.TarFechini).HasColumnName("TAR_FECHINI");
+
+                entity.Property(e => e.TarFechfin).HasColumnName("TAR_FECHFIN");
 
                 entity.HasOne(d => d.TarActcodNavigation)
                     .WithMany(p => p.Tareas)
                     .HasForeignKey(d => d.TarActcod)
-                    .HasConstraintName("FK__TAREAS__TAR_ACTC__5BAD9CC8");
+                    .HasConstraintName("FK__TAREAS__TAR_ACTC__756D6ECB");
+
+                entity.HasOne(d => d.TarPeriodNavigation)
+                    .WithMany(p => p.Tareas)
+                    .HasForeignKey(d => d.TarPeriod)
+                    .HasConstraintName("FK__TAREAS__TAR_PERI__76619304");
+            });
+
+            modelBuilder.Entity<Periocidad>(entity =>
+            {
+                entity.HasKey(e => e.PerCodigo)
+                    .HasName("PK__PERIOCID__AA2E668D5D2B2C34");
+
+                entity.ToTable("PERIOCIDAD");
+
+                entity.Property(e => e.PerCodigo).HasColumnName("PER_CODIGO");
+
+                entity.Property(e => e.PerNombre)
+                    .HasColumnName("PER_NOMBRE")
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+            });
+
+            modelBuilder.Entity<Accesoxrol>(entity =>
+            {
+                entity.HasKey(e => e.AccCodigo)
+                    .HasName("PK__ACCESOXR__804E6CEB031CBCD6");
+
+                entity.ToTable("ACCESOXROL");
+
+                entity.Property(e => e.AccCodigo).HasColumnName("ACC_CODIGO");
+
+                entity.Property(e => e.AccCodpag).HasColumnName("ACC_CODPAG");
+
+                entity.Property(e => e.AccCodrol).HasColumnName("ACC_CODROL");
+
+                entity.Property(e => e.AccCodunic).HasColumnName("ACC_CODUNIC");
+
+                entity.Property(e => e.AccNomunic)
+                    .HasColumnName("ACC_NOMUNIC")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.AccCodrolNavigation)
+                    .WithMany(p => p.Accesoxrol)
+                    .HasForeignKey(d => d.AccCodrol)
+                    .HasConstraintName("FK__ACCESOXRO__ACC_C__0880433F");
             });
 
             OnModelCreatingPartial(modelBuilder);
