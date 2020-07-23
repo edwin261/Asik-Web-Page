@@ -46,6 +46,24 @@ namespace AsikWeb.Models.Entidades
             }
         }
 
+        public async Task<AsikViewModel> LstProgramacionxrol(int rol)
+        {
+            try
+            {
+                //revisar 
+                AsikViewModel asikViewModel = new AsikViewModel();
+                asikViewModel.calCalendarios = await (from cc in _context.CalCalendario
+                                                      join ta in _context.Tareas on cc.CalTarcod equals ta.TarCodigo
+                                                      select cc).ToListAsync();
+                return new AsikViewModel { calCalendarios = asikViewModel.calCalendarios };
+            }
+            catch (Exception ex)
+            {
+                string error = ex.InnerException.Message.ToString();
+                return null;
+            }
+        }
+
         public async Task<List<Tareas>> Lst_BtnTareas(int act_Codigo)
         {
             try
@@ -166,7 +184,7 @@ namespace AsikWeb.Models.Entidades
             return calCalendario;
         }
 
-        public async Task<string> SaveNewProgTask(int tarCodigo, DateTime CalFecprog)
+        public async Task<string> SaveNewProgTask(int tarCodigo, DateTime CalFecprog, int Calfecvenc)
         {
             try
             {
@@ -175,6 +193,7 @@ namespace AsikWeb.Models.Entidades
                     CalTarcod = tarCodigo,
                     CalFeccre = DateTime.Now,
                     CalFecprog = CalFecprog,
+                    CalFecven = Convert.ToDateTime(CalFecprog).AddDays(Calfecvenc),
                     CalColor = "green"
                 };
                 await _context.CalCalendario.AddAsync(calCalendario);
