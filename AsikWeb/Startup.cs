@@ -30,12 +30,15 @@ namespace AsikWeb
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication("CookieAuth")
-                .AddCookie("CookieAuth", config => {
+                .AddCookie("CookieAuth", config =>
+                {
                     config.Cookie.Name = "Login.Cookie";
                     config.LoginPath = "/";
                 });
 
-            services.AddControllersWithViews();
+            services.AddControllersWithViews().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
             services.AddDbContext<ASIK_PGWEB_Context>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("SqlServerConnection"))
             );

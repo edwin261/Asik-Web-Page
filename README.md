@@ -10,3 +10,5 @@ Se agrego funcion JS (GoToPage) en la vista "/Home/SplashScreen" la cual recibe 
 # 19/06/2020
 Se añade metodo en el controlodor 'Calidad' para agregar Tareas a realizar dentro de la tabla 'CalCalendario'.
 Se Quita campo 'Comentario' en el modal de crear una tarea en un dia especifico.
+#25/07/2020
+Se añaden tareas al calendario, opcion de verlas y metodo de crear tareas individuales.

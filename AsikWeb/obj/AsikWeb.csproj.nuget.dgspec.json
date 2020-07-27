@@ -1,32 +1,37 @@
 {
   "format": 1,
   "restore": {
-    "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb/AsikWeb.csproj": {}
+    "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb\\AsikWeb.csproj": {}
   },
   "projects": {
-    "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Context/AsikWeb.Context.csproj": {
+    "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Context\\AsikWeb.Context.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Context/AsikWeb.Context.csproj",
+        "projectUniqueName": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Context\\AsikWeb.Context.csproj",
         "projectName": "AsikWeb.Context",
-        "projectPath": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Context/AsikWeb.Context.csproj",
-        "packagesPath": "/Users/edwinmarquezmelendez/.nuget/packages/",
-        "outputPath": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Context/obj/",
+        "projectPath": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Context\\AsikWeb.Context.csproj",
+        "packagesPath": "C:\\Users\\edwin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Context\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/Users/edwinmarquezmelendez/.config/NuGet/NuGet.Config"
+          "C:\\Users\\edwin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Models/AsikWeb.Models.csproj": {
-                "projectPath": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Models/AsikWeb.Models.csproj"
+              "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Models\\AsikWeb.Models.csproj": {
+                "projectPath": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Models\\AsikWeb.Models.csproj"
               }
             }
           }
@@ -60,26 +65,31 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Models/AsikWeb.Models.csproj": {
+    "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Models\\AsikWeb.Models.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Models/AsikWeb.Models.csproj",
+        "projectUniqueName": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Models\\AsikWeb.Models.csproj",
         "projectName": "AsikWeb.Models",
-        "projectPath": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Models/AsikWeb.Models.csproj",
-        "packagesPath": "/Users/edwinmarquezmelendez/.nuget/packages/",
-        "outputPath": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Models/obj/",
+        "projectPath": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Models\\AsikWeb.Models.csproj",
+        "packagesPath": "C:\\Users\\edwin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Models\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/Users/edwinmarquezmelendez/.config/NuGet/NuGet.Config"
+          "C:\\Users\\edwin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -126,36 +136,41 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb/AsikWeb.csproj": {
+    "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb\\AsikWeb.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb/AsikWeb.csproj",
+        "projectUniqueName": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb\\AsikWeb.csproj",
         "projectName": "AsikWeb",
-        "projectPath": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb/AsikWeb.csproj",
-        "packagesPath": "/Users/edwinmarquezmelendez/.nuget/packages/",
-        "outputPath": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb/obj/",
+        "projectPath": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb\\AsikWeb.csproj",
+        "packagesPath": "C:\\Users\\edwin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
         "configFilePaths": [
-          "/Users/edwinmarquezmelendez/.config/NuGet/NuGet.Config"
+          "C:\\Users\\edwin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "netcoreapp3.1"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.1": {
             "projectReferences": {
-              "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Context/AsikWeb.Context.csproj": {
-                "projectPath": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Context/AsikWeb.Context.csproj"
+              "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Context\\AsikWeb.Context.csproj": {
+                "projectPath": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Context\\AsikWeb.Context.csproj"
               },
-              "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Models/AsikWeb.Models.csproj": {
-                "projectPath": "/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Models/AsikWeb.Models.csproj"
+              "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Models\\AsikWeb.Models.csproj": {
+                "projectPath": "C:\\Users\\edwin\\Documents\\Asik-Web-Page\\AsikWeb.Models\\AsikWeb.Models.csproj"
               }
             }
           }
@@ -173,6 +188,10 @@
               "target": "Package",
               "version": "[2.5.2, )"
             },
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.6, )"
+            },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
               "version": "[3.1.2, )"
@@ -184,6 +203,10 @@
             "MimeKit": {
               "target": "Package",
               "version": "[2.5.2, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
             },
             "Syncfusion.Pdf.Net.Core": {
               "target": "Package",
@@ -212,7 +235,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.200\\RuntimeIdentifierGraph.json"
         }
       }
     }

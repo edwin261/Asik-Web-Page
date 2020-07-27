@@ -1,11 +1,19 @@
 ﻿
 @{
     ViewData["Title"] = "Calendar";
+    List<int> rolUsuList = new List<int>();
+    foreach (var identities in User.Identities.ToList())
+    {
+        for (int i = 2; i < identities.Claims.Count(); i++)
+        {
+            rolUsuList.Add(Convert.ToInt32(identities.Claims.ElementAt(i).Value));
+        }
+    }
 }
 
 <div id="Splash_Screen_Load" style="display: none"></div>
 
-<div id="calender"></div>
+<div id="calender" style="margin-bottom: 13vh;"></div>
 
 <div id="myModal" class="modal fade" role="dialog">
     <div class="modal-dialog">
@@ -17,13 +25,12 @@
                 <p id="pDetails"></p>
             </div>
             <div class="modal-footer text-center">
-                <button type="button" class="btn btn-default" data-dismiss="modal"
-                        onclick="$('#CalendarModal').modal('show');">
+                <button type="button" class="btn btn-default" data-dismiss="modal">
                     Volver al calendario
                 </button>
 
                 <button type="button" id="btnclick" class="btn btn-light TextNegrita float-right border-radius New_OT">
-                    Ver Inspeccion
+                    Realizar Tarea
                 </button>
             </div>
         </div>
@@ -49,7 +56,7 @@
                         </div>
                         <label>Dias de porroga</label>
                         <input type="text" value="1" min="1" class="form-control col-md-12 validanumericos" id="DiasPg" />
-                        
+
                     </div>
                     <div class="form-group">
                         <label>Proceso</label>
@@ -66,8 +73,13 @@
                         <select class="form-control" id="slt_Tarea">
                         </select>
                     </div>
+                    <div class="form-group" id="loadDocument">
+                        <label>Cargar Documento</label>
+                        <input type="file" name="imagensubida" class="form-control" accept=".pdf, .docx, .xls">
+                    </div>
                     <div class="modal-footer" id="divBtn">
                         <button type="button" onclick="SaveNewProgTask()" id="btnSave" class="btn btn-success btn_save_color disable" style="color:black">Guardar</button>
+                        <button type="button" onclick="SaveTask()" id="btnSaveDocument" class="btn btn-success btn_save_color" style="color:black;display:none">Guardar</button>
                         <button type="button" class="btn btn-danger btn_cancel disable" data-dismiss="modal">
                             Cerrar
                         </button>
@@ -85,4 +97,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.4.0/fullcalendar.min.js"></script>
     <script src="~/js/Calidad.js" type="text/javascript" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            var arrayRolusu = [];
+            @foreach (var itemLista in rolUsuList)
+	        {
+                @:arrayRolusu.push(@itemLista);
+	        }
+
+            LoadCalendar(arrayRolusu);
+        })
+    </script>
 }

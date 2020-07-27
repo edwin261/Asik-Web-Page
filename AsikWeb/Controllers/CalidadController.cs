@@ -33,7 +33,7 @@ namespace AsikWeb.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> GetProgramacion(int rol)
+        public async Task<IActionResult> GetProgramacion(List<int> rol)
         {
             using (var service = GetService<ASIK_PGWEB_Service>())
             {

@@ -46,21 +46,20 @@ namespace AsikWeb.Models.Entidades
             }
         }
 
-        public async Task<AsikViewModel> LstProgramacionxrol(int rol)
+        public async Task<AsikViewModel> LstProgramacionxrol(List<int> rol)
         {
             try
             {
-                //revisar 
-                AsikViewModel asikViewModel = new AsikViewModel();
-                asikViewModel.calCalendarios = await (from cc in _context.CalCalendario
-                                                      join ta in _context.Tareas on cc.CalTarcod equals ta.TarCodigo
-                                                      select cc).ToListAsync();
-                return new AsikViewModel { calCalendarios = asikViewModel.calCalendarios };
+                return new AsikViewModel
+                {
+                    Tareas = await _context.Tareas.Include(i => i.CalCalendario)
+                    .Include(a=>a.TarActcodNavigation)
+                    .Where(w => w.CalCalendario.Count() > 0).ToListAsync()
+                };
             }
             catch (Exception ex)
             {
-                string error = ex.InnerException.Message.ToString();
-                return null;
+                return new AsikViewModel { errorMetodo = ex.Message.ToString() };
             }
         }
 
@@ -93,7 +92,7 @@ namespace AsikWeb.Models.Entidades
                         for (int t = 0; t < tareas.Count(); t++)
                         {
                             Periocidad periocidad = await _context.Periocidad.Where(w => w.PerCodigo == tareas[t].TarPeriod).FirstOrDefaultAsync();
-                            DateTime date = DateTime.Now;
+                            DateTime date = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                             CalCalendario calCalendario = null;
 
                             switch (periocidad.PerNombre)
@@ -101,12 +100,13 @@ namespace AsikWeb.Models.Entidades
                                 case "DIARIA":
                                     if (tareas[t].TarFechini != 0)
                                     {
-                                        date = DateTime.Now;
+                                        date = date = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                                         for (int l = 1; l <= DateTime.DaysInMonth(date.Year, date.Month); l++)
                                         {
                                             calCalendario = AddCalcalendario(tareas[t]);
                                             calCalendario.CalFecprog = date.AddDays(Convert.ToInt32(tareas[t].TarFechini));
-                                            calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog).AddDays(Convert.ToInt32(tareas[t].TarFechfin));
+                                            calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog)
+                                                .AddDays(Convert.ToInt32(tareas[t].TarFechfin)).AddHours(23).AddMinutes(59).AddSeconds(59);
                                             date = Convert.ToDateTime(calCalendario.CalFecprog);
                                             await _context.CalCalendario.AddAsync(calCalendario);
                                             await _context.SaveChangesAsync();
@@ -116,12 +116,13 @@ namespace AsikWeb.Models.Entidades
                                 case "SEMANAL":
                                     if (tareas[t].TarFechini != 0)
                                     {
-                                        date = DateTime.Now;
+                                        date = date = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                                         for (int l = 1; l <= 4; l++)
                                         {
                                             calCalendario = AddCalcalendario(tareas[t]);
                                             calCalendario.CalFecprog = date.AddDays(Convert.ToInt32(tareas[t].TarFechini));
-                                            calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog).AddDays(Convert.ToInt32(tareas[t].TarFechfin));
+                                            calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog)
+                                                .AddDays(Convert.ToInt32(tareas[t].TarFechfin)).AddHours(23).AddMinutes(59).AddSeconds(59);
                                             date = Convert.ToDateTime(calCalendario.CalFecprog);
                                             await _context.CalCalendario.AddAsync(calCalendario);
                                             await _context.SaveChangesAsync();
@@ -131,10 +132,11 @@ namespace AsikWeb.Models.Entidades
                                 case "QUINCENAL":
                                     if (tareas[t].TarFechini != 0)
                                     {
-                                        date = DateTime.Now;
+                                        date = date = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                                         calCalendario = AddCalcalendario(tareas[t]);
                                         calCalendario.CalFecprog = date.AddDays(Convert.ToInt32(tareas[t].TarFechini));
-                                        calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog).AddDays(Convert.ToInt32(tareas[t].TarFechfin));
+                                        calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog)
+                                                .AddDays(Convert.ToInt32(tareas[t].TarFechfin)).AddHours(23).AddMinutes(59).AddSeconds(59);
                                         await _context.CalCalendario.AddAsync(calCalendario);
                                         await _context.SaveChangesAsync();
                                     }
@@ -142,10 +144,11 @@ namespace AsikWeb.Models.Entidades
                                 case "MENSUAL":
                                     if (tareas[t].TarFechini != 0)
                                     {
-                                        date = DateTime.Now;
+                                        date = date = Convert.ToDateTime(DateTime.Now.ToShortDateString());
                                         calCalendario = AddCalcalendario(tareas[t]);
                                         calCalendario.CalFecprog = date.AddDays(Convert.ToInt32(tareas[t].TarFechini));
-                                        calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog).AddDays(Convert.ToInt32(tareas[t].TarFechfin));
+                                        calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog)
+                                                .AddDays(Convert.ToInt32(tareas[t].TarFechfin)).AddHours(23).AddMinutes(59).AddSeconds(59);
                                         await _context.CalCalendario.AddAsync(calCalendario);
                                         await _context.SaveChangesAsync();
                                     }

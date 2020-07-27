@@ -4,7 +4,7 @@ var selectedEvent = null;
 
 $(document).ready(function () {
     //LoadCalendar($("#rol_usu").val());
-    GenerateCalender(null);
+    //GenerateCalender(null);
     loadSltTarea(1, true);
 
     $('.validanumericos').keypress(function (e) {
@@ -21,33 +21,32 @@ function LoadCalendar(rol) {
         type: "Post",
         url: "/Calidad/GetProgramacion",
         data: {
-            codTec: $('#slt_CodiTec').val(),
-            codigoOt: 0,
             rol: rol
         },
         success: function (data) {
             events = [];
             if (data != null) {
-                if (data.calendario != null) {
-                    for (var i = 0; i < data.calendario.length; i++) {
-                        events.push({
-                            proyect_name: data.ord_Trabajo[i].ord_Nomproy,
-                            Cal_eventId: data.calendario[i].cal_EventId,
-                            title: data.calendario[i].subjec,
-                            description: data.calendario[i].descripcion,
-                            start: moment(data.calendario[i].inicio),
-                            end: data.calendario[i].fin != null ? moment(data.calendario[i].fin) : null,
-                            color: data.calendario[i].themeColor,
-                            allDay: data.calendario[i].tod_Dia
-                        });
+                if (data.tareas != null) {
+                    for (var t = 0; t < data.tareas.length; t++) {
+                        for (var c = 0; c < data.tareas[t].calCalendario.length; c++) {
+                            events.push({
+                                proyect_name: data.tareas[t].tarActcodNavigation.actNombre,
+                                Cal_eventId: data.tareas[t].tarCodigo,
+                                title: data.tareas[t].tarActcodNavigation.actNombre,
+                                description: data.tareas[t].tarNombre,
+                                start: moment(data.tareas[t].calCalendario[c].calFecprog),
+                                end: data.tareas[t].calCalendario[c].calFecven != null ? moment(data.tareas[t].calCalendario[c].calFecven) : null,
+                                color: data.tareas[t].calCalendario[c].calColor,
+                                allDay: false
+                            });
+                        }
                     }
                 }
             }
             GenerateCalender(events);
         },
         error: function (error) {
-            showAlert("Ha ocurrido un error",
-                "Visita Tecnica", "warning");
+            showAlert("Ha ocurrido un error", "Calidad", "warning");
         }
     })
 }
@@ -56,6 +55,7 @@ function GenerateCalender(events) {
     modal = false;
     $('#calender').fullCalendar('destroy');
     $('#calender').fullCalendar({
+        locale: 'es',
         displayEventTime: false,
         monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'],
@@ -66,7 +66,7 @@ function GenerateCalender(events) {
         defaultDate: new Date(),
         timeFormat: 'h(:mm)a',
         header: {
-            left: 'month,basicWeek,basicDay,agenda',
+            left: 'month,basicDay,agenda',
             center: 'title',
             right: 'today,prevYear,prev,next,nextYear'
         },
@@ -86,7 +86,6 @@ function GenerateCalender(events) {
             selectedEvent = calEvent;
             $('#myModal #eventTitle').text(calEvent.proyect_name);
             var $description = $('<div/>');
-            $description.append($('<p/>').html('<b>Cliente: </b>' + calEvent.Nom_Cli));
             $description.append($('<p/>').html('<b>Inicio: </b>' + calEvent.start.format("DD-MMM-YYYY")));
             if (calEvent.end != null) {
                 $description.append($('<p/>').html('<b>Fin: </b>' + calEvent.end.format("DD-MMM-YYYY")));
@@ -153,7 +152,12 @@ function openAddEditForm() {
 
 function LoadEventView() {
     if (selectedEvent != null) {
-        location.href = "/VisitaTecnica/Visit_Start?Ord_CodOtc=" + selectedEvent.codOt;
+        $("#myModal").modal('hide');
+        $("#txtStart").val(selectedEvent.start._i);
+        $("#loadDocument").css("display", "flex");
+        $("#btnSave").css("display", "none");
+        $("#btnSaveDocument").css("display", "block");
+        $("#myModalSave").modal();
     }
 }
 
