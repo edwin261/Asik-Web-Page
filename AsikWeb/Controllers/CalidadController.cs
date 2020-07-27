@@ -42,9 +42,14 @@ namespace AsikWeb.Controllers
             }
         }
         [HttpPost]
-        public IActionResult SaveFiles()
+        public async Task<IActionResult> SaveFiles(int tarCodigo)
         {
-            return View();
+            using (var service = GetService<ASIK_PGWEB_Service>())
+            {
+                var datosModel = await service.SaveFiles(tarCodigo);
+                return View(datosModel);
+
+            }
         }
         [HttpPost]
         public async Task<JsonResult> Load_Actividades(int Pro_Codigo)

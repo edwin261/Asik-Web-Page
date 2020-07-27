@@ -152,12 +152,14 @@ function openAddEditForm() {
 
 function LoadEventView() {
     if (selectedEvent != null) {
-        $("#myModal").modal('hide');
-        $("#txtStart").val(selectedEvent.start._i);
-        $("#loadDocument").css("display", "flex");
-        $("#btnSave").css("display", "none");
-        $("#btnSaveDocument").css("display", "block");
-        $("#myModalSave").modal();
+        //$("#myModal").modal('hide');
+        //$("#txtStart").val(selectedEvent.start._i);
+        //$("#loadDocument").css("display", "flex");
+        //$("#btnSave").css("display", "none");
+        //$("#btnSaveDocument").css("display", "block");
+        //$("#myModalSave").modal();
+        $("#Splash_Screen_Load").fadeIn();
+        location.href = '/Calidad/SaveFiles?tarCodigo=' + selectedEvent.Cal_eventId;
     }
 }
 

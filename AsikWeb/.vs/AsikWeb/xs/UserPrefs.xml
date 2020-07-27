@@ -1,22 +1,19 @@
 ﻿<Properties StartupConfiguration="{DDC8C775-F410-483D-9AC1-7CFB55922DC8}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Views/Calidad/Calendar.cshtml">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/CalidadController.cs">
     <Files>
-      <File FileName="Views/Calidad/Calendar.cshtml" Line="51" Column="31" />
-      <File FileName="Controllers/CalidadController.cs" Line="81" Column="57" />
-      <File FileName="../AsikWeb.Models/Entidades/ASIK_PGWEB_Service.cs" Line="193" Column="38" />
-      <File FileName="wwwroot/js/Calidad.js" Line="233" Column="51" />
-      <File FileName="../AsikWeb.Models/Entidades/ASIK_PGWEB_Context.cs" Line="50" Column="1" />
+      <File FileName="Controllers/CalidadController.cs" Line="53" Column="10" />
+      <File FileName="../AsikWeb.Models/Entidades/ASIK_PGWEB_Service.cs" Line="57" Column="33" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="AsikWeb" expanded="True">
             <Node name="AsikWeb" expanded="True">
-              <Node name="Controllers" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="CalidadController.cs" selected="True" />
+              </Node>
               <Node name="Views" expanded="True">
-                <Node name="Calidad" expanded="True">
-                  <Node name="Calendar.cshtml" selected="True" />
-                </Node>
+                <Node name="Calidad" expanded="True" />
               </Node>
               <Node name="wwwroot" expanded="True">
                 <Node name="js" expanded="True" />
@@ -38,7 +35,8 @@
   <MonoDevelop.Ide.ItemProperties.AsikWeb PreferredExecutionTarget="/Applications/Safari.app" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore>
-      <Breakpoint file="/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb/Controllers/CalidadController.cs" relfile="Controllers/CalidadController.cs" line="78" column="1" />
+      <Breakpoint file="/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb/Controllers/CalidadController.cs" relfile="Controllers/CalidadController.cs" line="46" column="1" />
+      <Breakpoint file="/Users/edwinmarquezmelendez/Documents/Asik/Web Page/Asik-Web-Page/AsikWeb.Models/Entidades/ASIK_PGWEB_Service.cs" relfile=".Models/Entidades/ASIK_PGWEB_Service.cs" line="52" column="1" />
     </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />

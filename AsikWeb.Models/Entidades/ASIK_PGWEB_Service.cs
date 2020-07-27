@@ -46,6 +46,20 @@ namespace AsikWeb.Models.Entidades
             }
         }
 
+        public async Task<Tareas> SaveFiles(int tarCodigo)
+        {
+            try
+            {
+                return await _context.Tareas.Include(i => i.TarActcodNavigation)
+                    .Include(i => i.TarPeriodNavigation)
+                    .Where(w => w.TarCodigo == tarCodigo).FirstOrDefaultAsync();
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+        }
+
         public async Task<AsikViewModel> LstProgramacionxrol(List<int> rol)
         {
             try
