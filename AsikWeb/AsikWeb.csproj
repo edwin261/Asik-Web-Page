@@ -12,6 +12,7 @@
     <Content Remove="wwwroot\Img\Logo_Final_Asik.svg" />
     <Content Remove="wwwroot\js\Calidad.js" />
     <None Remove="obj\project.assets.json" />
+    <None Remove="obj\AsikWeb.csproj.nuget.cache" />
   </ItemGroup>
 
 

@@ -28,17 +28,19 @@ function LoadCalendar(rol) {
             if (data != null) {
                 if (data.calCalendarios != null) {
                     for (var c = 0; c < data.calCalendarios.length; c++) {
-                        events.push({
-                            proyect_name: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
-                            Tar_eventId: data.calCalendarios[c].calTarcodNavigation.tarCodigo,
-                            Cal_eventId: data.calCalendarios[c].calCodigo,
-                            title: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
-                            description: data.calCalendarios[c].calTarcodNavigation.tarNombre,
-                            start: moment(data.calCalendarios[c].calFecprog),
-                            end: data.calCalendarios[c].calFecven != null ? moment(data.calCalendarios[c].calFecven) : null,
-                            color: data.calCalendarios[c].calColor,
-                            allDay: false
-                        });
+                        if (data.calCalendarios[c].calFecreprog == null) {
+                            events.push({
+                                proyect_name: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
+                                Tar_eventId: data.calCalendarios[c].calTarcodNavigation.tarCodigo,
+                                Cal_eventId: data.calCalendarios[c].calCodigo,
+                                title: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
+                                description: data.calCalendarios[c].calTarcodNavigation.tarNombre,
+                                start: moment(data.calCalendarios[c].calFecprog),
+                                end: data.calCalendarios[c].calFecven != null ? moment(data.calCalendarios[c].calFecven) : null,
+                                color: data.calCalendarios[c].calColor,
+                                allDay: false
+                            });
+                        }
                     }
                 }
             }

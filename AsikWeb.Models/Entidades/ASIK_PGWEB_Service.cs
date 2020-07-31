@@ -103,6 +103,27 @@ namespace AsikWeb.Models.Entidades
             }
         }
 
+        public async Task<string> UpdateCalendarTask(int calCodigo, DateTime CalFecreprog)
+        {
+            try
+            {
+                CalCalendario calCalendario = await _context.CalCalendario.Where(w => w.CalCodigo == calCodigo).FirstOrDefaultAsync();
+                if(calCalendario != null)
+                {
+                    calCalendario.CalFecreprog = Convert.ToDateTime(CalFecreprog.ToShortDateString());
+                    calCalendario.CalColor = "green";
+                    calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecreprog).AddHours(23).AddMinutes(59).AddSeconds(59);
+                    _context.CalCalendario.Update(calCalendario).Property(p => p.CalCodigo).IsModified = false;
+                    return "Tarea reprogramada exitosamente.";
+                }
+                return "No se ha encontrado programacion asociada.";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
+            }
+        }
+
         public async Task<string> DelayTask()
         {
             try

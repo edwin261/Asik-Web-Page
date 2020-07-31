@@ -32,19 +32,29 @@
 
                     <div class="col-md-11 pb-3 ml-4">
                         <label><strong>Observaciones</strong></label>
-                        <textarea id="calObserva" style="overflow:auto;resize:none" class="form-control" rows="5" cols="7"></textarea>
+                        <textarea id="calObserva" style="overflow:auto;resize:none" class="form-control" rows="5" cols="7">@Model.calCalendarios[0].CalObser</textarea>
                     </div>
 
-                    <div class="col-md-11 ml-4 pb-4">
-                        <input type="hidden" id="fileName" value="@Model.Tareas[0].TarRegist" />
-                        <input type="hidden" id="calCodigo" value="@Model.calCalendarios[0].CalCodigo" />
-                        <label><strong>Anexar documento PDF</strong></label>
-                        <input required type="file" id="fileSelect" class="form-control-file col-md-12" accept=".pdf, .PDF" onchange="fileSelect(event)" />
-                    </div>
-                </div>
-                <div class="modal-footer" id="divBtn">
-                    <button type="submit" id="btnSave" class="btn btn-success btn_save_color" style="color:black">Guardar</button>
-                    <button type="button" class="btn btn-danger btn_cancel disable">Cancelar</button>
+                    @if (Model.calCalendarios[0].CalFecreal == null)
+                    {
+                        <div class="col-md-11 ml-4 pb-4">
+                            <input type="hidden" id="fileName" value="@Model.Tareas[0].TarRegist" />
+                            <input type="hidden" id="calCodigo" value="@Model.calCalendarios[0].CalCodigo" />
+                            <label><strong>Anexar documento PDF</strong></label>
+                            <input required type="file" id="fileSelect" class="form-control-file col-md-12" accept=".pdf, .PDF" onchange="fileSelect(event)" />
+                        </div>
+                        <div class="modal-footer" id="divBtn">
+                            <button type="submit" id="btnSave" class="btn btn-success btn_save_color" style="color:black">Guardar</button>
+                            <button type="button" class="btn btn-danger btn_cancel disable">Cancelar</button>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="col-md-11 ml-4 pb-4">
+                            <label><strong>Documento PDF</strong></label>
+                            <a href="@Model.calCalendarios[0].CalRutarc" target="_blank">@Model.Tareas[0].TarRegist</a>
+                        </div>
+                    }
                 </div>
             </fieldset>
         </form>

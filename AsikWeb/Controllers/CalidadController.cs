@@ -104,5 +104,14 @@ namespace AsikWeb.Controllers
                 return Json(UpdateTask);
             }
         }
+
+        public async Task<IActionResult> UpdateCalendarTask(int calCodigo, DateTime CalFecreprog)
+        {
+            using (var service = GetService<ASIK_PGWEB_Service>())
+            {
+                string UpdateTask = await service.UpdateCalendarTask(calCodigo, CalFecreprog);
+                return Json(new { Mesasage = UpdateTask });
+            }
+        }
     }
 }
