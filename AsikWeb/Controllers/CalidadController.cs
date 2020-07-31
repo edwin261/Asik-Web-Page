@@ -41,14 +41,23 @@ namespace AsikWeb.Controllers
                 return Json(LstProgamacion);
             }
         }
-        [HttpPost]
-        public async Task<IActionResult> SaveFiles(int tarCodigo)
+        [HttpGet]
+        public async Task<IActionResult> SaveFiles(int tarCodigo, int calCodigo)
         {
             using (var service = GetService<ASIK_PGWEB_Service>())
             {
-                var datosModel = await service.SaveFiles(tarCodigo);
+                var datosModel = await service.SaveFiles(tarCodigo, calCodigo);
                 return View(datosModel);
 
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> SaveFiles(int CalCodigo, string calObserva)
+        {
+            using (var service = GetService<ASIK_PGWEB_Service>())
+            {
+                var saveTask = await service.saveTask(CalCodigo, calObserva);
+                return Json(new { data = true });
             }
         }
         [HttpPost]
@@ -85,6 +94,14 @@ namespace AsikWeb.Controllers
             {
                 string message = await service.SaveNewProgTask(tarCodigo, CalFecprog, Calfecvenc);
                 return Json(message);
+            }
+        }
+        public async Task<JsonResult> DelayTask()
+        {
+            using (var service = GetService<ASIK_PGWEB_Service>())
+            {
+                string UpdateTask = await service.DelayTask();
+                return Json(UpdateTask);
             }
         }
     }

@@ -46,13 +46,19 @@ namespace AsikWeb.Models.Entidades
             }
         }
 
-        public async Task<Tareas> SaveFiles(int tarCodigo)
+        public async Task<AsikViewModel> SaveFiles(int tarCodigo, int calCodigo)
         {
             try
             {
-                return await _context.Tareas.Include(i => i.TarActcodNavigation)
+                List<Tareas> tareas = await _context.Tareas.Include(i => i.TarActcodNavigation)
                     .Include(i => i.TarPeriodNavigation)
-                    .Where(w => w.TarCodigo == tarCodigo).FirstOrDefaultAsync();
+                    .Where(w => w.TarCodigo == tarCodigo).ToListAsync();
+                return new AsikViewModel
+                {
+                    Tareas = tareas,
+                    calCalendarios = await _context.CalCalendario.Where(w => w.CalCodigo == calCodigo).ToListAsync(),
+                    Procesos = await _context.Proceso.Where(w => w.ProCodigo == tareas[0].TarActcodNavigation.ActProcod).ToListAsync()
+                };
             }
             catch (Exception ex)
             {
@@ -60,20 +66,60 @@ namespace AsikWeb.Models.Entidades
             }
         }
 
+        public async Task<bool> saveTask(int CalCodigo, string calObserva)
+        {
+            try
+            {
+                CalCalendario calCalendario = await _context.CalCalendario.Where(w => w.CalCodigo == CalCodigo).FirstOrDefaultAsync();
+                calCalendario.CalObser = calObserva;
+                calCalendario.CalColor = "green";
+                calCalendario.CalFecreal = DateTime.Now;
+                _context.CalCalendario.Update(calCalendario).Property(p => p.CalCodigo).IsModified = false;
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public async Task<AsikViewModel> LstProgramacionxrol(List<int> rol)
         {
             try
             {
+                //probar
                 return new AsikViewModel
                 {
-                    Tareas = await _context.Tareas.Include(i => i.CalCalendario)
-                    .Include(a=>a.TarActcodNavigation)
-                    .Where(w => w.CalCalendario.Count() > 0).ToListAsync()
+                    calCalendarios = await _context.CalCalendario
+                    .Include(i => i.CalTarcodNavigation)
+                    .Include(i=> i.CalTarcodNavigation.TarActcodNavigation)
+                    .Where(w => w.CalFecreal == null).ToListAsync()
                 };
             }
             catch (Exception ex)
             {
                 return new AsikViewModel { errorMetodo = ex.Message.ToString() };
+            }
+        }
+
+        public async Task<string> DelayTask()
+        {
+            try
+            {
+                List<CalCalendario> CalCalendario = await _context.CalCalendario
+                    .Where(w=>w.CalFecreal != null && w.CalFecven < DateTime.Now).ToListAsync();
+                foreach (var delayTask in CalCalendario)
+                {
+                    delayTask.CalColor = "red";
+                    _context.CalCalendario.Update(delayTask).Property(p => p.CalCodigo).IsModified = false;
+                }
+                await _context.SaveChangesAsync();
+                return "Datos de Tareas Actualizadas";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
             }
         }
 

@@ -26,20 +26,19 @@ function LoadCalendar(rol) {
         success: function (data) {
             events = [];
             if (data != null) {
-                if (data.tareas != null) {
-                    for (var t = 0; t < data.tareas.length; t++) {
-                        for (var c = 0; c < data.tareas[t].calCalendario.length; c++) {
-                            events.push({
-                                proyect_name: data.tareas[t].tarActcodNavigation.actNombre,
-                                Cal_eventId: data.tareas[t].tarCodigo,
-                                title: data.tareas[t].tarActcodNavigation.actNombre,
-                                description: data.tareas[t].tarNombre,
-                                start: moment(data.tareas[t].calCalendario[c].calFecprog),
-                                end: data.tareas[t].calCalendario[c].calFecven != null ? moment(data.tareas[t].calCalendario[c].calFecven) : null,
-                                color: data.tareas[t].calCalendario[c].calColor,
-                                allDay: false
-                            });
-                        }
+                if (data.calCalendarios != null) {
+                    for (var c = 0; c < data.calCalendarios.length; c++) {
+                        events.push({
+                            proyect_name: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
+                            Tar_eventId: data.calCalendarios[c].calTarcodNavigation.tarCodigo,
+                            Cal_eventId: data.calCalendarios[c].calCodigo,
+                            title: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
+                            description: data.calCalendarios[c].calTarcodNavigation.tarNombre,
+                            start: moment(data.calCalendarios[c].calFecprog),
+                            end: data.calCalendarios[c].calFecven != null ? moment(data.calCalendarios[c].calFecven) : null,
+                            color: data.calCalendarios[c].calColor,
+                            allDay: false
+                        });
                     }
                 }
             }
@@ -83,20 +82,24 @@ function GenerateCalender(events) {
         eventColor: '#378006',
         events: events,
         eventClick: function (calEvent, jsEvent, view) {
-            selectedEvent = calEvent;
-            $('#myModal #eventTitle').text(calEvent.proyect_name);
-            var $description = $('<div/>');
-            $description.append($('<p/>').html('<b>Inicio: </b>' + calEvent.start.format("DD-MMM-YYYY")));
-            if (calEvent.end != null) {
-                $description.append($('<p/>').html('<b>Fin: </b>' + calEvent.end.format("DD-MMM-YYYY")));
-            } else {
-                $description.append($('<p/>').html('<b>Fin: </b>' + calEvent.start.format("DD-MMM-YYYY")));
-            }
-            $description.append($('<p/>').html('<b>Descripcion: </b>' + calEvent.description));
-            $('#myModal #pDetails').empty().html($description);
+            if (calEvent.color) {
+                selectedEvent = calEvent;
+                $('#myModal #eventTitle').text(calEvent.proyect_name);
+                var $description = $('<div/>');
+                $description.append($('<p/>').html('<b>Inicio: </b>' + calEvent.start.format("DD-MMM-YYYY")));
+                if (calEvent.end != null) {
+                    $description.append($('<p/>').html('<b>Fin: </b>' + calEvent.end.format("DD-MMM-YYYY")));
+                } else {
+                    $description.append($('<p/>').html('<b>Fin: </b>' + calEvent.start.format("DD-MMM-YYYY")));
+                }
+                $description.append($('<p/>').html('<b>Descripcion: </b>' + calEvent.description));
+                $('#myModal #pDetails').empty().html($description);
 
-            $('#CalendarModal').modal('hide');
-            $('#myModal').modal();
+                $('#CalendarModal').modal('hide');
+                $('#myModal').modal();
+            } else {
+
+            }
         },
         selectable: true,
         select: function (start, end) {
@@ -104,6 +107,7 @@ function GenerateCalender(events) {
             selectedEvent = {
                 Nom_Cli: $("#N_Cliente").val(),
                 proyect_name: $("#N_Proyecto").val(),
+                tarCodigo: 0,
                 Cal_eventId: 0,
                 title: '',
                 description: '',
@@ -159,7 +163,8 @@ function LoadEventView() {
         //$("#btnSaveDocument").css("display", "block");
         //$("#myModalSave").modal();
         $("#Splash_Screen_Load").fadeIn();
-        location.href = '/Calidad/SaveFiles?tarCodigo=' + selectedEvent.Cal_eventId;
+        location.href = '/Calidad/SaveFiles?tarCodigo=' +
+            selectedEvent.Tar_eventId + '&calCodigo=' + selectedEvent.Cal_eventId;
     }
 }
 
@@ -296,6 +301,38 @@ function SaveNewProgTask() {
             }
             else {
                 showAlert(data, "Calidad", "warning");
+            }
+        }
+    });
+}
+
+function fileSelect() {
+    var fileName = $('#fileSelect').val();
+    var tarRegist = $('#fileName').val();
+    if (fileName != tarRegist) {
+        showAlert("Favor validar el nombre del documento el cual debe ser " + tarRegist, "Calidad", "warning");
+        $('#fileSelect').val('');
+    }
+}
+
+function SaveFiles() {
+    $("#Splash_Screen_Load").fadeIn();
+    $.ajax({
+        url: "/Calidad/SaveFiles",
+        type: 'Post',
+        data: {
+            CalCodigo: $("#calCodigo").val(),
+            calObserva: $("#calObserva").val()
+        },
+        success: function (data) {
+            $("#Splash_Screen_Load").fadeOut();
+            if (data) {
+                $("#divBtn").css("display", "none");
+                showAlert("Tarea Guardada exitosamente.", "Calidad", "success");
+                setInterval(location.href = '/Calidad/Calendar', 2000);
+            }
+            else {
+                showAlert("Ocurrio un error al intentar guardar la tarea, intentar nuevamente.", "Calidad", "warning");
             }
         }
     });

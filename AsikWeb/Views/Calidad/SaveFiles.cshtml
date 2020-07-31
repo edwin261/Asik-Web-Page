@@ -1,21 +1,56 @@
-﻿
+﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
 @{
     ViewData["Title"] = "Cargar Documentos";
 }
 
-<div class="row mt-4">
-    <div class="col-md-4">
-        <label id="lblProceso">Proceso</label>
-    </div>
-    <div class="col-md-4">
-        <label id="lblActividad">Actividad</label>
-    </div>
-    <div class="col-md-4">
-        <label id="lblTarea">Tarea</label>
+<div class="row" style="margin-top: 6rem !important; margin-bottom: 6rem !important;">
+    <div class="col-md-11 col-sm-12 ml-lg-5 ml-sm-0">
+        <form action="/Calidad/SaveFiles" enctype="multipart/form-data" method="post">
+            <fieldset class="border p-2" style="border-color: rgba(var(--color_orange)) !important;">
+                <legend class="w-auto color_orange">Informe General</legend>
+                <div class="row">
+                    <div class="col-md-4 pb-3 ml-4">
+                        <strong>Proceso: </strong><label id="lblProceso">@Model.Procesos[0].ProNombre</label>
+                    </div>
+
+                    <div class="col-md-6 pb-3 ml-4">
+                        <strong>Actividad: </strong><label id="lblActividad">@Model.Tareas[0].TarActcodNavigation.ActNombre</label>
+                    </div>
+
+                    <div class="col-md-11 pb-3 ml-4">
+                        <strong>Tarea: </strong><label id="lblTarea">@Model.Tareas[0].TarNombre</label>
+                        <input type="hidden" id="tarCodigo" value="@Model.Tareas[0].TarCodigo" />
+                    </div>
+
+                    <div class="col-md-4 pb-3 ml-4">
+                        <strong>Fecha Tarea: </strong><label id="lblFechIni">@Convert.ToDateTime(Model.calCalendarios[0].CalFecprog).ToString("MMMM dd, yyyy")</label>
+                    </div>
+
+                    <div class="col-md-5 pb-3 ml-4">
+                        <strong>Fecha Limite: </strong><label id="lblFechFin">@Convert.ToDateTime(Model.calCalendarios[0].CalFecven).ToString("MMMM dd, yyyy")</label>
+                    </div>
+
+                    <div class="col-md-11 pb-3 ml-4">
+                        <label><strong>Observaciones</strong></label>
+                        <textarea id="calObserva" style="overflow:auto;resize:none" class="form-control" rows="5" cols="7"></textarea>
+                    </div>
+
+                    <div class="col-md-11 ml-4 pb-4">
+                        <input type="hidden" id="fileName" value="@Model.Tareas[0].TarRegist" />
+                        <input type="hidden" id="calCodigo" value="@Model.calCalendarios[0].CalCodigo" />
+                        <label><strong>Anexar documento PDF</strong></label>
+                        <input required type="file" id="fileSelect" class="form-control-file col-md-12" accept=".pdf, .PDF" onchange="fileSelect(event)" />
+                    </div>
+                </div>
+                <div class="modal-footer" id="divBtn">
+                    <button type="submit" id="btnSave" class="btn btn-success btn_save_color" style="color:black">Guardar</button>
+                    <button type="button" class="btn btn-danger btn_cancel disable">Cancelar</button>
+                </div>
+            </fieldset>
+        </form>
     </div>
 </div>
 
-<div class="row">
-    <h5 class="col-md-1">Subir Archivo:</h5>
-    <input type="file" class="form-control col-md-9" />
-</div>
+@section Scripts{
+    <script src="~/js/Calidad.js" type="text/javascript" asp-append-version="true"></script>
+}
