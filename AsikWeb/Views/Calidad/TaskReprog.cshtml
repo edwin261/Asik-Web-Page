@@ -1,0 +1,132 @@
+﻿@model List<AsikWeb.Models.Entidades.CalCalendario>;
+@{
+    ViewData["Title"] = "Reprogramacion";
+}
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<style>
+    .row {
+        margin-right: 0;
+        margin-left: 0;
+    }
+
+    .dataTables_scrollBody {
+        height: 317px !important;
+    }
+
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+        bottom: .5em;
+    }
+
+    .col, .col-1, .col-10, .col-11, .col-12, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-auto, .col-lg, .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-lg-auto, .col-md, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-md-auto, .col-sm, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-sm-auto, .col-xl, .col-xl-1, .col-xl-10, .col-xl-11, .col-xl-12, .col-xl-2, .col-xl-3, .col-xl-4, .col-xl-5, .col-xl-6, .col-xl-7, .col-xl-8, .col-xl-9, .col-xl-auto {
+        width: unset;
+    }
+</style>
+
+<div class="row">
+    <div class="col-md-7 mt-4">
+        <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
+
+        <h4 class="color_orange text-shadow">
+            Lista de tareas para reprogramar
+        </h4>
+    </div>
+
+    <!-- tabla lista tareas a reprogramar -->
+    <div class="col-md-12 mt-2" style="margin-bottom:4.5rem">
+        <table id="dtBasicExample" class="table table-sm" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th class="text-center">Actividad</th>
+                    <th class="text-center">Tarea</th>
+                    <th class="text-center">Accion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var delayTask in Model)
+                    {
+                        <tr id="tr_@delayTask.CalCodigo">
+                            <td class="text-center" id="ActNombre_@delayTask.CalCodigo">@delayTask.CalTarcodNavigation.TarActcodNavigation.ActNombre</td>
+                            <td class="text-center" id="TarNombre_@delayTask.CalCodigo">@delayTask.CalTarcodNavigation.TarNombre</td>
+                            <td style="display:none" class="text-center" id="CalObserv_@delayTask.CalCodigo">@delayTask.CalObser</td>
+                            <td class="text-center">
+                                <button class="form-control btn-success" onclick="loadDatoToReprog('@delayTask.CalCodigo')">Reprogramar</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @*Modal para reprogramar la tarea*@
+    <div id="ModalReprog" class="modal fade" role="dialog" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content" style="border-radius: 7vh; box-shadow: 1em 1em 11.3em rgba(255, 143, 46, 0.94);">
+                <div class="modal-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <h4 class="TextNegrita text-center text-shadow">Datos</h4>
+                            <input type="hidden" id="txtCalCodigo" />
+                        </div>
+                        <div class="form-group">
+                            <label>Fecha de reprogramacion</label>
+                            <input type="date" class="form-control" id="CalFecreprog" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Actividad</label>
+                            <input type="text" class="form-control" id="txt_Actividad" readonly />
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tarea</label>
+                            <input type="text" class="form-control" id="txt_Tarea" readonly />
+                        </div>
+
+                        @*<div class="form-group">
+                            <label>Observacion</label>
+                            <input type="text" class="form-control" id="txt_Comentario" readonly />
+                        </div>*@
+
+                        <div class="modal-footer" id="divBtn">
+                            <button type="button" onclick="UpdateCalendarTask()" id="btnSave" class="btn btn-success btn_save_color disable" style="color:black">Guardar</button>
+                            <button type="button" class="btn btn-danger btn_cancel disable" data-dismiss="modal">
+                                Cerrar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts
+{
+    <script type="text/javascript" charset="utf8" src="/js/jquery.dataTables.js"></script>
+    <script src="~/js/Calidad.js" type="text/javascript" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $('#dtBasicExample').DataTable({
+
+                language: {
+                    url: '/js/Spanish.json'
+                },
+                lengthMenu: [5, 10, 20, 50, 100, 200, 500, 10000]
+            });
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}

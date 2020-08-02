@@ -28,19 +28,17 @@ function LoadCalendar(rol) {
             if (data != null) {
                 if (data.calCalendarios != null) {
                     for (var c = 0; c < data.calCalendarios.length; c++) {
-                        if (data.calCalendarios[c].calFecreprog == null) {
-                            events.push({
-                                proyect_name: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
-                                Tar_eventId: data.calCalendarios[c].calTarcodNavigation.tarCodigo,
-                                Cal_eventId: data.calCalendarios[c].calCodigo,
-                                title: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
-                                description: data.calCalendarios[c].calTarcodNavigation.tarNombre,
-                                start: moment(data.calCalendarios[c].calFecprog),
-                                end: data.calCalendarios[c].calFecven != null ? moment(data.calCalendarios[c].calFecven) : null,
-                                color: data.calCalendarios[c].calColor,
-                                allDay: false
-                            });
-                        }
+                        events.push({
+                            proyect_name: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
+                            Tar_eventId: data.calCalendarios[c].calTarcodNavigation.tarCodigo,
+                            Cal_eventId: data.calCalendarios[c].calCodigo,
+                            title: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
+                            description: data.calCalendarios[c].calTarcodNavigation.tarNombre,
+                            start: data.calCalendarios[c].calFecreprog == null ? moment(data.calCalendarios[c].calFecprog) : moment(data.calCalendarios[c].CalFecreprog),
+                            end: data.calCalendarios[c].calFecreprog == null ? data.calCalendarios[c].calFecven != null ? moment(data.calCalendarios[c].calFecven) : null : moment(data.calCalendarios[c].calFecreprog).add(23, 'hours'),
+                            color: data.calCalendarios[c].calColor,
+                            allDay: false
+                        });
                     }
                 }
             }
@@ -84,7 +82,7 @@ function GenerateCalender(events) {
         eventColor: '#378006',
         events: events,
         eventClick: function (calEvent, jsEvent, view) {
-            if (calEvent.color) {
+            if (calEvent.color != "red") {
                 selectedEvent = calEvent;
                 $('#myModal #eventTitle').text(calEvent.proyect_name);
                 var $description = $('<div/>');
@@ -100,7 +98,8 @@ function GenerateCalender(events) {
                 $('#CalendarModal').modal('hide');
                 $('#myModal').modal();
             } else {
-
+                $("#calCodigo").val(calEvent.Cal_eventId);
+                $('#ModalConfirmation').modal();
             }
         },
         selectable: true,
@@ -338,4 +337,66 @@ function SaveFiles() {
             }
         }
     });
+}
+
+function sendMailToReprog(codUsu) {
+    $("#Splash_Screen_Load").fadeIn();
+    if ($("#calReprogObserva").val().trim() == "") {
+        showAlert("Debe especificar un motivo por el cual no realizo la tarea en la fecha indicada", "Calidad", "warning");
+        $("#Splash_Screen_Load").fadeOut();
+    } else {
+        $.ajax({
+            url: "/Calidad/sendMailToReprog",
+            type: 'Post',
+            data: {
+                calCodigo: parseInt($("#calCodigo").val()),
+                calObserva: $("#calReprogObserva").val(),
+                codUsu: codUsu
+            },
+            success: function (data) {
+                $("#Splash_Screen_Load").fadeOut();
+                if (data.status) {
+                    showAlert(data.message, "Calidad", "success");
+                    setInterval(location.href = '/Calidad/Reprog', 2000);
+                }
+                else {
+                    showAlert(data.message, "Calidad", "warning");
+                    $("#Splash_Screen_Load").fadeOut();
+                }
+            }
+        });
+    }
+}
+
+function UpdateCalendarTask() {
+    $("#Splash_Screen_Load").fadeIn();
+    $.ajax({
+        url: "/Calidad/UpdateCalendarTask",
+        type: 'Post',
+        data: {
+            CalCodigo: $("#txtCalCodigo").val(),
+            CalFecreprog: $("#CalFecreprog").val()
+        },
+        success: function (data) {
+            $("#Splash_Screen_Load").fadeOut();
+            if (data) {
+                $("#tr_" + $("#txtCalCodigo").val()).fadeOut(200);
+                showAlert("Tarea reprogramada exitosamente.", "Calidad", "success");
+                $("#ModalReprog").modal("hide");
+            }
+            else {
+                showAlert("Ocurrio un error al intentar guardar la tarea, intentar nuevamente.", "Calidad", "warning");
+            }
+        }
+    });
+}
+
+function loadDatoToReprog(calCodigo) {
+    $("#Splash_Screen_Load").fadeIn();
+    $("#txt_Actividad").val($("#ActNombre_" + calCodigo).html());
+    $("#txt_Tarea").val($("#TarNombre_" + calCodigo).html());
+    $("#txt_Comentario").val($("#CalObserv_" + calCodigo).html());
+    $("#txtCalCodigo").val(calCodigo);
+    $("#Splash_Screen_Load").fadeOut(200);
+    $("#ModalReprog").modal();
 }

@@ -1,10 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Calendar";
     List<int> rolUsuList = new List<int>();
+    int codUsu = 0;
     foreach (var identities in User.Identities.ToList())
     {
-        for (int i = 2; i < identities.Claims.Count(); i++)
+        for (int i = 1; i < identities.Claims.Count(); i++)
         {
+            if (i == 1)
+            {
+                codUsu = Convert.ToInt32(identities.Claims.ElementAt(i).Value);
+                continue;
+            }
             rolUsuList.Add(Convert.ToInt32(identities.Claims.ElementAt(i).Value));
         }
     }
@@ -46,7 +52,6 @@
                     </div>
                     <div class="form-group">
                         <label>Fecha de Inicio</label>
-                        @*<input type="date" value="@DateTime.Now.ToString("yyyy-MM-dd")" min="@DateTime.Now.ToString("yyyy-MM-dd")" class="form-control col-md-12" id="dtp1" />*@
                         <div class="input-group date" id="dtp1" data-target-input="nearest">
                             <input type="text" readonly class="form-control datetimepicker-input" data-target="#dtp1" id="txtStart" />
                             <div class="input-group-append" data-target="#dtp1" data-toggle="datetimepicker">
@@ -72,13 +77,8 @@
                         <select class="form-control" id="slt_Tarea">
                         </select>
                     </div>
-                    <div class="form-group" id="loadDocument" style="display:none">
-                        <label>Cargar Documento</label>
-                        <input type="file" name="imagensubida" class="form-control" accept=".pdf, .docx, .xls">
-                    </div>
                     <div class="modal-footer" id="divBtn">
                         <button type="button" onclick="SaveNewProgTask()" id="btnSave" class="btn btn-success btn_save_color disable" style="color:black">Guardar</button>
-                        <button type="button" onclick="SaveTask()" id="btnSaveDocument" class="btn btn-success btn_save_color" style="color:black;display:none">Guardar</button>
                         <button type="button" class="btn btn-danger btn_cancel disable" data-dismiss="modal">
                             Cerrar
                         </button>
@@ -93,20 +93,19 @@
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Reprogramar Tarea</h5>
+                <h5 class="modal-title">Tarea actualmente vencida para su realizacion</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <p>La tarea se encuentra actualmente vencida para su realizacion.</p>
-                <p>¿Motivo por el cual no se realizo la tarea?</p>
+                <p>Para solicitar la reprogramacion, por favor especificar el motivo por el cual no fue realizada la tarea</p>
+                <input type="text" id="calCodigo" />
                 <textarea id="calReprogObserva" style="overflow:auto;resize:none" class="form-control" rows="3" cols="3"></textarea>
-                <p>¿Solicitar la reprogramacion de la tarea?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" onclick="sendMailToReprog()">Si</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" onclick="sendMailToReprog('@codUsu')">Aceptar</button>
             </div>
         </div>
     </div>

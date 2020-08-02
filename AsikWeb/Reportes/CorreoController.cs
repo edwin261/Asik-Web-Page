@@ -145,6 +145,55 @@ CERTIFICAMOS SU TRANQUILIDAD"
             }
             return null;
         }
+
+        public async Task<bool> sendEmailTaskDelay(CalCalendario calCalendario, List<Usuarios>  usuarios, int codUsu)
+        {
+            try
+            {
+                using (var service = GetService<ASIK_PGWEB_Service>())
+                {
+                    var message = new MimeMessage();
+                    message.From.Add(new MailboxAddress("Asik S.A.S", "soporteiinspector@gmail.com"));
+                    foreach (var usuario in usuarios.Where(w=>w.UsuIdenti != codUsu))
+                    {
+                        message.To.Add(new MailboxAddress("", usuario.UsuEmail));
+                    }
+                    message.Subject = "Reprogramacion tarea modulo calidad: ";
+
+                    message.Body = new TextPart("plain")
+                    {
+                        Text = @"La tarea ... asociada a la actividad ... debido que no fue realizada entre las fechas ... , el usuario ...
+solicita una reprogramacion, por el siguiente motivo:
+
+...
+
+
+Esta dirección de e-mail es utilizada solamente para envíos automáticos, por favor no responder este correo.
+Cordialmente,
+
+
+
+ASIK SAS
+CERTIFICAMOS SU TRANQUILIDAD"
+                    };
+
+                    using (var client = new SmtpClient())
+                    {
+                        client.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
+                        client.Authenticate("soporteiinspector@gmail.com", "Soporteaplicaciones");
+                        client.Send(message);
+                        client.Disconnect(true);
+                    }
+
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
+
         public bool Send_Email_Rev_Documental(List<Rev_DocItem> rev_DocItem, Ord_Trabajo ord_Trabajo)
         {
             try
