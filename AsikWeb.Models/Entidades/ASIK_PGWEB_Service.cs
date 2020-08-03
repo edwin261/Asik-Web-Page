@@ -74,7 +74,8 @@ namespace AsikWeb.Models.Entidades
                 string pathUsu = Path.Combine(@"wwwroot\calidadFiles\", codUsu.ToString());
                 Directory.CreateDirectory(pathUsu);
 
-                string pathfech = Path.Combine(pathUsu, DateTime.Now.ToShortDateString());
+                string pathfech = Path.Combine(pathUsu, 
+                    DateTime.Now.Day.ToString() + "_" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Year.ToString());
                 Directory.CreateDirectory(pathfech);
 
                 var stream = File.Create(Path.Combine(pathfech, uploadFile.FileName));
@@ -128,6 +129,7 @@ namespace AsikWeb.Models.Entidades
                 {
                     calCalendario.CalFecreprog = Convert.ToDateTime(CalFecreprog.ToShortDateString());
                     calCalendario.CalColor = "gray";
+                    calCalendario.CalReprog = true;
                     _context.CalCalendario.Update(calCalendario).Property(p => p.CalCodigo).IsModified = false;
                     await _context.SaveChangesAsync();
                     return "Tarea reprogramada exitosamente.";
@@ -182,7 +184,7 @@ namespace AsikWeb.Models.Entidades
                 List<CalCalendario> calCalendarios = await _context.CalCalendario
                     .Include(i => i.CalTarcodNavigation)
                     .Include(i => i.CalTarcodNavigation.TarActcodNavigation)
-                    .Where(w => w.CalFecreprog == null && w.CalColor == "red" && w.CalObser != null).ToListAsync();
+                    .Where(w => w.CalReprog != true && w.CalFecreprog == null && w.CalColor == "red" && w.CalObser != null).ToListAsync();
                 return calCalendarios;
             }
             catch (Exception)
@@ -257,6 +259,7 @@ namespace AsikWeb.Models.Entidades
                                                 .AddDays(Convert.ToInt32(tareas[t].TarFechfin)).AddHours(23).AddMinutes(59).AddSeconds(59);
                                             date = Convert.ToDateTime(calCalendario.CalFecprog);
                                             calCalendario.CalColor = "gray";
+                                            calCalendario.CalReprog = false;
                                             await _context.CalCalendario.AddAsync(calCalendario);
                                             await _context.SaveChangesAsync();
                                         }
@@ -269,6 +272,7 @@ namespace AsikWeb.Models.Entidades
                                         for (int l = 1; l <= 4; l++)
                                         {
                                             calCalendario = AddCalcalendario(tareas[t]);
+                                            calCalendario.CalReprog = false;
                                             calCalendario.CalFecprog = date.AddDays(Convert.ToInt32(tareas[t].TarFechini));
                                             calCalendario.CalFecven = Convert.ToDateTime(calCalendario.CalFecprog)
                                                 .AddDays(Convert.ToInt32(tareas[t].TarFechfin)).AddHours(23).AddMinutes(59).AddSeconds(59);
@@ -289,6 +293,7 @@ namespace AsikWeb.Models.Entidades
                                                 .AddDays(Convert.ToInt32(tareas[t].TarFechfin)).AddHours(23).AddMinutes(59).AddSeconds(59);
                                         date = Convert.ToDateTime(calCalendario.CalFecprog);
                                         calCalendario.CalColor = "gray";
+                                        calCalendario.CalReprog = false;
                                         await _context.CalCalendario.AddAsync(calCalendario);
                                         await _context.SaveChangesAsync();
                                     }
@@ -303,6 +308,7 @@ namespace AsikWeb.Models.Entidades
                                                 .AddDays(Convert.ToInt32(tareas[t].TarFechfin)).AddHours(23).AddMinutes(59).AddSeconds(59);
                                         date = Convert.ToDateTime(calCalendario.CalFecprog);
                                         calCalendario.CalColor = "gray";
+                                        calCalendario.CalReprog = false;
                                         await _context.CalCalendario.AddAsync(calCalendario);
                                         await _context.SaveChangesAsync();
                                     }
@@ -348,6 +354,7 @@ namespace AsikWeb.Models.Entidades
                 CalCalendario calCalendario = new CalCalendario
                 {
                     CalTarcod = tarCodigo,
+                    CalReprog = false,
                     CalFeccre = Convert.ToDateTime(DateTime.Now.ToShortDateString()),
                     CalFecprog = Convert.ToDateTime(CalFecprog.ToShortDateString()),
                     CalFecven = Convert.ToDateTime(CalFecprog).AddDays(Calfecvenc).AddHours(23).AddMinutes(59).AddSeconds(59),

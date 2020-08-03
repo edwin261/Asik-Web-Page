@@ -63,7 +63,7 @@ namespace AsikWeb.Controllers
             {
                 var SaveFileResult = await service.saveTask(uploadFile, CalCodigo, codUsu);
                 if (SaveFileResult.errorMetodo == null)
-                    return Json(new { Status = true, Message = SaveFileResult.successMetodo});
+                    return RedirectToAction("Calendar");
                 return Json(new { Status = false, Message = SaveFileResult.errorMetodo });
             }
         }

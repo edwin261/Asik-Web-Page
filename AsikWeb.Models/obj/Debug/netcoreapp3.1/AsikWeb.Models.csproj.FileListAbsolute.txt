@@ -107,3 +107,4 @@ C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\bin\Debug\netcoreapp3.1\As
 C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.dll
 C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.pdb
 C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.genruntimeconfig.cache
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb.Models\obj\Debug\netcoreapp3.1\AsikWeb.Models.csproj.CoreCompileInputs.cache

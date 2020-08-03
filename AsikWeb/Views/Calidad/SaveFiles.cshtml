@@ -7,7 +7,7 @@
         codUsu = Convert.ToInt32(identities.Claims.ElementAt(1).Value);
     }
 }
-    <div id="Splash_Screen_Load" style="display: none"></div>
+<div id="Splash_Screen_Load" style="display: none"></div>
 <div class="row" style="margin-top: 6rem !important; margin-bottom: 6rem !important;">
     <div class="col-md-11 col-sm-12 ml-lg-5 ml-sm-0">
         <form action="/Calidad/SaveFiles" enctype="multipart/form-data" method="post">
@@ -35,10 +35,10 @@
                         <strong>Fecha Limite: </strong><label id="lblFechFin">@Convert.ToDateTime(Model.calCalendarios[0].CalFecven).ToString("MMMM dd, yyyy")</label>
                     </div>
 
-                    <div class="col-md-11 pb-3 ml-4">
+                    @*<div class="col-md-11 pb-3 ml-4">
                         <label><strong>Observaciones</strong></label>
                         <textarea id="calObserva" style="overflow:auto;resize:none" class="form-control" rows="5" cols="7">@Model.calCalendarios[0].CalObser</textarea>
-                    </div>
+                    </div>*@
 
                     @if (Model.calCalendarios[0].CalFecreal == null)
                     {
