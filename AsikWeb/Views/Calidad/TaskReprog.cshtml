@@ -31,7 +31,7 @@
         width: unset;
     }
 </style>
-
+<div id="Splash_Screen_Load" style="display: none"></div>
 <div class="row">
     <div class="col-md-7 mt-4">
         <img class="imgNextToTitle" alt="Button to open menu" src="~/Img/Open_Menu.svg" width="47" onclick="OpenHideMenu(true)">
@@ -95,10 +95,10 @@
                             <input type="text" class="form-control" id="txt_Tarea" readonly />
                         </div>
 
-                        @*<div class="form-group">
+                        <div class="form-group">
                             <label>Observacion</label>
-                            <input type="text" class="form-control" id="txt_Comentario" readonly />
-                        </div>*@
+                            <textarea id="txt_Comentario" readonly style="overflow:auto;resize:none" class="form-control" rows="3" cols="3"></textarea>
+                        </div>
 
                         <div class="modal-footer" id="divBtn">
                             <button type="button" onclick="UpdateCalendarTask()" id="btnSave" class="btn btn-success btn_save_color disable" style="color:black">Guardar</button>

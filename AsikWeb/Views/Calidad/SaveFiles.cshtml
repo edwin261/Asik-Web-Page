@@ -1,8 +1,13 @@
 ﻿@model AsikWeb.Models.ViewModels.AsikViewModel;
 @{
     ViewData["Title"] = "Cargar Documentos";
+    int codUsu = 0;
+    foreach (var identities in User.Identities.ToList())
+    {
+        codUsu = Convert.ToInt32(identities.Claims.ElementAt(1).Value);
+    }
 }
-
+    <div id="Splash_Screen_Load" style="display: none"></div>
 <div class="row" style="margin-top: 6rem !important; margin-bottom: 6rem !important;">
     <div class="col-md-11 col-sm-12 ml-lg-5 ml-sm-0">
         <form action="/Calidad/SaveFiles" enctype="multipart/form-data" method="post">
@@ -19,7 +24,7 @@
 
                     <div class="col-md-11 pb-3 ml-4">
                         <strong>Tarea: </strong><label id="lblTarea">@Model.Tareas[0].TarNombre</label>
-                        <input type="hidden" id="tarCodigo" value="@Model.Tareas[0].TarCodigo" />
+                        <input type="hidden" id="tarCodigo" name="tarCodigo" value="@Model.Tareas[0].TarCodigo" />
                     </div>
 
                     <div class="col-md-4 pb-3 ml-4">
@@ -39,9 +44,10 @@
                     {
                         <div class="col-md-11 ml-4 pb-4">
                             <input type="hidden" id="fileName" value="@Model.Tareas[0].TarRegist" />
-                            <input type="hidden" id="calCodigo" value="@Model.calCalendarios[0].CalCodigo" />
+                            <input type="hidden" id="codUsu" name="codUsu" value="@codUsu" />
+                            <input type="hidden" id="calCodigo" name="calCodigo" value="@Model.calCalendarios[0].CalCodigo" />
                             <label><strong>Anexar documento PDF</strong></label>
-                            <input required type="file" id="fileSelect" class="form-control-file col-md-12" accept=".pdf, .PDF" onchange="fileSelect(event)" />
+                            <input required type="file" id="uploadFile" name="uploadFile" class="form-control-file col-md-12" accept=".pdf, .PDF" onchange="fileSelect(event)" />
                         </div>
                         <div class="modal-footer col-md-12" id="divBtn">
                             <button type="submit" id="btnSave" class="btn btn-success btn_save_color" style="color:black">Guardar</button>

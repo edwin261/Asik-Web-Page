@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using AsikWeb.Base;
 using AsikWeb.Models.Entidades;
 using AsikWeb.Reportes;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AsikWeb.Controllers
@@ -55,12 +57,14 @@ namespace AsikWeb.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> SaveFiles(int CalCodigo, string calObserva)
+        public async Task<IActionResult> SaveFiles(IFormFile uploadFile, int CalCodigo, int codUsu)
         {
             using (var service = GetService<ASIK_PGWEB_Service>())
             {
-                var saveTask = await service.saveTask(CalCodigo, calObserva);
-                return Json(new { data = true });
+                var SaveFileResult = await service.saveTask(uploadFile, CalCodigo, codUsu);
+                if (SaveFileResult.errorMetodo == null)
+                    return Json(new { Status = true, Message = SaveFileResult.successMetodo});
+                return Json(new { Status = false, Message = SaveFileResult.errorMetodo });
             }
         }
         [HttpPost]
@@ -136,7 +140,7 @@ namespace AsikWeb.Controllers
                 if (infoToSendMailTaskDelay.errorMetodo == null)
                 {
                     CorreoController ClientCorreo = new CorreoController(_serviceProvider);
-                    bool sendMail = await ClientCorreo.sendEmailTaskDelay(infoToSendMailTaskDelay.calCalendarios.FirstOrDefault(),
+                    bool sendMail = ClientCorreo.sendEmailTaskDelay(infoToSendMailTaskDelay.calCalendarios.FirstOrDefault(),
                         infoToSendMailTaskDelay.LstUsuarios, codUsu);
                     if (sendMail)
                         return Json(new { Status = true, Message = infoToSendMailTaskDelay.successMetodo });

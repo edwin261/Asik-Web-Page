@@ -1640,3 +1640,5 @@ C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb\obj\Debug\netcoreapp3.1\AsikWeb.d
 C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb\obj\Debug\netcoreapp3.1\AsikWeb.pdb
 C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb\obj\Debug\netcoreapp3.1\AsikWeb.genruntimeconfig.cache
 C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb\obj\Debug\netcoreapp3.1\Razor\Views\Calidad\TaskReprog.cshtml.g.cs
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.Http.Features.dll
+C:\Users\edwin\Documents\Asik-Web-Page\AsikWeb\bin\Debug\netcoreapp3.1\System.IO.Pipelines.dll

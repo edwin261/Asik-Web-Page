@@ -7,6 +7,7 @@ using AsikWeb.Models;
 using Microsoft.AspNetCore.Http;
 using AsikWeb.Base;
 using AsikWeb.Models.Entidades;
+using Microsoft.AspNetCore.Authentication;
 
 namespace AsikWeb.Controllers
 {
@@ -27,8 +28,9 @@ namespace AsikWeb.Controllers
         }
 
         [HttpGet]
-        public IActionResult SplashScreen()
+        public async Task<IActionResult> SplashScreen()
         {
+            await HttpContext.SignOutAsync();
             return View();
         }
 

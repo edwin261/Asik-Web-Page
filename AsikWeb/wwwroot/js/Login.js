@@ -50,7 +50,6 @@ function LogIn(event) {
                         location.href = "/Dictamen/Index";
                         break;
                 }
-                $("#Splash_Screen_Load").fadeOut();
             } else {
                 showAlert(data.message, "Login", "warning");
                 $("#UserAsik").val('');

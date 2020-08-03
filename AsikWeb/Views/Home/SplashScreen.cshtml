@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <title>Portal Asik</title>
     <style>
-        body{
+        body {
             overflow-x: hidden;
         }
     </style>
@@ -55,6 +55,7 @@
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js"></script>
     <script>
         $(document).ready(function () {
+            deleteAllCookies();
             setTimeout(function () {
                 $("#Splash_Screen").fadeOut(300);
                 $("#page_content").fadeIn(400);
@@ -68,6 +69,15 @@
                     break;
                 default:
                     location.href = "/Acceso/Index";
+            }
+        }
+
+        function deleteAllCookies() {
+            var mydate = new Date();
+            var cookies = document.cookie.split("; ");
+            if (cookies[0] != "") {
+                for (i in cookies)
+                    document.cookie = /^[^=]+/.exec(cookies[i])[0] + "=;expires=" + mydate.toGMTString();
             }
         }
     </script>

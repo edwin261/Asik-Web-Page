@@ -34,7 +34,7 @@ function LoadCalendar(rol) {
                             Cal_eventId: data.calCalendarios[c].calCodigo,
                             title: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
                             description: data.calCalendarios[c].calTarcodNavigation.tarNombre,
-                            start: data.calCalendarios[c].calFecreprog == null ? moment(data.calCalendarios[c].calFecprog) : moment(data.calCalendarios[c].CalFecreprog),
+                            start: data.calCalendarios[c].calFecreprog == null ? moment(data.calCalendarios[c].calFecprog) : moment(data.calCalendarios[c].calFecreprog),
                             end: data.calCalendarios[c].calFecreprog == null ? data.calCalendarios[c].calFecven != null ? moment(data.calCalendarios[c].calFecven) : null : moment(data.calCalendarios[c].calFecreprog).add(23, 'hours'),
                             color: data.calCalendarios[c].calColor,
                             allDay: false
@@ -354,15 +354,14 @@ function sendMailToReprog(codUsu) {
                 codUsu: codUsu
             },
             success: function (data) {
-                $("#Splash_Screen_Load").fadeOut();
                 if (data.status) {
                     showAlert(data.message, "Calidad", "success");
-                    setInterval(location.href = '/Calidad/Reprog', 2000);
+                    $("#ModalConfirmation").modal('hide');
                 }
                 else {
                     showAlert(data.message, "Calidad", "warning");
-                    $("#Splash_Screen_Load").fadeOut();
                 }
+                $("#Splash_Screen_Load").fadeOut(100);
             }
         });
     }

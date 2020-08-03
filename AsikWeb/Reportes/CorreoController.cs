@@ -11,6 +11,7 @@ using MimeKit;
 using AsikWeb.Models.Entidades;
 using AsikWeb.Base;
 using System.Text;
+using Syncfusion.XlsIO.Calculate;
 
 namespace AsikWeb.Reportes
 {
@@ -146,7 +147,7 @@ CERTIFICAMOS SU TRANQUILIDAD"
             return null;
         }
 
-        public async Task<bool> sendEmailTaskDelay(CalCalendario calCalendario, List<Usuarios>  usuarios, int codUsu)
+        public bool sendEmailTaskDelay(CalCalendario calCalendario, List<Usuarios> usuarios, int codUsu)
         {
             try
             {
@@ -154,7 +155,7 @@ CERTIFICAMOS SU TRANQUILIDAD"
                 {
                     var message = new MimeMessage();
                     message.From.Add(new MailboxAddress("Asik S.A.S", "soporteiinspector@gmail.com"));
-                    foreach (var usuario in usuarios.Where(w=>w.UsuIdenti != codUsu))
+                    foreach (var usuario in usuarios.Where(w => w.UsuIdenti != codUsu))
                     {
                         message.To.Add(new MailboxAddress("", usuario.UsuEmail));
                     }
@@ -162,18 +163,17 @@ CERTIFICAMOS SU TRANQUILIDAD"
 
                     message.Body = new TextPart("plain")
                     {
-                        Text = @"La tarea ... asociada a la actividad ... debido que no fue realizada entre las fechas ... , el usuario ...
-solicita una reprogramacion, por el siguiente motivo:
+                        Text = @"La tarea " + calCalendario.CalTarcodNavigation.TarNombre + @" asociada a la actividad " + calCalendario.CalTarcodNavigation.TarActcodNavigation.ActNombre +
+ @" debido que no fue realizada entre las fechas " + calCalendario.CalFecprog + " - " + calCalendario.CalFecven + @" , el usuario " + usuarios.Where(w => w.UsuIdenti == codUsu).FirstOrDefault().UsuNombre + " " + usuarios.Where(w => w.UsuIdenti == codUsu).FirstOrDefault().UsuApelli +
+ @" solicita una reprogramacion, por el siguiente motivo: " +
 
-...
+ calCalendario.CalObser + @".
 
 
 Esta dirección de e-mail es utilizada solamente para envíos automáticos, por favor no responder este correo.
 Cordialmente,
 
-
-
-ASIK SAS
+ASIK SAS 
 CERTIFICAMOS SU TRANQUILIDAD"
                     };
 

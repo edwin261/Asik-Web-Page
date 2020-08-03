@@ -9,6 +9,7 @@ using System.IO;
 using System.Globalization;
 using System.Runtime.InteropServices.ComTypes;
 using System.Net;
+using Microsoft.AspNetCore.Http;
 
 namespace AsikWeb.Models.Entidades
 {
@@ -66,21 +67,36 @@ namespace AsikWeb.Models.Entidades
             }
         }
 
-        public async Task<bool> saveTask(int CalCodigo, string calObserva)
+        public async Task<AsikViewModel> saveTask(IFormFile uploadFile, int CalCodigo, int codUsu)
         {
             try
             {
+                string pathUsu = Path.Combine(@"wwwroot\calidadFiles\", codUsu.ToString());
+                Directory.CreateDirectory(pathUsu);
+
+                string pathfech = Path.Combine(pathUsu, DateTime.Now.ToShortDateString());
+                Directory.CreateDirectory(pathfech);
+
+                var stream = File.Create(Path.Combine(pathfech, uploadFile.FileName));
+                await uploadFile.CopyToAsync(stream);
+                stream.Close();
+
                 CalCalendario calCalendario = await _context.CalCalendario.Where(w => w.CalCodigo == CalCodigo).FirstOrDefaultAsync();
-                calCalendario.CalObser = calObserva;
+                calCalendario.CalRutarc = Path.Combine(pathfech, uploadFile.FileName);
                 calCalendario.CalColor = "green";
                 calCalendario.CalFecreal = DateTime.Now;
                 _context.CalCalendario.Update(calCalendario).Property(p => p.CalCodigo).IsModified = false;
                 await _context.SaveChangesAsync();
-                return true;
+
+
+                return new AsikViewModel
+                {
+                    successMetodo = "Tarea cargada exitosamente."
+                };
             }
             catch (Exception ex)
             {
-                return false;
+                return new AsikViewModel { errorMetodo = ex.Message.ToString() };
             }
         }
 
@@ -166,7 +182,7 @@ namespace AsikWeb.Models.Entidades
                 List<CalCalendario> calCalendarios = await _context.CalCalendario
                     .Include(i => i.CalTarcodNavigation)
                     .Include(i => i.CalTarcodNavigation.TarActcodNavigation)
-                    .Where(w => w.CalFecreprog == null && w.CalColor == "red").ToListAsync();
+                    .Where(w => w.CalFecreprog == null && w.CalColor == "red" && w.CalObser != null).ToListAsync();
                 return calCalendarios;
             }
             catch (Exception)
