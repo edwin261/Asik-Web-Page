@@ -3,9 +3,8 @@ var cod = [];
 var selectedEvent = null;
 
 $(document).ready(function () {
-    //LoadCalendar($("#rol_usu").val());
-    //GenerateCalender(null);
-    loadSltTarea(1, true);
+    loadSltTarea(1, '', true);
+    periocidad(0);
 
     $('.validanumericos').keypress(function (e) {
         if (isNaN(this.value + String.fromCharCode(e.charCode)))
@@ -34,8 +33,8 @@ function LoadCalendar(rol) {
                             Cal_eventId: data.calCalendarios[c].calCodigo,
                             title: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
                             description: data.calCalendarios[c].calTarcodNavigation.tarNombre,
-                            start: data.calCalendarios[c].calReprog == null ? moment(data.calCalendarios[c].calFecprog) : moment(data.calCalendarios[c].calFecreprog),
-                            end: data.calCalendarios[c].calReprog == null ? data.calCalendarios[c].calFecven != null ? moment(data.calCalendarios[c].calFecven) : null : moment(data.calCalendarios[c].calFecreprog).add(23, 'hours'),
+                            start: data.calCalendarios[c].calReprog == false ? moment(data.calCalendarios[c].calFecprog) : moment(data.calCalendarios[c].calFecreprog),
+                            end: data.calCalendarios[c].calReprog == false ? data.calCalendarios[c].calFecven != null ? moment(data.calCalendarios[c].calFecven) : null : moment(data.calCalendarios[c].calFecreprog).add(23, 'hours'),
                             color: data.calCalendarios[c].calColor,
                             allDay: false
                         });
@@ -169,26 +168,26 @@ function LoadEventView() {
     }
 }
 
-function Load_Actividades(Pro_Codigo) {
-    cod = [];
+function Load_Actividades(proCodigo, proNombre) {
     $("#Splash_Screen_Load").fadeIn();
-    addValueToArray(Pro_Codigo);
     $.ajax({
         url: "/Calidad/Load_Actividades",
         type: 'Post',
         data: {
-            Pro_Codigo: Pro_Codigo
+            Pro_Codigo: proCodigo
         },
         success: function (data) {
             if (data.length > 0) {
                 $("#div_Procesos").fadeOut(300);
                 data.forEach(function (actividad) {
-                    $('<div class="col-md-4 mt-4">' +
+                    $('<div class="col-md-5 mt-4 ml-md-5">' +
                         '<input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"' +
-                        'value="' + actividad.actNombre + '" id="' + actividad.actCodigo + '" onclick="addValueToArray(' +
-                        actividad.actCodigo + '), loadSltTarea(\'' + actividad.actCodigo + '\'' + ',' + '\'' + false + '\')" />' +
+                        'value="' + capitalize(actividad.actNombre.toLowerCase()) + '" id="' + actividad.actCodigo + '" onclick="loadSltTarea(\'' + actividad.actCodigo + '\'' + ',' + '\'' + actividad.actNombre + '\'' + ',' + '\'' + false + '\')" />' +
                         '</div>').appendTo("#divBtnActivities");
                 });
+                $("#txtProceso").val(proNombre);
+                $("#txtProcesoId").val(proCodigo);
+                $('#txtProceso').prop('readonly', true);
                 $("#div_Actividades").fadeIn(300);
             } else {
                 showAlert("El proceso no tiene actividades relacionadas", "Calidad", "warning");
@@ -196,10 +195,6 @@ function Load_Actividades(Pro_Codigo) {
             $("#Splash_Screen_Load").fadeOut();
         }
     });
-}
-
-function addValueToArray(Codigo) {
-    cod.push(Codigo);
 }
 
 function loadSelectProceso() {
@@ -248,14 +243,14 @@ function loadSltActividad(Pro_Codigo) {
     });
 }
 
-function loadSltTarea(Act_Codigo, opt) {
+function loadSltTarea(actCodigo, actNombre, opt) {
     $("#Splash_Screen_Load").fadeIn();
     $('#slt_Tarea').empty();
     $.ajax({
         url: "/Calidad/Load_Tareas",
         type: 'Post',
         data: {
-            Act_Codigo: Act_Codigo
+            Act_Codigo: actCodigo
         },
         success: function (data) {
             if (data.length > 0) {
@@ -266,13 +261,15 @@ function loadSltTarea(Act_Codigo, opt) {
                     });
                     $("#divBtn").fadeIn();
                 } else {
-                    addValueToArray(Act_Codigo);
                     $("#div_Actividades").fadeOut(300);
                     data.forEach(function (tarea) {
-                        $('<div class="col-md-4 mt-4">' +
+                        $('<div class="col-md-5 mt-4 ml-md-5">' +
                             '<input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"' +
-                            'value="' + tarea.tarNombre + '" id="' + tarea.tarCodigo + '" />' +
+                            'value="' + capitalize(tarea.tarNombre.toLowerCase()) + '" id="' + tarea.tarCodigo + '" />' +
                             '</div>').appendTo("#divBtnTrea");
+                        $("#txtActividad").val(actNombre);
+                        $("#txtActividadId").val(actCodigo);
+                        $('#txtActividad').prop('readonly', true);
                         $("#div_Tareas").fadeIn(300);
                     });
                 }
@@ -284,7 +281,35 @@ function loadSltTarea(Act_Codigo, opt) {
     });
 }
 
-function SaveNewProgTask() {
+function periocidad(id) {
+    if (id == 0) {
+        $.ajax({
+            url: "/Calidad/Periocidad",
+            type: 'Post',
+            data: {},
+            success: function (data) {
+                if (data != null) {
+                    $("#sltPeriocidad").empty();
+                    data.forEach(function (periocidad) {
+                        if (periocidad.perCodigo == 8)
+                            $('#sltPeriocidad').append("<option selected value=" + periocidad.perCodigo + ">" + periocidad.perNombre + "</option>");
+                        else
+                            $('#sltPeriocidad').append("<option value=" + periocidad.perCodigo + ">" + periocidad.perNombre + "</option>");
+                    });
+                } else {
+                    showAlert("No se encontraron datos de periocidad", "Calidad", "warning");
+                }
+            }
+        });
+    } else {
+        if (id != 8)
+            $("#fechaPeriocidad").css("display", "block");
+        else
+            $("#fechaPeriocidad").css("display", "none");
+    }
+}
+
+function SaveNewProgTask(codUsu) {
     $("#Splash_Screen_Load").fadeIn();
     $.ajax({
         url: "/Calidad/SaveNewProgTask",
@@ -297,6 +322,7 @@ function SaveNewProgTask() {
         success: function (data) {
             $("#Splash_Screen_Load").fadeOut();
             if (data = "Tarea programada exitosamente") {
+                LoadCalendar(null);
                 showAlert(data, "Calidad", "success");
                 $('#myModalSave').modal('hide');
             }
@@ -310,33 +336,11 @@ function SaveNewProgTask() {
 function fileSelect() {
     var fileName = $('#uploadFile').val().split('\\').pop();
     var tarRegist = $('#fileName').val();
-    if (fileName != tarRegist) {
-        showAlert("Favor validar el nombre del documento el cual debe ser " + tarRegist, "Calidad", "warning");
-        $('#uploadFile').val('');
-    }
+
 }
 
-function SaveFiles() {
+function SaveFiles(event) {
     $("#Splash_Screen_Load").fadeIn();
-    $.ajax({
-        url: "/Calidad/SaveFiles",
-        type: 'Post',
-        data: {
-            CalCodigo: $("#calCodigo").val(),
-            calObserva: $("#calObserva").val()
-        },
-        success: function (data) {
-            $("#Splash_Screen_Load").fadeOut();
-            if (data) {
-                $("#divBtn").css("display", "none");
-                showAlert("Tarea Guardada exitosamente.", "Calidad", "success");
-                setInterval(location.href = '/Calidad/Calendar', 2000);
-            }
-            else {
-                showAlert("Ocurrio un error al intentar guardar la tarea, intentar nuevamente.", "Calidad", "warning");
-            }
-        }
-    });
 }
 
 function sendMailToReprog(codUsu) {
@@ -398,4 +402,32 @@ function loadDatoToReprog(calCodigo) {
     $("#txtCalCodigo").val(calCodigo);
     $("#Splash_Screen_Load").fadeOut(200);
     $("#ModalReprog").modal();
+}
+
+function SaveNewProg() {
+    $("#Splash_Screen_Load").fadeIn();
+    $.ajax({
+        url: "/Calidad/SaveNewProg",
+        type: 'Post',
+        data: {
+            proceso: $("#txtProcesoId").val(),
+            procesoName: $("#txtProceso").val().toUpperCase(),
+            actividad: $("#txtActividadId").val(),
+            actividadName: $("#txtActividad").val().toUpperCase(),
+            tareaName: $("#txtTarea").val().toUpperCase(),
+            periocidad: $("#sltPeriocidad").val(),
+            fecha: $("#datePeriocidad").val(),
+            prorroga: $("#DiasProrroga").val()
+        },
+        success: function (data) {
+            showAlert(data.message, "Calidad", "success");
+            setTimeout(function () {
+                location.href = '/Calidad/Index';
+            }, 3000);
+        }
+    });
+}
+
+function capitalize(word) {
+    return $.camelCase("-" + word);
 }

@@ -105,13 +105,11 @@ namespace AsikWeb.Models.Entidades
         {
             try
             {
-                //probar
                 return new AsikViewModel
                 {
                     calCalendarios = await _context.CalCalendario
                     .Include(i => i.CalTarcodNavigation)
-                    .Include(i => i.CalTarcodNavigation.TarActcodNavigation)
-                    .Where(w => w.CalFecreal == null).ToListAsync()
+                    .Include(i => i.CalTarcodNavigation.TarActcodNavigation).ToListAsync()
                 };
             }
             catch (Exception ex)
@@ -174,6 +172,55 @@ namespace AsikWeb.Models.Entidades
             catch (Exception ex)
             {
                 return new AsikViewModel { errorMetodo = ex.Message.ToString() };
+            }
+        }
+
+        public async Task<string> SaveNewProg(int proceso, string procesoName, int actividad, string actividadName, string tareaName, int periocidad, DateTime fecha, int prorroga)
+        {
+            try
+            {
+                if (proceso == 0)
+                {
+                    Proceso objProceso = new Proceso
+                    {
+                        ProNombre = procesoName
+                    };
+
+                    await _context.Proceso.AddAsync(objProceso);
+                    await _context.SaveChangesAsync();
+                    proceso = await _context.Proceso.CountAsync();
+                }
+
+                if (actividad == 0)
+                {
+                    Actividad objActividad = new Actividad
+                    {
+                        ActProcod = proceso,
+                        ActNombre = actividadName
+                    };
+
+                    await _context.Actividad.AddAsync(objActividad);
+                    await _context.SaveChangesAsync();
+                    actividad = await _context.Actividad.CountAsync();
+                }
+
+                Tareas tareas = new Tareas
+                {
+                    TarActcod = actividad,
+                    TarNombre = tareaName,
+                    TarPeriod = periocidad,
+                    TarRegist = "",
+                    TarFechini = periocidad != 8 ? fecha.Day : 0,
+                    TarFechfin = periocidad != 8 ? prorroga : 0
+                };
+                await _context.Tareas.AddAsync(tareas);
+                await _context.SaveChangesAsync();
+
+                return "Guardado realizado exitosamente";
+            }
+            catch (Exception ex)
+            {
+                return ex.Message.ToString();
             }
         }
 
@@ -373,6 +420,11 @@ namespace AsikWeb.Models.Entidades
         public async Task<List<Actividad>> Lst_BtnActividades(int pro_Codigo)
         {
             return await _context.Actividad.Where(w => w.ActProcod == pro_Codigo).ToListAsync();
+        }
+
+        public async Task<List<Periocidad>> LstPeriocidad()
+        {
+            return await _context.Periocidad.ToListAsync();
         }
 
         public async Task<List<Proceso>> Lst_BtnProcesos()

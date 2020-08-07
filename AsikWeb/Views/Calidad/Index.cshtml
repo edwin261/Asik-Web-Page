@@ -5,15 +5,19 @@
 
 <div id="Splash_Screen_Load" style="display: none"></div>
 
+<button type="button" class="btn btn-success btn-circle btn-xl" data-toggle="modal" data-target="#saveProceso">
+    <i class="fas fa-angle-right"></i>
+</button>
+
 <div id="div_Procesos">
     <div class="col-md-12 text-center mt-3"><strong class="h4 text-shadow">Procesos</strong></div>
 
     <div class="row mt-3">
         @foreach (var procesos in Model)
         {
-            <div class="col-md-4 mt-4">
-                <input type="button" class="btn btn-light TextNegrita btn_save_color border-radius New_OT form-control box-shadow-green"
-                       id="@procesos.ProCodigo" value="@procesos.ProNombre" onclick="Load_Actividades(@procesos.ProCodigo)" />
+            <div class="col-md-5 mt-4 ml-md-5">
+                <input type="button" class="btn btn-light TextNegrita btn_save_color border-radius New_OT form-control box-shadow-green text-capitalize"
+                       id="@procesos.ProCodigo" value="@procesos.ProNombre.ToLower()" onclick="Load_Actividades(@procesos.ProCodigo, '@procesos.ProNombre')" />
             </div>
         }
     </div>
@@ -22,22 +26,69 @@
 <div id="div_Actividades" style="display:none">
     <div class="col-md-12 text-center mt-3"><strong class="h4 text-shadow">Actividades</strong></div>
 
-    <div class="row mt-3" id="divBtnActivities">
-        @*<div class="col-md-4 mt-4">
-                <input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"
-                       value="Boton 2" />
-            </div>*@
-    </div>
+    <div class="row mt-3" id="divBtnActivities"></div>
 </div>
 
 <div id="div_Tareas" style="display:none">
     <div class="col-md-12 text-center mt-3"><strong class="h4 text-shadow">Tarea</strong></div>
 
-    <div class="row mt-3" id="divBtnTrea">
-        @*<div class="col-md-4 mt-4">
-                <input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"
-                       value="Boton 2" />
-            </div>*@
+    <div class="row mt-3" id="divBtnTrea"></div>
+</div>
+
+<div id="saveProceso" class="modal fade" role="dialog" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="border-radius: 7vh; box-shadow: 1em 1em 11.3em rgba(255, 143, 46, 0.94);">
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <h4 class="TextNegrita text-center text-shadow">Datos</h4>
+                    </div>
+                    <div class="form-group">
+                        <label>Proceso</label>
+                        <input type="text" class="form-control" id="txtProceso" />
+                        <input type="hidden" class="form-control" id="txtProcesoId" value="0" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Actividad</label>
+                        <input type="text" class="form-control" id="txtActividad" />
+                        <input type="hidden" class="form-control" id="txtActividadId" value="0" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Tarea</label>
+                        <input type="text" class="form-control" id="txtTarea" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Periocidad</label>
+                        <select class="form-control" id="sltPeriocidad" onchange="periocidad(this.value)">
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="fechaPeriocidad" style="display:none">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label>Dia inicial</label>
+                                <input type="date" id="datePeriocidad" class="form-control col-md-11" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>Dias de prorroga</label>
+                                <input type="text" value="1" min="1" class="form-control col-md-11 validanumericos" id="DiasProrroga" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer" id="divBtn">
+                        <button type="button" onclick="SaveNewProg()" id="btnSave" class="btn btn-success btn_save_color disable" style="color:black">Guardar</button>
+                        <button type="button" class="btn btn-danger btn_cancel disable" data-dismiss="modal">
+                            Cerrar
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

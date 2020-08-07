@@ -77,6 +77,14 @@ namespace AsikWeb.Controllers
             }
         }
         [HttpPost]
+        public async Task<JsonResult> Periocidad()
+        {
+            using (var service = GetService<ASIK_PGWEB_Service>())
+            {
+                return Json(await service.LstPeriocidad());
+            }
+        }
+        [HttpPost]
         public async Task<JsonResult> Load_Tareas(int Act_Codigo)
         {
             using (var service = GetService<ASIK_PGWEB_Service>())
@@ -150,6 +158,17 @@ namespace AsikWeb.Controllers
                 {
                     return Json(new { Status = false, Message = infoToSendMailTaskDelay.errorMetodo });
                 }
+            }
+        }
+        [HttpPost]
+        public async Task<IActionResult> SaveNewProg(int proceso, string procesoName, int actividad, string actividadName, string tareaName,
+            int periocidad, DateTime fecha, int prorroga)
+        {
+            using (var service = GetService<ASIK_PGWEB_Service>())
+            {
+                string Result = await service.SaveNewProg(proceso, procesoName, actividad, actividadName, tareaName, periocidad,
+                    fecha, prorroga);
+                return Json(new { Message = Result });
             }
         }
     }
