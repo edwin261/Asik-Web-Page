@@ -3,16 +3,29 @@
     ViewData["Title"] = "Calidad";
 }
 
+<style>
+    .containerHeiht {
+        height: 72vh;
+        padding-bottom: 5vh;
+        overflow-y: auto;
+        overflow-x: hidden;
+    }
+</style>
+
 <div id="Splash_Screen_Load" style="display: none"></div>
 
 <button type="button" class="btn btn-success btn-circle btn-xl" data-toggle="modal" data-target="#saveProceso">
-    <i class="fas fa-angle-right"></i>
+    <i class="fa fa-plus"></i>
+</button>
+
+<button type="button" onclick="backDiv()" class="btn btn-primary btn-circleLeft btn-xl" style="display:none;width: 40px !important;height: 41px !important;border-radius: 21px !important;">
+    <i class="fa fa-arrow-left"></i>
 </button>
 
 <div id="div_Procesos">
     <div class="col-md-12 text-center mt-3"><strong class="h4 text-shadow">Procesos</strong></div>
 
-    <div class="row mt-3">
+    <div class="row mt-3 containerHeiht">
         @foreach (var procesos in Model)
         {
             <div class="col-md-5 mt-4 ml-md-5">
@@ -26,13 +39,13 @@
 <div id="div_Actividades" style="display:none">
     <div class="col-md-12 text-center mt-3"><strong class="h4 text-shadow">Actividades</strong></div>
 
-    <div class="row mt-3" id="divBtnActivities"></div>
+    <div class="row mt-3 containerHeiht" id="divBtnActivities"></div>
 </div>
 
 <div id="div_Tareas" style="display:none">
     <div class="col-md-12 text-center mt-3"><strong class="h4 text-shadow">Tarea</strong></div>
 
-    <div class="row mt-3" id="divBtnTrea"></div>
+    <div class="row mt-3 containerHeiht" id="divBtnTrea"></div>
 </div>
 
 <div id="saveProceso" class="modal fade" role="dialog" tabindex="-1">

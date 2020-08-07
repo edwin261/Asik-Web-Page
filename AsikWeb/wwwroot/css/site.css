@@ -768,15 +768,15 @@ label, td, span, p, th, h6, h5, h4, h3, h2, h1 {
 }
 
 .btn-circle.btn-xl {
-    width: 70px;
-    height: 70px;
-    padding: 10px 16px;
-    border-radius: 35px;
-    font-size: 24px;
-    line-height: 1.33;
+    width: 54px !important;
+    height: 50px !important;
+    padding: 10px 16px !important;
+    border-radius: 35px !important;
+    font-size: 24px !important;
+    line-height: 1.33 !important;
 }
 
-.btn-circle {
+.btn-circle, .btn-circleLeft {
     width: 30px;
     height: 30px;
     padding: 6px 0px;
@@ -788,4 +788,8 @@ label, td, span, p, th, h6, h5, h4, h3, h2, h1 {
     z-index: 100;
     bottom: 10%;
     right: 14px;
+}
+
+.btn-circleLeft {
+    left: 9px !important;
 }

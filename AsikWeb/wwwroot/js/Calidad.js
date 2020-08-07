@@ -1,6 +1,7 @@
 ﻿var events = [];
 var cod = [];
 var selectedEvent = null;
+var divToBack = 0;
 
 $(document).ready(function () {
     loadSltTarea(1, '', true);
@@ -179,8 +180,9 @@ function Load_Actividades(proCodigo, proNombre) {
         success: function (data) {
             if (data.length > 0) {
                 $("#div_Procesos").fadeOut(300);
+                $("#loadActividad").remove();
                 data.forEach(function (actividad) {
-                    $('<div class="col-md-5 mt-4 ml-md-5">' +
+                    $('<div class="col-md-5 mt-4 ml-md-5 loadActividad">' +
                         '<input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"' +
                         'value="' + capitalize(actividad.actNombre.toLowerCase()) + '" id="' + actividad.actCodigo + '" onclick="loadSltTarea(\'' + actividad.actCodigo + '\'' + ',' + '\'' + actividad.actNombre + '\'' + ',' + '\'' + false + '\')" />' +
                         '</div>').appendTo("#divBtnActivities");
@@ -188,6 +190,8 @@ function Load_Actividades(proCodigo, proNombre) {
                 $("#txtProceso").val(proNombre);
                 $("#txtProcesoId").val(proCodigo);
                 $('#txtProceso').prop('readonly', true);
+                divToBack = 1;
+                $(".btn-circleLeft").fadeIn();
                 $("#div_Actividades").fadeIn(300);
             } else {
                 showAlert("El proceso no tiene actividades relacionadas", "Calidad", "warning");
@@ -262,14 +266,16 @@ function loadSltTarea(actCodigo, actNombre, opt) {
                     $("#divBtn").fadeIn();
                 } else {
                     $("#div_Actividades").fadeOut(300);
+                    $("#loadTarea").remove();
                     data.forEach(function (tarea) {
-                        $('<div class="col-md-5 mt-4 ml-md-5">' +
+                        $('<div class="col-md-5 mt-4 ml-md-5 loadTarea">' +
                             '<input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"' +
                             'value="' + capitalize(tarea.tarNombre.toLowerCase()) + '" id="' + tarea.tarCodigo + '" />' +
                             '</div>').appendTo("#divBtnTrea");
                         $("#txtActividad").val(actNombre);
                         $("#txtActividadId").val(actCodigo);
                         $('#txtActividad').prop('readonly', true);
+                        divToBack = 2;
                         $("#div_Tareas").fadeIn(300);
                     });
                 }
@@ -430,4 +436,20 @@ function SaveNewProg() {
 
 function capitalize(word) {
     return $.camelCase("-" + word);
+}
+
+function backDiv() {
+    switch (divToBack) {
+        case 1:
+            $("#div_Procesos").fadeIn(200);
+            $("#div_Actividades").fadeOut(190);
+            divToBack = 0;
+            $(".btn-circleLeft").fadeOut();
+            break;
+        case 2:
+            $("#div_Actividades").fadeIn(200);
+            $("#div_Tareas").fadeOut(190);
+            divToBack = 1;
+            break;
+    }
 }
