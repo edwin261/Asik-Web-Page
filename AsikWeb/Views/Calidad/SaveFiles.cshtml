@@ -36,14 +36,13 @@
                     </div>
 
                     @*<div class="col-md-11 pb-3 ml-4">
-                        <label><strong>Observaciones</strong></label>
-                        <textarea id="calObserva" style="overflow:auto;resize:none" class="form-control" rows="5" cols="7">@Model.calCalendarios[0].CalObser</textarea>
-                    </div>*@
+                            <label><strong>Observaciones</strong></label>
+                            <textarea id="calObserva" style="overflow:auto;resize:none" class="form-control" rows="5" cols="7">@Model.calCalendarios[0].CalObser</textarea>
+                        </div>*@
 
                     @if (Model.calCalendarios[0].CalFecreal == null)
                     {
                         <div class="col-md-11 ml-4 pb-4">
-                            <input type="hidden" id="fileName" value="@Model.Tareas[0].TarRegist" />
                             <input type="hidden" id="codUsu" name="codUsu" value="@codUsu" />
                             <input type="hidden" id="calCodigo" name="calCodigo" value="@Model.calCalendarios[0].CalCodigo" />
                             <label><strong>Anexar documento PDF</strong></label>
@@ -57,8 +56,13 @@
                     else
                     {
                         <div class="col-md-11 ml-4 pb-4">
-                            <label><strong>Documento PDF</strong></label>
-                            <a href="@Model.calCalendarios[0].CalRutarc" target="_blank">@Model.Tareas[0].TarRegist</a>
+                            <label><strong>Descargar Documento PDF</strong></label><br />
+                            <a href='../@Model.calCalendarios[0].CalRutarc.Split("wwwroot")[1]' target="_blank">
+                                @Model.calCalendarios[0].CalRutarc.Split("AsikWeb-")[1]
+                            </a>
+                        </div>
+                        <div class="modal-footer col-md-12" id="divBtn">
+                            <button type="button" class="btn btn-danger btn_cancel disable" onclick="location.href = '/Calidad/Calendar'">Volver</button>
                         </div>
                     }
                 </div>

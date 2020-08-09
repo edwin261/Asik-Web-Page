@@ -796,11 +796,6 @@ namespace AsikWeb.Models.Entidades
 
                 entity.Property(e => e.TarPeriod).HasColumnName("TAR_PERIOD");
 
-                entity.Property(e => e.TarRegist)
-                    .HasColumnName("TAR_REGIST")
-                    .HasMaxLength(150)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.TarFechini).HasColumnName("TAR_FECHINI");
 
                 entity.Property(e => e.TarFechfin).HasColumnName("TAR_FECHFIN");

@@ -71,19 +71,19 @@ namespace AsikWeb.Models.Entidades
         {
             try
             {
-                string pathUsu = Path.Combine(@"wwwroot\calidadFiles\", codUsu.ToString());
+                string pathUsu = Path.Combine(@"wwwroot\calidadFiles", codUsu.ToString());
                 Directory.CreateDirectory(pathUsu);
 
-                string pathfech = Path.Combine(pathUsu, 
+                string pathfech = Path.Combine(pathUsu,
                     DateTime.Now.Day.ToString() + "_" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Year.ToString());
                 Directory.CreateDirectory(pathfech);
 
-                var stream = File.Create(Path.Combine(pathfech, uploadFile.FileName));
+                var stream = File.Create(Path.Combine(pathfech, "AsikWeb-" + uploadFile.FileName));
                 await uploadFile.CopyToAsync(stream);
                 stream.Close();
 
                 CalCalendario calCalendario = await _context.CalCalendario.Where(w => w.CalCodigo == CalCodigo).FirstOrDefaultAsync();
-                calCalendario.CalRutarc = Path.Combine(pathfech, uploadFile.FileName);
+                calCalendario.CalRutarc = Path.Combine(pathfech, "AsikWeb-" + uploadFile.FileName);
                 calCalendario.CalColor = "green";
                 calCalendario.CalFecreal = DateTime.Now;
                 _context.CalCalendario.Update(calCalendario).Property(p => p.CalCodigo).IsModified = false;
@@ -209,7 +209,6 @@ namespace AsikWeb.Models.Entidades
                     TarActcod = actividad,
                     TarNombre = tareaName,
                     TarPeriod = periocidad,
-                    TarRegist = "",
                     TarFechini = periocidad != 8 ? fecha.Day : 0,
                     TarFechfin = periocidad != 8 ? prorroga : 0
                 };

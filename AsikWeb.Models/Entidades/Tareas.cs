@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace AsikWeb.Models.Entidades
 {
@@ -13,7 +14,6 @@ namespace AsikWeb.Models.Entidades
         public int? TarActcod { get; set; }
         public string TarNombre { get; set; }
         public int? TarPeriod { get; set; }
-        public string TarRegist { get; set; }
         public int? TarFechini { get; set; }
         public int? TarFechfin { get; set; }
 

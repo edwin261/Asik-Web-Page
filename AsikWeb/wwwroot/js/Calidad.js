@@ -94,6 +94,12 @@ function GenerateCalender(events) {
                 $description.append($('<p/>').html('<b>Descripcion: </b>' + calEvent.description));
                 $('#myModal #pDetails').empty().html($description);
 
+                if (calEvent.color == "green") {
+                    $("#btnclick").html('Visualizar');
+                } else {
+                    $("#btnclick").html('Realizar Tarea');
+                }
+
                 $('#CalendarModal').modal('hide');
                 $('#myModal').modal();
             } else {
@@ -336,12 +342,6 @@ function SaveNewProgTask(codUsu) {
             }
         }
     });
-}
-
-function fileSelect() {
-    var fileName = $('#uploadFile').val().split('\\').pop();
-    var tarRegist = $('#fileName').val();
-
 }
 
 function SaveFiles(event) {
