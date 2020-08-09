@@ -4,7 +4,6 @@ var selectedEvent = null;
 var divToBack = 0;
 
 $(document).ready(function () {
-    loadSltTarea(1, '', true);
     periocidad(0);
 
     $('.validanumericos').keypress(function (e) {
@@ -29,11 +28,11 @@ function LoadCalendar(rol) {
                 if (data.calCalendarios != null) {
                     for (var c = 0; c < data.calCalendarios.length; c++) {
                         events.push({
-                            proyect_name: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
+                            proyect_name: capitalize(data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre.toLowerCase()),
                             Tar_eventId: data.calCalendarios[c].calTarcodNavigation.tarCodigo,
                             Cal_eventId: data.calCalendarios[c].calCodigo,
-                            title: data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre,
-                            description: data.calCalendarios[c].calTarcodNavigation.tarNombre,
+                            title: capitalize(data.calCalendarios[c].calTarcodNavigation.tarActcodNavigation.actNombre.toLowerCase()),
+                            description: capitalize(data.calCalendarios[c].calTarcodNavigation.tarNombre.toLowerCase()),
                             start: data.calCalendarios[c].calReprog == false ? moment(data.calCalendarios[c].calFecprog) : moment(data.calCalendarios[c].calFecreprog),
                             end: data.calCalendarios[c].calReprog == false ? data.calCalendarios[c].calFecven != null ? moment(data.calCalendarios[c].calFecven) : null : moment(data.calCalendarios[c].calFecreprog).add(23, 'hours'),
                             color: data.calCalendarios[c].calColor,
@@ -180,7 +179,7 @@ function Load_Actividades(proCodigo, proNombre) {
         success: function (data) {
             if (data.length > 0) {
                 $("#div_Procesos").fadeOut(300);
-                $("#loadActividad").remove();
+                $(".loadActividad").remove();
                 data.forEach(function (actividad) {
                     $('<div class="col-md-5 mt-4 ml-md-5 loadActividad">' +
                         '<input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"' +
@@ -213,7 +212,7 @@ function loadSelectProceso() {
         success: function (data) {
             if (data.length > 0) {
                 data.forEach(function (proceso) {
-                    $('#slt_Proceso').append("<option value=" + proceso.proCodigo + ">" + proceso.proNombre + "</option>");
+                    $('#slt_Proceso').append("<option value=" + proceso.proCodigo + ">" + capitalize(proceso.proNombre.toLowerCase()) + "</option>");
                 });
                 loadSltActividad($('#slt_Proceso').val());
             } else {
@@ -236,12 +235,12 @@ function loadSltActividad(Pro_Codigo) {
             if (data.length > 0) {
                 $("#slt_Actividad").empty();
                 data.forEach(function (actividad) {
-                    $('#slt_Actividad').append("<option value=" + actividad.actCodigo + ">" + actividad.actNombre + "</option>");
+                    $('#slt_Actividad').append("<option value=" + actividad.actCodigo + ">" + capitalize(actividad.actNombre.toLowerCase()) + "</option>");
                 });
             } else {
                 showAlert("El proceso no tiene actividades relacionadas", "Calidad", "warning");
             }
-            loadSltTarea($('#slt_Actividad').val(), true);
+            loadSltTarea($('#slt_Actividad').val(), "", true);
             $("#Splash_Screen_Load").fadeOut();
         }
     });
@@ -261,12 +260,12 @@ function loadSltTarea(actCodigo, actNombre, opt) {
                 if (opt == true) {
                     $("#slt_Tarea").empty();
                     data.forEach(function (tarea) {
-                        $('#slt_Tarea').append("<option value=" + tarea.tarCodigo + ">" + tarea.tarNombre + "</option>");
+                        $('#slt_Tarea').append("<option value=" + tarea.tarCodigo + ">" + capitalize(tarea.tarNombre.toLowerCase()) + "</option>");
                     });
                     $("#divBtn").fadeIn();
                 } else {
                     $("#div_Actividades").fadeOut(300);
-                    $("#loadTarea").remove();
+                    $(".loadTarea").remove();
                     data.forEach(function (tarea) {
                         $('<div class="col-md-5 mt-4 ml-md-5 loadTarea">' +
                             '<input type="button" class="btn btn-light TextNegrita border-radius New_OT form-control box-shadow-orange"' +
@@ -298,9 +297,9 @@ function periocidad(id) {
                     $("#sltPeriocidad").empty();
                     data.forEach(function (periocidad) {
                         if (periocidad.perCodigo == 8)
-                            $('#sltPeriocidad').append("<option selected value=" + periocidad.perCodigo + ">" + periocidad.perNombre + "</option>");
+                            $('#sltPeriocidad').append("<option selected value=" + periocidad.perCodigo + ">" + capitalize(periocidad.perNombre.toLowerCase()) + "</option>");
                         else
-                            $('#sltPeriocidad').append("<option value=" + periocidad.perCodigo + ">" + periocidad.perNombre + "</option>");
+                            $('#sltPeriocidad').append("<option value=" + periocidad.perCodigo + ">" + capitalize(periocidad.perNombre.toLowerCase()) + "</option>");
                     });
                 } else {
                     showAlert("No se encontraron datos de periocidad", "Calidad", "warning");

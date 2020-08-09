@@ -15,15 +15,15 @@
                 <legend class="w-auto color_orange">Informe General</legend>
                 <div class="row">
                     <div class="col-md-4 pb-3 ml-4">
-                        <strong>Proceso: </strong><label id="lblProceso">@Model.Procesos[0].ProNombre</label>
+                        <strong>Proceso: </strong><label id="lblProceso">@Model.Procesos[0].ProNombre.ToLower()</label>
                     </div>
 
                     <div class="col-md-6 pb-3 ml-4">
-                        <strong>Actividad: </strong><label id="lblActividad">@Model.Tareas[0].TarActcodNavigation.ActNombre</label>
+                        <strong>Actividad: </strong><label id="lblActividad">@Model.Tareas[0].TarActcodNavigation.ActNombre.ToLower()</label>
                     </div>
 
                     <div class="col-md-11 pb-3 ml-4">
-                        <strong>Tarea: </strong><label id="lblTarea">@Model.Tareas[0].TarNombre</label>
+                        <strong>Tarea: </strong><label id="lblTarea">@Model.Tareas[0].TarNombre.ToLower()</label>
                         <input type="hidden" id="tarCodigo" name="tarCodigo" value="@Model.Tareas[0].TarCodigo" />
                     </div>
 

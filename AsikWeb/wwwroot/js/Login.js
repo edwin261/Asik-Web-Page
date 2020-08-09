@@ -45,6 +45,7 @@ function LogIn(event) {
                         location.href = "/OrdenTrabajo/show";
                         break;
                     case 9:
+                        location.href = "/Calidad/Calendar";
                         break;
                     case 10:
                         location.href = "/Dictamen/Index";

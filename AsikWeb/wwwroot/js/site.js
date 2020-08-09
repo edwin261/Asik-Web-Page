@@ -96,6 +96,14 @@ function RemoveAttrDisable() {
                 $(".Mvistas").removeClass("isDisabled");
                 break;
             case 9:
+                $("#Menu_15").addClass("item");
+                $("#Menu_15").removeClass("isDisabled");
+
+                $('<img class="imgNextToTitle ml-2" alt="Image of delay task" src="/Img/Close_Menu.svg" width="42" style="width: 5vh !important;" />' +
+                    '<li><a tabindex="-1" href="/Calidad/TaskReprog" class="item pt-2 pb-3 btn btn-link">Reprogramar Tareas</a></li>').appendTo(".menu");
+
+                $('<img class="imgNextToTitle ml-2" alt="Image of new programming" src="/Img/Close_Menu.svg" width="42" style="width: 5vh !important;" />' +
+                    '<li><a tabindex="-1" href="/Calidad/Index" class="item pt-2 pb-3 btn btn-link">Parametros Calidad</a></li>').appendTo(".menu");
                 break;
             case 10:
                 $("#Menu_7").addClass("item");

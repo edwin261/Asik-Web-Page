@@ -57,9 +57,9 @@
                     foreach (var delayTask in Model)
                     {
                         <tr id="tr_@delayTask.CalCodigo">
-                            <td class="text-center" id="ActNombre_@delayTask.CalCodigo">@delayTask.CalTarcodNavigation.TarActcodNavigation.ActNombre</td>
-                            <td class="text-center" id="TarNombre_@delayTask.CalCodigo">@delayTask.CalTarcodNavigation.TarNombre</td>
-                            <td style="display:none" class="text-center" id="CalObserv_@delayTask.CalCodigo">@delayTask.CalObser</td>
+                            <td class="text-center" id="ActNombre_@delayTask.CalCodigo">@delayTask.CalTarcodNavigation.TarActcodNavigation.ActNombre.ToLower()</td>
+                            <td class="text-center" id="TarNombre_@delayTask.CalCodigo">@delayTask.CalTarcodNavigation.TarNombre.ToLower()</td>
+                            <td style="display:none" class="text-center" id="CalObserv_@delayTask.CalCodigo">@delayTask.CalObser.ToLower()</td>
                             <td class="text-center">
                                 <button class="form-control btn-success" onclick="loadDatoToReprog('@delayTask.CalCodigo')">Reprogramar</button>
                             </td>
